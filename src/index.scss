@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$swdc-path-fonts: '../node_modules/@prism/dropcloth/src/resources/fonts/';
+$swdc-path-iconfont: '../node_modules/@prism/dropcloth/src/resources/iconfont/';
+
+// Dropcloth application to use mixins, variables, and functions
+@import '@prism/dropcloth/src/styles/dropcloth-application.scss';
+
+// Base Dropcloth CSS
+@import '@prism/dropcloth/dist/styles/dropcloth-toolkit.css';
+@import '@prism/dropcloth/dist/styles/dropcloth-iconfont.css';
+
+// Fonts
+@include swdc-set-fontface-dropcloth();
+@include swdc-set-fontface-iconfont();
+
+:root {
+  font-family: var(--swdc-text-family-brand);
+  color: var(--swdc-color-dark-foreground-on-surface);
+  background-color: var(--swdc-color-surface-1);
+}
+
+#root {
+  width: 100%;
+}
