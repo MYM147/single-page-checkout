@@ -1,0 +1,31 @@
+import { Radio } from '@prism/dropcloth';
+
+const PickupOrDeliverySelector = () => {
+  return (
+		<>
+			<div className='swdc-flex swdc-mt-12 swdc-flex-shrink-0 swdc-gap-8'>
+				<Radio
+					name='pickup'
+					value='value'
+					className='swdc-w-[300px] swdc-items-center swdc-rounded-[1px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-rounded-[2px] has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30]'>
+					<div>
+						<p className='swdc-font-medium swdc-text-base'>Pickup</p>
+						<p>Ready in as little as 2 hours</p>
+					</div>
+				</Radio>
+
+				<Radio
+					name='pickup'
+					value='value'
+					className='swdc-w-[300px] swdc-items-center swdc-rounded-[1px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-rounded-[2px] has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30]'>
+					<div>
+						<p className='swdc-font-medium swdc-text-base'>Delivery</p>
+						<p>Standard or rush delivery available</p>
+					</div>
+				</Radio>
+			</div>
+		</>
+	);
+}
+
+export default PickupOrDeliverySelector;
