@@ -1,3 +1,4 @@
+
 import { Radio } from '@prism/dropcloth';
 
 const PickupOrDeliverySelector = () => {
@@ -21,6 +22,7 @@ const PickupOrDeliverySelector = () => {
 					<div>
 						<p className='swdc-font-medium swdc-text-base'>Delivery</p>
 						<p>Standard or rush delivery available</p>
+						{/* Make this text a prop after getting fulfillment data */}
 					</div>
 				</Radio>
 			</div>
@@ -28,4 +30,4 @@ const PickupOrDeliverySelector = () => {
 	);
 }
 
-export default PickupOrDeliverySelector;
+export default PickupOrDeliverySelector
