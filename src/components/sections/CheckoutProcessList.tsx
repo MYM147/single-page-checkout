@@ -15,9 +15,12 @@ const CheckoutProcessList = () => {
 				isExpanded={expandedPanel === 0}
 				onContinue={() => setExpandedPanel(1)}
 				className={`
-					swdc-transition-all swdc-duration-300
-					${expandedPanel === 0 ? 'swdc-h-auto' : 'swdc-h-8'} 
-					swdc-overflow-hidden
+					swdc-transition-all swdc-duration-300 swdc-overflow-hidden
+					${
+						expandedPanel === 0
+							? 'swdc-h-auto swdc-opacity-100'
+							: 'swdc-h-[48px] swdc-opacity-75'
+					}
 				`}
 			/>
 
@@ -25,9 +28,12 @@ const CheckoutProcessList = () => {
 				isExpanded={expandedPanel === 1}
 				onContinue={() => setExpandedPanel(2)}
 				className={`
-					swdc-transition-all swdc-duration-300
-					${expandedPanel === 1 ? 'swdc-h-auto' : 'swdc-h-8'}
-					swdc-overflow-hidden
+					swdc-transition-all swdc-duration-300 swdc-overflow-hidden
+					${
+						expandedPanel === 0
+							? 'swdc-h-auto swdc-opacity-100'
+							: 'swdc-h-[48px] swdc-opacity-75'
+					}
 				`}
 			/>
 
@@ -35,9 +41,12 @@ const CheckoutProcessList = () => {
 				isExpanded={expandedPanel === 2}
 				onContinue={() => setExpandedPanel(3)}
 				className={`
-					swdc-transition-all swdc-duration-300
-					${expandedPanel === 2 ? 'swdc-h-auto' : 'swdc-h-8'}
-					swdc-overflow-hidden
+					swdc-transition-all swdc-duration-300 swdc-overflow-hidden
+					${
+						expandedPanel === 0
+							? 'swdc-h-auto swdc-opacity-100'
+							: 'swdc-h-[48px] swdc-opacity-75'
+					}
 				`}
 			/>
 
@@ -45,9 +54,12 @@ const CheckoutProcessList = () => {
 				isExpanded={expandedPanel === 3}
 				onContinue={() => setExpandedPanel(4)}
 				className={`
-					swdc-transition-all swdc-duration-300
-					${expandedPanel === 3 ? 'swdc-h-auto' : 'swdc-h-8'}
-					swdc-overflow-hidden
+					swdc-transition-all swdc-duration-300 swdc-overflow-hidden
+					${
+						expandedPanel === 0
+							? 'swdc-h-auto swdc-opacity-100'
+							: 'swdc-h-[48px] swdc-opacity-75'
+					}
 				`}
 			/>
 		</div>
