@@ -1,13 +1,19 @@
-
 import { Radio } from '@prism/dropcloth';
+// import { useState } from 'react';
 
-const PickupOrDeliverySelector = () => {
-  return (
+type Props = {
+	onSelect: (value: string) => void;
+};
+
+const PickupOrDeliverySelector = ({ onSelect }: Props) => {
+
+	return (
 		<>
-			<div className='swdc-flex swdc-mt-12 swdc-flex-shrink-0 swdc-gap-8'>
+			<div className='swdc-flex swdc-mt-12 swdc-flex-shrink-0 swdc-gap-4'>
 				<Radio
 					name='pickup'
-					value='value'
+					onChange={(e) => onSelect(e.target.value)}
+					value='pickup'
 					className='swdc-w-[300px] swdc-items-center swdc-rounded-[1px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-rounded-[2px] has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30]'>
 					<div>
 						<p className='swdc-font-medium swdc-text-base'>Pickup</p>
@@ -17,7 +23,8 @@ const PickupOrDeliverySelector = () => {
 
 				<Radio
 					name='pickup'
-					value='value'
+					onChange={(e) => onSelect(e.target.value)}
+					value='delivery'
 					className='swdc-w-[300px] swdc-items-center swdc-rounded-[1px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-rounded-[2px] has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30]'>
 					<div>
 						<p className='swdc-font-medium swdc-text-base'>Delivery</p>
@@ -28,6 +35,6 @@ const PickupOrDeliverySelector = () => {
 			</div>
 		</>
 	);
-}
+};
 
 export default PickupOrDeliverySelector

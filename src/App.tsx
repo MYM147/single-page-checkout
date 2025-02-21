@@ -4,17 +4,15 @@ import { Sidebar } from './components/sidebar/Sidebar';
 function App() {
 
   return (
-		<div className='swdc-px-16 swdc-pt-10 swdc-pb-[120px] bg-[#DCDEDC]'>
-			<h1 className='swdc-text-2xl swdc-py-10 swdc-pr-20 swdc-pl-10 swdc-text-[32px] swdc-font-medium swdc-leading-10 swdc-tracking-[-1px]'>
-				Checkout
-			</h1>
-			<div className='swdc-flex text-center content-center'>
-				<section>
-					<CheckoutProcessList />
-				</section>
-				<section>
-					<Sidebar />
-				</section>
+		<div className=' swdc-bg-[#DCDEDC]'>
+			<div className='swdc-mx-[80px] swdc-px-16 swdc-pt-10 swdc-pb-[120px]'>
+				<h1 className='swdc-text-2xl swdc-text-[32px] swdc-font-medium'>
+					Checkout
+				</h1>
+				<div className='swdc-flex swdc-pt-6 swdc-px-16 swdc-items-start swdc-gap-8 swdc-self-stretch'>
+						<CheckoutProcessList />
+						<Sidebar />
+				</div>
 			</div>
 		</div>
 	);

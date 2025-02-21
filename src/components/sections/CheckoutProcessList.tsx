@@ -10,7 +10,7 @@ const CheckoutProcessList = () => {
 	const [expandedPanel, setExpandedPanel] = useState(0);
 
   return (
-		<div className='swdc-flex swdc-flex-col swdc-gap-4 swdc-w-[752px]'>
+		<div className='swdc-flex swdc-flex-col swdc-gap-4'>
 			<FulfillmentOptions
 				isExpanded={expandedPanel === 0}
 				onContinue={() => setExpandedPanel(1)}
