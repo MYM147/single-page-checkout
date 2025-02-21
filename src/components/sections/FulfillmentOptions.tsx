@@ -1,4 +1,4 @@
-import { Button, Radio } from '@prism/dropcloth';
+import { Button } from '@prism/dropcloth';
 import { useState } from 'react';
 import PickupOrDeliverySelector from '../global/PickupOrDeliverySelector';
 import PickupStore from '../global/PickupStore';
