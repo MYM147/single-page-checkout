@@ -1,5 +1,6 @@
 import { Button } from '@prism/dropcloth';
 import SectionTitle from '../global/SectionTitle';
+import { saveOrderDetails } from '../utils/orderUtils';
 
 type Props = {
 	isExpanded: boolean;

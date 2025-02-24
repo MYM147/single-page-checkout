@@ -5,6 +5,7 @@ import PickupStore from '../global/PickupStore';
 import RadioBtnChoice from '../global/RadioBtnChoice';
 import SectionTitle from '../global/SectionTitle';
 import SpecialInstructions from '../global/SpecialInstructions';
+import { saveOrderDetails } from '../utils/orderUtils';
 
 type Props = {
 	isExpanded: boolean;
@@ -14,6 +15,16 @@ type Props = {
 
 const FulfillmentOptions = ({ isExpanded, onContinue, className }: Props) => {
 	const [fulfillmentType, setFulfillmentType] = useState('');
+	const handleSaveAndContinue = () => {
+		const fulfillmentData = {
+			pickupType: selectedOption,
+			pickupPerson: selectedPickupPerson,
+			// Add other form data here
+		};
+
+		saveOrderDetails('fulfillment', fulfillmentData);
+		onContinue();
+	};
 
 	return (
 		<div
@@ -49,17 +60,21 @@ const FulfillmentOptions = ({ isExpanded, onContinue, className }: Props) => {
 							<RadioBtnChoice
 								name='pickup-person'
 								name2='pickup-person'
-								option='Me'
+								option='Self Pickup'
 								option2='Someone else'
 								title='Pickup Person *'
 								text="Who's picking up this order?"
-								value='me'
+								value='self-pickup'
 								value2='someone-else'
 							/>
 							<RadioBtnChoice
+								name="pickup-date"
+								name2="pickup-date"
 								option='As soon as possible'
 								option2='On a specific day'
 								title='Pickup Date *'
+								value='as-soon-as-possible'
+								value2='on-a-specific-day'
 							/>
 							<SpecialInstructions
 								label=''
