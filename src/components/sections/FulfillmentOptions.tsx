@@ -5,7 +5,7 @@ import PickupStore from '../global/PickupStore';
 import RadioBtnChoice from '../global/RadioBtnChoice';
 import SectionTitle from '../global/SectionTitle';
 import SpecialInstructions from '../global/SpecialInstructions';
-import { saveOrderDetails } from '../utils/orderUtils';
+// import { saveOrderDetails } from '../utils/orderUtils';
 
 type Props = {
 	isExpanded: boolean;
@@ -15,16 +15,16 @@ type Props = {
 
 const FulfillmentOptions = ({ isExpanded, onContinue, className }: Props) => {
 	const [fulfillmentType, setFulfillmentType] = useState('');
-	const handleSaveAndContinue = () => {
-		const fulfillmentData = {
-			pickupType: selectedOption,
-			pickupPerson: selectedPickupPerson,
-			// Add other form data here
-		};
+	// const handleSaveAndContinue = () => {
+	// 	const fulfillmentData = {
+	// 		pickupType: selectedOption,
+	// 		pickupPerson: selectedPickupPerson,
+	// 		// Add other form data here
+	// 	};
 
-		saveOrderDetails('fulfillment', fulfillmentData);
-		onContinue();
-	};
+	// 	saveOrderDetails('fulfillment', fulfillmentData);
+	// 	onContinue();
+	// };
 
 	return (
 		<div

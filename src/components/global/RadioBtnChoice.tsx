@@ -75,11 +75,39 @@ const RadioBtnChoice = ({
 				{/* Pick Up Person Conditional Render */}
 				{name2 === 'pickup-person' && selectedOption === 'someone-else' && (
 					<>
-						<div className='swdc-grid swdc-grid-cols-2 swdc-gap-4'>
-							<Input name='First name' className='swdc-p-2'/>
-							<Input name='Last name' className='swdc-p-2'/>
-							<Input name='Email' className='swdc-p-2'/>
-							<Input name='Phone' className='swdc-p-2'/>
+						<div className='swdc-grid swdc-grid-cols-2 swdc-gap-2 swdc-mt-4'>
+							<div>
+								First Name
+								<br />
+								<Input
+									name='First name'
+									className='swdc-p-2 swdc-mt-1 swdc-h-6 swdc-w-[285px]'
+								/>
+							</div>
+							<div>
+								Last Name
+								<br />
+								<Input
+									name='Last name'
+									className='swdc-p-2 swdc-mt-1 swdc-h-6 swdc-w-[285px]'
+								/>
+							</div>
+							<div>
+								Email Address
+								<br />
+								<Input
+									name='Email'
+									className='swdc-p-2 swdc-mt-1 swdc-h-6 swdc-w-[285px]'
+								/>
+							</div>
+							<div>
+								Phone Number
+								<br />
+								<Input
+									name='Phone'
+									className='swdc-p-2 swdc-mt-1 swdc-h-6 swdc-w-[285px]'
+								/>
+							</div>
 						</div>
 					</>
 				)}
