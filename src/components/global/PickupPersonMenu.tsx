@@ -81,6 +81,9 @@ const PickupPersonMenu = () => {
 					error={errors.firstName}
 					className="swdc-w-full"
 				/>
+				{errors.firstName && (
+					<span className="swdc-text-sm">Please enter letters only</span>
+				)}
 			</div>
 			<div>
 				Last Name *
@@ -93,6 +96,9 @@ const PickupPersonMenu = () => {
 					error={errors.lastName}
 					className="swdc-w-full"
 				/>
+				{errors.lastName && (
+					<span className="swdc-text-sm">Please enter letters only</span>
+				)}
 			</div>
 			<div>
 				Email Address *
@@ -106,6 +112,11 @@ const PickupPersonMenu = () => {
 					error={errors.email}
 					className="swdc-w-full"
 				/>
+				{errors.email && (
+					<span className="swdc-text-sm">
+						Please enter a valid email address
+					</span>
+				)}
 			</div>
 			<div>
 				Phone Number *
@@ -118,6 +129,11 @@ const PickupPersonMenu = () => {
 					error={errors.phone}
 					className="swdc-w-full"
 				/>
+				{errors.phone && (
+					<span className="swdc-text-sm">
+						Please enter a valid phone number
+					</span>
+				)}
 			</div>
 		</div>
 	);
