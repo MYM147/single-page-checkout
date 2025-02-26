@@ -8,7 +8,16 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Phone regex for format (XXX) XXX-XXXX
 const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
 
-const PickupPersonMenu = () => {
+type Props = {
+	onPersonDetailsChange: (details: {
+		firstName: string;
+		lastName: string;
+		email: string;
+		phone: string;
+	}) => void;
+};
+
+const PickupPersonMenu = ({ onPersonDetailsChange }: Props) => {
 	const [formData, setFormData] = useState({
 		firstName: '',
 		lastName: '',
@@ -58,6 +67,13 @@ const PickupPersonMenu = () => {
 			...prev,
 			[name]: !isValid,
 		}));
+
+		const newFormData = {
+			...formData,
+			[name]: formattedValue,
+		};
+		setFormData(newFormData);
+		onPersonDetailsChange(newFormData);
 	};
 
 	const formatPhoneNumber = (value: string) => {

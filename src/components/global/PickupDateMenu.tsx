@@ -1,6 +1,10 @@
 import { Tooltip } from '@prism/dropcloth';
 import { useState } from 'react';
 
+type Props = {
+	onDateSelect: (date: string) => void;
+};
+
 const getDates = () => {
 	const dates = [];
 	for (let i = 0; i < 7; i++) {
@@ -19,7 +23,7 @@ const getDates = () => {
 
 const weekDates = getDates();
 
-const PickupDateMenu = () => {
+const PickupDateMenu = ({ onDateSelect }: Props) => {
 	const [selectedDate, setSelectedDate] = useState<number | null>(null);
 
 	return (
@@ -40,13 +44,16 @@ const PickupDateMenu = () => {
 										})}
 						</span>
 						<div
-							className={`swdc-flex swdc-h-[68px] swdc-w-[80px] swdc-flex-col swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] ${
+							className={`swdc-flex swdc-h-[68px] swdc-w-[80px] swdc-cursor-pointer swdc-flex-col swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] ${
 								selectedDate === index
 									? 'swdc-bg-[#2F2F30] swdc-text-[#fff]'
 									: 'swdc-bg-white hover:swdc-bg-[#2F2F30] hover:swdc-text-[#fff]'
 							}`}
-							onClick={() => setSelectedDate(index)}
-						>
+							onClick={() => {
+								setSelectedDate(index);
+								onDateSelect(date);
+							}}
+						> 
 							<span className="swdc-text-sm swdc-font-medium">
 								{new Date(date).toLocaleDateString('en-US', {
 									month: 'short',

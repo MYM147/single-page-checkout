@@ -9,7 +9,9 @@ type Props = {
 
 const PaymentMethod = ({ isExpanded, onContinue, className }: Props) => {
 	return (
-		<div className={`pr-20 bg-[#fff] py-10 pl-10 ${className}`}>
+		<div
+			className={`swdc-bg-[#fff] swdc-py-4 swdc-pl-6 swdc-pr-6 swdc-drop-shadow-md ${className}`}
+		>
 			<SectionTitle title="Payment Method" />
 			{isExpanded && (
 				<>

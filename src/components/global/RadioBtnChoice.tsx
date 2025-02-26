@@ -13,11 +13,13 @@ type Props = {
 	title: string;
 	value: string;
 	value2: string;
+	onSelectionChange: (selection: string, details?: any) => void;
 };
 
 const RadioBtnChoice = ({
 	name,
 	name2,
+	onSelectionChange,
 	option,
 	option2,
 	text,
@@ -34,7 +36,10 @@ const RadioBtnChoice = ({
 			<div className="swdc-pt-2">
 				<Radio
 					className="hover:swdc-bg-[#fff]"
-					onChange={(e) => setSelectedOption(e.target.value)}
+					onChange={(e) => {
+						setSelectedOption(e.target.value);
+						onSelectionChange(e.target.value);
+					}}
 					name={`${name}`}
 					value={`${value}`}
 				>
@@ -43,7 +48,10 @@ const RadioBtnChoice = ({
 				<br />
 				<Radio
 					className="hover:swdc-bg-[#fff]"
-					onChange={(e) => setSelectedOption(e.target.value)}
+					onChange={(e) => {
+						setSelectedOption(e.target.value);
+						onSelectionChange(e.target.value);
+					}}
 					name={`${name2}`}
 					value={`${value2}`}
 				>
@@ -51,11 +59,19 @@ const RadioBtnChoice = ({
 				</Radio>
 
 				{name2 === 'pickup-person' && selectedOption === 'someone-else' && (
-					<PickupPersonMenu />
+					<PickupPersonMenu
+						onPersonDetailsChange={(details) => {
+							onSelectionChange(selectedOption, details);
+						}}
+					/>
 				)}
 
 				{name2 === 'pickup-date' && selectedOption === 'on-a-specific-day' && (
-					<PickupDateMenu />
+					<PickupDateMenu
+						onDateSelect={(date) => {
+							onSelectionChange(selectedOption, date);
+						}}
+					/>
 				)}
 			</div>
 		</div>

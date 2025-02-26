@@ -1,4 +1,5 @@
 import { Button } from '@prism/dropcloth';
+import OrderSummaryDetails from '../global/FulfillmentSummaryDetails';
 import SectionTitle from '../global/SectionTitle';
 
 type Props = {
@@ -9,7 +10,9 @@ type Props = {
 
 const ContactDetails = ({ isExpanded, onContinue, className }: Props) => {
 	return (
-		<div className={`swdc-pr-20 bg-[#fff] swdc-py-10 swdc-pl-10 ${className}`}>
+		<div
+			className={`swdc-bg-[#fff] swdc-py-4 swdc-pl-6 swdc-pr-6 swdc-drop-shadow-md ${className}`}
+		>
 			<SectionTitle title="Contact Details" />
 			{isExpanded && (
 				<>
