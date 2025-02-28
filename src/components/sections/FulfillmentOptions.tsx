@@ -66,7 +66,7 @@ const FulfillmentOptions = ({
 
 	return (
 		<div
-			className={`swdc-bg-[#fff] swdc-py-4 swdc-pl-6 swdc-pr-6 swdc-drop-shadow-md ${className} swdc-w-full lg:swdc-w-[752px]`}
+			className={`swdc-bg-[#fff] swdc-px-3 swdc-py-4 swdc-drop-shadow-md lg:swdc-pl-6 lg:swdc-pr-6 ${className} swdc-w-full lg:swdc-w-[752px]`}
 		>
 			<SectionTitle
 				title="Fulfillment Options"
