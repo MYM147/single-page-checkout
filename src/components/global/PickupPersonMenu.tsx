@@ -15,14 +15,30 @@ type Props = {
 		email: string;
 		phone: string;
 	}) => void;
+	selectedPerson:
+		| {
+				firstName: string;
+				lastName: string;
+				email: string;
+				phone: string;
+		  }
+		| undefined;
 };
 
-const PickupPersonMenu = ({ onPersonDetailsChange }: Props) => {
-	const [formData, setFormData] = useState({
-		firstName: '',
+const PickupPersonMenu = ({
+	onPersonDetailsChange,
+	selectedPerson = {
+		firstName: 'Myself',
 		lastName: '',
 		email: '',
 		phone: '',
+	},
+}: Props) => {
+	const [formData, setFormData] = useState({
+		firstName: selectedPerson.firstName,
+		lastName: selectedPerson.lastName,
+		email: selectedPerson.email,
+		phone: selectedPerson.phone,
 	});
 
 	const [errors, setErrors] = useState({

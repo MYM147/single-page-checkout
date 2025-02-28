@@ -33,11 +33,13 @@ const PickupOrDeliverySelector = ({
 				onChange={(e) => onSelect(e.target.value)}
 				value={`${value}`}
 				defaultChecked={true}
-				className="swdc-w-[300px] swdc-items-center swdc-rounded-[1px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-rounded-[2px] has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30]"
+				className="swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-1/2 swdc-items-center swdc-rounded-[1px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] lg:swdc-w-[300px]"
 			>
 				<div>
-					<p className="swdc-text-base swdc-font-medium">{title}</p>
-					<p>{text}</p>
+					<p className="swdc-text-sm swdc-font-medium lg:swdc-text-base">
+						{title}
+					</p>
+					<p className="swdc-text-[12px]">{text}</p>
 				</div>
 			</Radio>
 
@@ -48,8 +50,10 @@ const PickupOrDeliverySelector = ({
 				className="swdc-w-[300px] swdc-items-center swdc-rounded-[1px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-rounded-[2px] has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30]"
 			>
 				<div>
-					<p className="swdc-text-base swdc-font-medium">{title2}</p>
-					<p>{text2}</p>
+					<p className="swdc-text-sm swdc-font-medium lg:swdc-text-base">
+						{title2}
+					</p>
+					<p className="swdc-text-[12px]">{text2}</p>
 				</div>
 			</Radio>
 		</div>

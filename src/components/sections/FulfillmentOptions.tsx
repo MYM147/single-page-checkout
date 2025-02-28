@@ -1,5 +1,7 @@
 import { Button } from '@prism/dropcloth';
 import { useState } from 'react';
+import { type Selections } from '../../types';
+
 import FulfillmentSummaryDetails from '../global/FulfillmentSummaryDetails';
 import PickupOrDeliverySelector from '../global/PickupOrDeliverySelector';
 import PickupStore from '../global/PickupStore';
@@ -9,32 +11,34 @@ import SpecialInstructions from '../global/SpecialInstructions';
 // import { saveOrderDetails } from '../utils/orderUtils';
 
 type Props = {
+	className?: string;
 	isExpanded: boolean;
 	onContinue: () => void;
-	className?: string;
+	onEdit: () => void;
+	onSelectionsChange: (selections: Selections) => void;
+	onSelectionChange: (selection: string, details?: any) => void;
+	selections: Selections;
+	pickupDate?: string;
+	pickupDateSelection?: string;
+	pickupPerson?: string;
+	pickupPersonDetails?: {
+		firstName: string;
+		lastName: string;
+		email: string;
+		phone: string;
+	};
 };
 
-const FulfillmentOptions = ({ isExpanded, onContinue, className }: Props) => {
+const FulfillmentOptions = ({
+	className,
+	isExpanded,
+	onContinue,
+	onEdit,
+	onSelectionsChange,
+	selections,
+}: Props) => {
 	const [fulfillmentType, setFulfillmentType] = useState('pickup');
-	const [selections, setSelections] = useState({
-		pickupPerson: '',
-		pickupPersonDetails: {
-			firstName: '',
-			lastName: '',
-			email: '',
-			phone: '',
-		},
-		pickupDate: '',
-		pickupDateSelection: null,
-		storeDetails: {
-			storeCity: 'Cleveland',
-			storeState: 'OH',
-			storeNumber: 721107,
-			storeStreet: '4329 Lorain Ave.',
-			storeZip: '44113-3716',
-		},
-		specialInstructions: '',
-	});
+	const [isSaved, setIsSaved] = useState(false);
 
 	const isFormValid = () => {
 		// Check if someone else is picking up
@@ -62,9 +66,17 @@ const FulfillmentOptions = ({ isExpanded, onContinue, className }: Props) => {
 
 	return (
 		<div
-			className={`swdc-bg-[#fff] swdc-py-4 swdc-pl-6 swdc-pr-6 swdc-drop-shadow-md ${className} lg:swdc-w-[752px]`}
+			className={`swdc-bg-[#fff] swdc-py-4 swdc-pl-6 swdc-pr-6 swdc-drop-shadow-md ${className} swdc-w-full lg:swdc-w-[752px]`}
 		>
-			<SectionTitle title="Fulfillment Options" />
+			<SectionTitle
+				title="Fulfillment Options"
+				showEdit={isSaved}
+				onEdit={() => {
+					setIsSaved(false);
+					onEdit();
+				}}
+			/>
+
 			{isExpanded && (
 				<>
 					<PickupOrDeliverySelector
@@ -101,12 +113,14 @@ const FulfillmentOptions = ({ isExpanded, onContinue, className }: Props) => {
 								text="Who's picking up this order?"
 								value="self-pickup"
 								value2="someone-else"
+								pickupPerson={selections.pickupPerson}
+								pickupPersonDetails={selections.pickupPersonDetails}
 								onSelectionChange={(selection, details) => {
-									setSelections((prev) => ({
-										...prev,
+									onSelectionsChange({
+										...selections,
 										pickupPerson: selection,
 										pickupPersonDetails: details,
-									}));
+									});
 								}}
 							/>
 							<RadioBtnChoice
@@ -117,23 +131,112 @@ const FulfillmentOptions = ({ isExpanded, onContinue, className }: Props) => {
 								title="Pickup Date *"
 								value="as-soon-as-possible"
 								value2="on-a-specific-day"
+								pickupDate={selections.pickupDate}
+								pickupDateSelection={selections.pickupDateSelection}
 								onSelectionChange={(selection, details) => {
-									setSelections((prev) => ({
-										...prev,
+									onSelectionsChange({
+										...selections,
 										pickupDate: selection,
 										pickupDateSelection: details,
-									}));
+									});
 								}}
 							/>
 							<SpecialInstructions
 								label=""
 								maxLength={100}
+								onChange={(value) => {
+									onSelectionsChange({
+										...selections,
+										specialInstructions: value,
+									});
+								}}
 								text="If you have any special instructions for the store or delivery driver,
 									add them here."
 								title="Special Instructions (Optional)"
+								value={selections.specialInstructions}
 							/>
 							<Button
-								onClick={onContinue}
+								onClick={() => {
+									setIsSaved(true);
+									onContinue();
+								}}
+								className="swdc-mt-6"
+								disabled={!isFormValid()}
+							>
+								Save and Continue
+							</Button>
+						</>
+					)}
+					{fulfillmentType === 'delivery' && (
+						<>
+							<div className="swdc-mt-6">
+								<p className="swdc-text-sm"> * Required</p>
+							</div>
+							<PickupStore
+								storeCity="Cleveland"
+								storeState="OH"
+								storeNumber={721107}
+								storeStreet="4329 Lorain Ave."
+								storeZip="44113-3716"
+								storePhone="(216) 7412-6800"
+								storeIsOpen={false}
+							/>
+							<RadioBtnChoice
+								name="pickup-person"
+								name2="pickup-person"
+								option="Self Pickup"
+								option2="Someone else"
+								title="Pickup Person *"
+								text="Who's picking up this order?"
+								value="self-pickup"
+								value2="someone-else"
+								pickupPerson={selections.pickupPerson}
+								pickupPersonDetails={selections.pickupPersonDetails}
+								onSelectionChange={(selection, details) => {
+									onSelectionsChange({
+										...selections,
+										pickupPerson: selection,
+										pickupPersonDetails: details,
+									});
+								}}
+							/>
+							<RadioBtnChoice
+								name="pickup-date"
+								name2="pickup-date"
+								option="As soon as possible"
+								option2="On a specific day"
+								title="Pickup Date *"
+								value="as-soon-as-possible"
+								value2="on-a-specific-day"
+								pickupDate={selections.pickupDate}
+								pickupDateSelection={selections.pickupDateSelection}
+								onSelectionChange={(selection, details) => {
+									onSelectionsChange({
+										...selections,
+										pickupDate: selection,
+										pickupDateSelection: details,
+									});
+								}}
+							/>
+							<SpecialInstructions
+								label=""
+								maxLength={100}
+								onChange={(value) => {
+									onSelectionsChange({
+										...selections,
+										specialInstructions: value,
+									});
+								}}
+								text="If you have any special instructions for the store or delivery driver,
+									add them here."
+								title="Special Instructions (Optional)"
+								value={selections.specialInstructions}
+							/>
+							<Button
+								onClick={() => {
+									setIsSaved(true);
+									onContinue();
+								}}
 								className="swdc-mt-6"
 								disabled={!isFormValid()}
 							>

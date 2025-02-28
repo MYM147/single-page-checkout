@@ -12,7 +12,7 @@ const PaymentMethod = ({ isExpanded, onContinue, className }: Props) => {
 		<div
 			className={`swdc-bg-[#fff] swdc-py-4 swdc-pl-6 swdc-pr-6 swdc-drop-shadow-md ${className}`}
 		>
-			<SectionTitle title="Payment Method" />
+			{/* <SectionTitle title="Payment Method" /> */}
 			{isExpanded && (
 				<>
 					<Button onClick={onContinue} className="swdc-mt-6">
