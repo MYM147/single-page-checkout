@@ -26,6 +26,20 @@ const CheckoutProcessList = () => {
 			storeZip: '44113-3716',
 		},
 		specialInstructions: '',
+		deliveryAddress: '',
+		deliveryDetails: {
+			firstName: '',
+			lastName: '',
+			email: '',
+			phone: '',
+			address1: '',
+			address2: '',
+			city: '',
+			state: '',
+			zip: '',
+		},
+		deliveryDateTime: '',
+		deliveryPhone: '',
 	});
 
 	const handleEdit = (panelIndex: number) => {
@@ -33,7 +47,7 @@ const CheckoutProcessList = () => {
 	};
 
 	return (
-		<div className="swdc-flex swdc-flex-col swdc-gap-4 swdc-w-full">			
+		<div className="swdc-flex swdc-w-full swdc-flex-col swdc-gap-4">
 			<FulfillmentOptions
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${expandedPanel === 0 ? 'swdc-h-auto swdc-opacity-100' : ''} `}
 				isExpanded={expandedPanel === 0}
@@ -41,9 +55,6 @@ const CheckoutProcessList = () => {
 				onEdit={() => handleEdit(0)}
 				onSelectionsChange={setSelections}
 				selections={selections}
-				onSelectionChange={function (selection: string, details?: any): void {
-					throw new Error('Function not implemented.');
-				}}
 			/>
 
 			<ContactDetails
@@ -77,5 +88,7 @@ const CheckoutProcessList = () => {
 			/>
 		</div>
 	);
+
 };
+
 export default CheckoutProcessList;

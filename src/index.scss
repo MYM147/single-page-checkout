@@ -22,6 +22,51 @@ $swdc-path-iconfont: '../node_modules/@prism/dropcloth/src/resources/iconfont/';
   background-color: var(--swdc-color-surface-diy-1);
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 #root {
   width: 100%;
+}
+
+.swdc-overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
+.has-large-radio .swdc-radio {
+  width: 35px !important;
+  height: 35px !important;
+
+  &::before {
+    width: 35px !important;
+    height: 35px !important;
+  }
+
+  &::after {
+    width: 25px !important;
+    height: 25px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .has-large-radio .swdc-radio {
+
+    &::before {
+      width: 20px !important;
+      height: 20px !important;
+    }
+
+    &::after {
+      width: 14px !important;
+      height: 14px !important;
+    }
+  }
 }

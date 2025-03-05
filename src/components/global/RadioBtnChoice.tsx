@@ -1,7 +1,7 @@
 import { Radio } from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
 import { weekDates } from '../utils/dateUtils';
-import PickupDateMenu from './PickupDateMenu';
+import PickupDateMenu from './DateSelectMenu';
 import PickupPersonMenu from './PickupPersonMenu';
 
 type Props = {
@@ -46,13 +46,17 @@ const RadioBtnChoice = ({
 
 	useEffect(() => {
 		if (name2 === 'pickup-date' && selectedOption === 'as-soon-as-possible') {
-			onSelectionChange(selectedOption, weekDates[0]);
+			onSelectionChange(
+				selectedOption,
+				weekDates[0].toLocaleDateString('en-US')
+			);
 		}
-	}, [selectedOption, name2, onSelectionChange, weekDates]);
+	}, [selectedOption, name2]);
 
 	return (
 		<div className="swdc-mt-6">
-			<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">{title}</h3>			{text && <p className="swdc-mt-2">{text}</p>}
+			<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">{title}</h3>
+			{text && <p className="swdc-mt-2">{text}</p>}
 			<div className="swdc-pt-2">
 				<Radio
 					className="hover:swdc-bg-[#fff]"

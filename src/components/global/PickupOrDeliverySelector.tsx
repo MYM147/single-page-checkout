@@ -1,5 +1,4 @@
 import { Radio } from '@prism/dropcloth';
-import { useState } from 'react';
 
 type Props = {
 	name?: string;
@@ -24,22 +23,20 @@ const PickupOrDeliverySelector = ({
 	value2,
 	onSelect,
 }: Props) => {
-	const [selectedOption, setSelectedOption] = useState('pickup');
-
 	return (
-		<div className="swdc-mt-12 swdc-flex swdc-flex-shrink-0 swdc-gap-4">
+		<div className="has-large-radio swdc-flex swdc-flex-shrink-0 swdc-gap-4">
 			<Radio
 				name={`${name}`}
 				onChange={(e) => onSelect(e.target.value)}
 				value={`${value}`}
 				defaultChecked={true}
-				className="swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-1/2 swdc-items-center swdc-rounded-[1px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] lg:swdc-w-[300px]"
+				className="swdc-has-[input:checked]:swdc-rounded-[2px] swdc-block swdc-w-1/2 swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex lg:swdc-w-[300px] lg:swdc-border-[#2F2F30]/[0.45] lg:swdc-p-1"
 			>
-				<div>
-					<p className="swdc-text-sm swdc-font-medium lg:swdc-text-base">
+				<div className="swdc-pt-1 md:swdc-p-0">
+					<p className="swdc-text-lg swdc-font-medium lg:swdc-text-base">
 						{title}
 					</p>
-					<p className="swdc-text-[12px]">{text}</p>
+					<p className="swdc-leading-tight lg:swdc-text-[12px]">{text}</p>
 				</div>
 			</Radio>
 
@@ -47,13 +44,13 @@ const PickupOrDeliverySelector = ({
 				name={`${name2}`}
 				onChange={(e) => onSelect(e.target.value)}
 				value={`${value2}`}
-				className="swdc-w-[300px] swdc-items-center swdc-rounded-[1px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-rounded-[2px] has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30]"
+				className="swdc-has-[input:checked]:swdc-rounded-[2px] swdc-block swdc-w-1/2 swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex lg:swdc-w-[300px] lg:swdc-border-[#2F2F30]/[0.45] lg:swdc-p-1"
 			>
-				<div>
-					<p className="swdc-text-sm swdc-font-medium lg:swdc-text-base">
+				<div className="swdc-pt-1 md:swdc-p-0">
+					<p className="swdc-text-lg swdc-font-medium lg:swdc-text-base">
 						{title2}
 					</p>
-					<p className="swdc-text-[12px]">{text2}</p>
+					<p className="swdc-leading-tight lg:swdc-text-[12px]">{text2}</p>
 				</div>
 			</Radio>
 		</div>

@@ -1,6 +1,6 @@
 import { Button } from '@prism/dropcloth';
-import OrderSummaryDetails from '../global/FulfillmentSummaryDetails';
 import SectionTitle from '../global/SectionTitle';
+import OrderSummaryDetails from './subsections/OrderSummaryDetails';
 // import { saveOrderDetails } from '../utils/orderUtils';
 
 type Props = {
