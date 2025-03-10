@@ -101,7 +101,7 @@ const PickupPersonMenu = ({
 	};
 
 	return (
-		<div className="swdc-mt-2 swdc-grid swdc-gap-2 lg:swdc-grid-cols-2">
+		<div className="swdc-mt-2 swdc-grid swdc-gap-2 md:swdc-grid-cols-2">
 			<div>
 				First Name *
 				<br />
@@ -117,7 +117,7 @@ const PickupPersonMenu = ({
 					<span className="swdc-text-sm">Please enter letters only</span>
 				)}
 			</div>
-			<div className="swdc-mt-2 lg:swdc-mt-0">
+			<div className="swdc-mt-2 md:swdc-mt-0">
 				Last Name *
 				<br />
 				<Input
@@ -132,7 +132,7 @@ const PickupPersonMenu = ({
 					<span className="swdc-text-sm">Please enter letters only</span>
 				)}
 			</div>
-			<div className="swdc-mt-2 lg:swdc-mt-0">
+			<div className="swdc-mt-2 md:swdc-mt-0">
 				Email Address *
 				<br />
 				<Input
@@ -150,7 +150,7 @@ const PickupPersonMenu = ({
 					</span>
 				)}
 			</div>
-			<div className="swdc-mt-2 lg:swdc-mt-0">
+			<div className="swdc-mt-2 md:swdc-mt-0">
 				Phone Number *
 				<br />
 				<Input

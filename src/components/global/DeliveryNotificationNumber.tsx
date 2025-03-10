@@ -1,11 +1,7 @@
-import {
-	Checkbox,
-	IconRegularInformation,
-	Input,
-	Tooltip,
-} from '@prism/dropcloth';
+import { Checkbox, IconRegularInformation, Input } from '@prism/dropcloth';
 import { useState } from 'react';
 import { type Selections } from '../../types';
+import DetailTooltip from './DetailTooltip';
 
 type Props = {
 	defaultValue: string;
@@ -37,25 +33,18 @@ const DeliveryNotificationNumber = ({ onChange, selections, title }: Props) => {
 
 	return (
 		<>
-			<div className="swdc-mt-6 swdc-flex swdc-items-center">
+			<div className="swdc-mt-6 swdc-items-center md:swdc-flex">
 				<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
 					{title}
 				</h3>
-				<Tooltip
-					offsetValue={5}
-					placement="bottom"
-					polarity="light"
-					tooltip="This is required in case we need t contact you with questions about your delivery"
-				>
-					<IconRegularInformation className="swdc-ml-1 swdc-h-[16px] swdc-w-[16px]" />
-				</Tooltip>
+				<DetailTooltip text="This is required in case we need to contact you with questions about your delivery." />
 			</div>
 			<p className="swdc-my-1">Phone number*</p>
 			<Input
 				value={phone}
 				onChange={handlePhoneChange}
 				error={error}
-				className="swdc-w-full lg:swdc-w-[300px]"
+				className="swdc-w-full md:swdc-w-[300px]"
 			/>
 			{error && (
 				<span className="swdc-text-sm swdc-text-[#93324C]">

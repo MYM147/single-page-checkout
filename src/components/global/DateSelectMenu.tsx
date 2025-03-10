@@ -1,7 +1,8 @@
-import { IconFillAlarm, Tooltip } from '@prism/dropcloth';
+import { IconFillAlarm } from '@prism/dropcloth';
 import { useState } from 'react';
 import { Selections } from '../../types';
 import { getDates } from '../utils/dateUtils';
+import DetailTooltip from './DetailTooltip';
 import PickupOrDeliverySelector from './PickupOrDeliverySelector';
 
 type Props = {
@@ -34,7 +35,7 @@ const DateSelectMenu = ({
 		<>
 			{title && (
 				<>
-					<h3 className="swdc-mt-6 swdc-text-base swdc-font-bold swdc-uppercase">
+					<h3 className="swdc-mt-6 swdc-text-base swdc-font-bold swdc-uppercase swdc-tracking-[1.5px]">
 						{title}
 					</h3>
 					<p className="swdc-mt-1">
@@ -45,7 +46,7 @@ const DateSelectMenu = ({
 				</>
 			)}
 
-			<div className="date-scroll swdc-mt-2 swdc-flex swdc-w-[320px] swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-[13px] swdc-overflow-x-auto lg:swdc-w-full">
+			<div className="date-scroll swdc-mt-2 swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-[13px] swdc-overflow-x-auto">
 				{weekDates.map((date, index) => (
 					<div
 						key={index}
@@ -59,7 +60,7 @@ const DateSelectMenu = ({
 									: date.toLocaleDateString('en-US', { weekday: 'long' })}
 						</span>
 						<div
-							className={`swdc-flex swdc-h-[68px] swdc-w-[80px] swdc-flex-col swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] ${
+							className={`swdc-flex swdc-h-[88px] swdc-w-[100px] swdc-flex-col swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] md:swdc-h-[68px] md:swdc-w-[80px] ${
 								disabled
 									? 'swdc-cursor-not-allowed swdc-opacity-50'
 									: selectedDateState ===
@@ -142,14 +143,8 @@ const DateSelectMenu = ({
 			) : (
 				<>
 					<p className="swdc-mt-2">Two hours after store opens.</p>
-					<Tooltip
-						offsetValue={5}
-						placement="bottom-start"
-						polarity="light"
-						tooltip="No available times."
-					>
-						<span className="swdc-font-medium">View store hours</span>
-					</Tooltip>
+					<DetailTooltip text="This is required in case we need to contact you with questions about your delivery." />
+					<span className="swdc-font-medium">View store hours</span>
 				</>
 			)}
 		</>

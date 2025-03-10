@@ -107,7 +107,7 @@ const DeliveryFulfillment = ({
 				selections={selections}
 				selectedDate={selections.deliveryDate}
 				selectedTimeSlot={selections.deliveryTimeSlot}
-				title="Delivery Date"
+				title="Delivery Date &amp; Time"
 			/>
 
 			<DeliveryNotificationNumber

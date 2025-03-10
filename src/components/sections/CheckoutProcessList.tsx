@@ -50,7 +50,7 @@ const CheckoutProcessList = () => {
 	};
 
 	return (
-		<div className="swdc-flex swdc-w-full swdc-flex-col swdc-gap-4">
+		<div className="swdc-flex swdc-w-full swdc-max-w-[752px] swdc-flex-col swdc-gap-4">
 			<FulfillmentOptions
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${expandedPanel === 0 ? 'swdc-h-auto swdc-opacity-100' : ''} `}
 				isExpanded={expandedPanel === 0}

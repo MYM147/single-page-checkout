@@ -22,6 +22,10 @@ $swdc-path-iconfont: '../node_modules/@prism/dropcloth/src/resources/iconfont/';
   background-color: var(--swdc-color-surface-diy-1);
 }
 
+h3 {
+  letter-spacing: 1.5px;
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
