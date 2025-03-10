@@ -16,7 +16,8 @@ interface Props {
 	pickupDateTime: string | Date | null;
 	pickupPhone: string;
 	deliveryAddress: string;
-	deliveryDateTime: string;
+	deliveryDate: string;
+	deliveryTime: string;
 	deliveryPhone: string;
 	specialInstructions: string;
 	pickupPerson: string;
@@ -33,8 +34,8 @@ const OrderSummaryDetails = ({
 	pickupPerson,
 	pickupPersonDetails,
 	pickupDateTime,
-	pickupPhone,
-	deliveryDateTime,
+	deliveryDate,
+	deliveryTime,
 	deliveryAddress,
 	deliveryPhone,
 	specialInstructions,
@@ -97,26 +98,34 @@ const OrderSummaryDetails = ({
 				<>
 					<div className="swdc-flex">
 						<IconRegularMapPin />
-						<div>
+						<div className="swdc-ml-1">
 							<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
 								Delivery Address
 							</h3>
 							<p>{deliveryAddress}</p>
 						</div>
 					</div>
-					<div className="swdc-flex">
+					<div className="swdc-mt-3 swdc-flex">
 						<IconRegularTruck />
-						<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
-							Delivery Date &amp; Time
-						</h3>
-						<p className="swdc-mt-1">{deliveryDateTime}</p>
+						<div className="swdc-ml-1">
+							<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
+								Delivery Date & Time
+							</h3>
+							<p>
+								{deliveryDate}
+								<br />
+								{deliveryTime}
+							</p>
+						</div>
 					</div>
-					<div className="swdc-flex">
+					<div className="swdc-mt-3 swdc-flex">
 						<IconRegularSmartphone />
-						<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
-							Delivery Phone
-						</h3>
-						<p className="swdc-mt-1">{deliveryPhone}</p>
+						<div className="swdc-ml-1">
+							<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
+								Delivery Phone
+							</h3>
+							<p>{deliveryPhone}</p>
+						</div>
 					</div>
 				</>
 			)}

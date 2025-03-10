@@ -1,19 +1,33 @@
-import { Tooltip } from '@prism/dropcloth';
+import { IconFillAlarm, Tooltip } from '@prism/dropcloth';
 import { useState } from 'react';
+import { Selections } from '../../types';
 import { getDates } from '../utils/dateUtils';
 import PickupOrDeliverySelector from './PickupOrDeliverySelector';
 
 type Props = {
+	disabled?: boolean;
 	onDateSelect: (date: string) => void;
+	onSelectionsChange: (selections: Selections) => void;
+	rush?: boolean;
 	selectedDate: string | null;
+	selectedTimeSlot: string;
+	selections: Selections;
 	title?: string;
 };
 
 const weekDates = getDates();
 
-const DateSelectMenu = ({ onDateSelect, selectedDate, title }: Props) => {
+const DateSelectMenu = ({
+	disabled = false,
+	onDateSelect,
+	onSelectionsChange,
+	rush,
+	selectedDate,
+	selections,
+	title,
+}: Props) => {
 	const [selectedDateState, setSelectedDateState] = useState<string | null>(
-		selectedDate || null
+		selectedDate
 	);
 
 	return (
@@ -31,7 +45,7 @@ const DateSelectMenu = ({ onDateSelect, selectedDate, title }: Props) => {
 				</>
 			)}
 
-			<div className="date-scroll swdc-mt-2 swdc-flex swdc-w-[320px] swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-1 swdc-overflow-x-auto lg:swdc-w-full">
+			<div className="date-scroll swdc-mt-2 swdc-flex swdc-w-[320px] swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-[13px] swdc-overflow-x-auto lg:swdc-w-full">
 				{weekDates.map((date, index) => (
 					<div
 						key={index}
@@ -45,25 +59,31 @@ const DateSelectMenu = ({ onDateSelect, selectedDate, title }: Props) => {
 									: date.toLocaleDateString('en-US', { weekday: 'long' })}
 						</span>
 						<div
-							className={`swdc-flex swdc-h-[68px] swdc-w-[80px] swdc-cursor-pointer swdc-flex-col swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] ${
-								selectedDateState ===
-								date.toLocaleDateString('en-US', {
-									weekday: 'long',
-									month: 'short',
-									day: 'numeric',
-								})
-									? 'swdc-bg-[#2F2F30] swdc-text-[#fff]'
-									: 'swdc-bg-white hover:swdc-bg-[#2F2F30] hover:swdc-text-[#fff]'
+							className={`swdc-flex swdc-h-[68px] swdc-w-[80px] swdc-flex-col swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] ${
+								disabled
+									? 'swdc-cursor-not-allowed swdc-opacity-50'
+									: selectedDateState ===
+										  date.toLocaleDateString('en-US', {
+												weekday: 'long',
+												month: 'short',
+												day: 'numeric',
+										  })
+										? 'swdc-bg-[#2F2F30] swdc-text-[#fff]'
+										: 'swdc-cursor-pointer swdc-bg-white hover:swdc-bg-[#2F2F30] hover:swdc-text-[#fff]'
 							}`}
-							onClick={() => {
-								const formattedDate = date.toLocaleDateString('en-US', {
-									weekday: 'long',
-									month: 'short',
-									day: 'numeric',
-								});
-								setSelectedDateState(formattedDate);
-								onDateSelect(formattedDate);
-							}}
+							onClick={
+								!disabled
+									? () => {
+											const formattedDate = date.toLocaleDateString('en-US', {
+												weekday: 'long',
+												month: 'short',
+												day: 'numeric',
+											});
+											setSelectedDateState(formattedDate);
+											onDateSelect(formattedDate);
+										}
+									: undefined
+							}
 						>
 							<span className="swdc-text-sm swdc-font-medium">
 								{date.toLocaleDateString('en-US', {
@@ -71,23 +91,53 @@ const DateSelectMenu = ({ onDateSelect, selectedDate, title }: Props) => {
 									day: 'numeric',
 								})}
 							</span>
+							{index === 0 && rush && (
+								<div className="swdc-flex swdc-items-center swdc-text-center">
+									<IconFillAlarm className="swdc-mr-[2px] swdc-h-2 swdc-w-2 swdc-fill-[#eec46f]" />
+									<span className="swdc-text-xs swdc-uppercase">RUSH</span>
+								</div>
+							)}
 						</div>
 					</div>
 				))}
 			</div>
+
 			{title ? (
 				<>
-					<PickupOrDeliverySelector
-						name="delivery"
-						name2="delivery"
-						text="8AM - NOON"
-						text2="NOON - 5PM"
-						title="Morning"
-						title2="Afternoon"
-						value="standard"
-						value2="rush"
-						onSelect={(selection) => onDateSelect(selection)}
-					/>
+					<p className="swdc-mt-2">Time*</p>
+					{disabled ? (
+						<div className="opacity-50 swdc-mt-2 swdc-flex swdc-h-[68px] swdc-w-full swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-opacity-50">
+							<p>Please fill out delivery address to continue</p>
+						</div>
+					) : selectedDateState ? (
+						<>
+							<PickupOrDeliverySelector
+								name="delivery-time"
+								name2="delivery-time"
+								text="8AM - NOON"
+								text2="NOON - 5PM"
+								title="Morning"
+								title2="Afternoon"
+								value="morning"
+								value2="afternoon"
+								defaultValue={selections.deliveryTimeSlot}
+								onSelect={(timeSlot) => {
+									const timeDisplay =
+										timeSlot === 'morning' ? '8AM - NOON' : 'NOON - 5PM';
+									console.log('Time selected:', timeSlot, timeDisplay);
+									onSelectionsChange({
+										...selections,
+										deliveryTimeSlot: timeSlot,
+										deliveryTime: timeDisplay,
+									});
+								}}
+							/>
+						</>
+					) : (
+						<div className="swdc-mt-2 swdc-flex swdc-h-[68px] swdc-w-full swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-opacity-50">
+							<p>Please select a date to find available timeslots</p>
+						</div>
+					)}
 				</>
 			) : (
 				<>

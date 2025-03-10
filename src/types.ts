@@ -1,5 +1,6 @@
 export interface Selections {
 	// Shared properties
+	fulfillmentType: string;
 	specialInstructions: string;
 
 	// Pickup properties
@@ -22,7 +23,8 @@ export interface Selections {
 
 	// Delivery properties
 	deliveryAddress: string;
-	deliveryDateTime: string;
+	deliveryDate: string;
+	deliveryTime: string;
 	deliveryPhone: string;
 	deliveryDetails: {
 		firstName: string;

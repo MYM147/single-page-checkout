@@ -1,21 +1,34 @@
 import { Input, Select } from '@prism/dropcloth';
 import { useState } from 'react';
+import { type Selections } from '../../types';
 import { states } from '../utils/statesUtils';
+
+type Props = {
+	defaultValues: {
+		address1: string;
+		address2: string;
+		city: string;
+		state: string;
+		zip: string;
+	};
+	selections: Selections;
+	onChange: (value: any) => void;
+};
 
 const addressRegex = /^[a-zA-Z0-9\s,.-]+$/;
 const cityRegex = /^[a-zA-Z\s.-]+$/;
 const zipRegex = /^\d{5}$/;
 
-const DeliveryAddress = () => {
+const DeliveryAddress = ({ onChange, selections }: Props) => {
 	const [formData, setFormData] = useState({
-		address1: '',
-		address2: '',
-		city: '',
-		state: '',
-		zip: '',
+		address1: selections.deliveryDetails?.address1 || '',
+		address2: selections.deliveryDetails?.address2 || '',
+		city: selections.deliveryDetails?.city || '',
+		state: selections.deliveryDetails?.state || '',
+		zip: selections.deliveryDetails?.zip || '',
 	});
 
-	const [errors, setErrors] = useState({
+	const [errors] = useState({
 		address1: false,
 		address2: false,
 		city: false,
@@ -42,18 +55,9 @@ const DeliveryAddress = () => {
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-
-		if (name === 'zip') {
-			const numbersOnly = value.slice(0, 5);
-			setFormData((prev) => ({ ...prev, [name]: numbersOnly }));
-			const isValid = validateField(name, numbersOnly);
-			setErrors((prev) => ({ ...prev, [name]: !isValid }));
-			return;
-		}
-
-		setFormData((prev) => ({ ...prev, [name]: value }));
-		const isValid = validateField(name, value);
-		setErrors((prev) => ({ ...prev, [name]: !isValid }));
+		const newFormData = { ...formData, [name]: value };
+		setFormData(newFormData);
+		onChange(newFormData);
 	};
 
 	return (
@@ -98,14 +102,23 @@ const DeliveryAddress = () => {
 					/>
 					{errors.city && (
 						<span className="swdc-text-sm swdc-text-[#93324C]">
-							Please enter a valid US city
+							Please enter a US city
 						</span>
 					)}
 				</div>
 
 				<div>
 					<p className="swdc-pb-1">State/Territory*</p>
-					<Select className="swdc-w-full lg:swdc-w-[180px]">
+					<Select
+						className="swdc-w-full lg:swdc-w-[180px]"
+						name="state"
+						onChange={(e) => {
+							const newFormData = { ...formData, state: e.target.value };
+							setFormData(newFormData);
+							onChange(newFormData);
+						}}
+						value={formData.state}
+					>
 						{states.map((state) => (
 							<option key={state.value} value={state.value}>
 								{state.label}
@@ -118,8 +131,9 @@ const DeliveryAddress = () => {
 					<p className="swdc-pb-1">Zip Code*</p>
 					<Input
 						name="zip"
-						type="number"
+						type="text"
 						maxLength={5}
+						pattern="\d{5}"
 						onChange={handleInputChange}
 						value={formData.zip}
 						error={errors.zip}
@@ -127,7 +141,7 @@ const DeliveryAddress = () => {
 					/>
 					{errors.zip && (
 						<span className="swdc-text-sm swdc-text-[#93324C]">
-							Enter 5-digit ZIP code
+							Enter 5 digits
 						</span>
 					)}
 				</div>

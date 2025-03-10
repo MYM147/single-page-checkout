@@ -32,7 +32,11 @@ const FulfillmentOptions = ({
 	onSelectionsChange,
 	selections,
 }: Props) => {
-	const [fulfillmentType, setFulfillmentType] = useState('pickup');
+	const [fulfillmentType, setFulfillmentType] = useState(() => {
+		if (selections.deliveryDetails?.address1) return 'delivery';
+		if (selections.pickupPerson) return 'pickup';
+		return 'pickup';
+	});
 	const [isSaved, setIsSaved] = useState(false);
 
 	return (
@@ -60,6 +64,7 @@ const FulfillmentOptions = ({
 						value="pickup"
 						value2="delivery"
 						onSelect={setFulfillmentType}
+						defaultValue={fulfillmentType}
 					/>
 					{fulfillmentType === 'pickup' ? (
 						<PickupFulfillment
@@ -86,9 +91,14 @@ const FulfillmentOptions = ({
 					pickupPerson={selections.pickupPerson}
 					pickupPersonDetails={selections.pickupPersonDetails}
 					pickupPhone={selections.pickupPersonDetails?.phone}
-					deliveryAddress={selections.deliveryAddress}
-					deliveryDateTime={selections.deliveryDateTime}
-					deliveryPhone={selections.deliveryDetails?.phone}
+					deliveryAddress={`${selections.deliveryDetails.address1}${selections.deliveryDetails.address2 ? `, ${selections.deliveryDetails.address2}` : ''}, ${selections.deliveryDetails.city}, ${selections.deliveryDetails.state} ${selections.deliveryDetails.zip}`}
+					deliveryDate={selections.deliveryDate}
+					deliveryTime={
+						selections.deliveryTimeSlot === 'morning'
+							? '8AM - NOON'
+							: 'NOON - 5PM'
+					}
+					deliveryPhone={selections.deliveryDetails.phone}
 					specialInstructions={selections.specialInstructions}
 				/>
 			)}

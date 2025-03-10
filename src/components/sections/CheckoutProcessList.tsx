@@ -9,6 +9,7 @@ const CheckoutProcessList = () => {
 	const [expandedPanel, setExpandedPanel] = useState(0);
 
 	const [selections, setSelections] = useState<Selections>({
+		fulfillmentType: '',
 		pickupPerson: '',
 		pickupPersonDetails: {
 			firstName: '',
@@ -38,7 +39,9 @@ const CheckoutProcessList = () => {
 			state: '',
 			zip: '',
 		},
-		deliveryDateTime: '',
+		deliveryDate: '',
+		deliveryTime: '',
+		deliveryTimeSlot: '',
 		deliveryPhone: '',
 	});
 
@@ -88,7 +91,5 @@ const CheckoutProcessList = () => {
 			/>
 		</div>
 	);
-
 };
-
 export default CheckoutProcessList;
