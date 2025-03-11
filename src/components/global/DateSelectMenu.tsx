@@ -18,7 +18,7 @@ type Props = {
 
 const weekDates = getDates();
 
-const DateSelectMenu = ({
+export const DateSelectMenu = ({
 	disabled = false,
 	onDateSelect,
 	onSelectionsChange,
@@ -150,4 +150,5 @@ const DateSelectMenu = ({
 		</>
 	);
 };
+
 export default DateSelectMenu;
