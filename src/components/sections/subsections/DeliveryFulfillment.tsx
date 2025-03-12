@@ -28,6 +28,8 @@ const DeliveryFulfillment = ({
 		phone: selections.deliveryDetails?.phone || '',
 	});
 
+	const [, setLoading] = useState(false); // Loading state
+
 	const handleAddressChange = (addressData: any) => {
 		onSelectionsChange({
 			...selections,
@@ -36,6 +38,23 @@ const DeliveryFulfillment = ({
 				...addressData,
 			},
 		});
+
+		// Check if the address is valid
+		if (isAddressValid()) {
+			setLoading(true); // Start loading
+			setTimeout(() => {
+				setLoading(false); // Stop loading after a delay (simulate loading)
+			}, 10000); // Simulate a 1 second loading time
+		}
+	};
+
+	const isAddressValid = () => {
+		return (
+			selections.deliveryDetails?.address1 &&
+			selections.deliveryDetails?.city &&
+			selections.deliveryDetails?.state &&
+			selections.deliveryDetails?.zip
+		);
 	};
 
 	const handlePhoneChange = (phone: string) => {
@@ -61,16 +80,15 @@ const DeliveryFulfillment = ({
 		const dateValid = selections.deliveryDate;
 		const timeValid = selections.deliveryTimeSlot;
 
-		return addressValid && phoneValid && dateValid && timeValid;
-	};
+		console.log({
+			addressValid,
+			phoneValid,
+			dateValid,
+			timeValid,
+			timeSlot: selections.deliveryTimeSlot,
+		});
 
-	const isAddressValid = () => {
-		return (
-			selections.deliveryDetails?.address1 &&
-			selections.deliveryDetails?.city &&
-			selections.deliveryDetails?.state &&
-			selections.deliveryDetails?.zip
-		);
+		return addressValid && phoneValid && dateValid && timeValid;
 	};
 
 	return (
@@ -85,30 +103,25 @@ const DeliveryFulfillment = ({
 				defaultValues={formData}
 			/>
 
-			<DateSelectMenu
-				disabled={!isAddressValid()}
-				onDateSelect={(date) => {
-					onSelectionsChange({
-						...selections,
-						deliveryDate: date,
-					});
-				}}
-				onSelectionsChange={(newSelections) => {
-					onSelectionsChange({
-						...selections,
-						deliveryTimeSlot: newSelections.deliveryTimeSlot,
-						deliveryTime:
-							newSelections.deliveryTimeSlot === 'morning'
-								? '8AM - NOON'
-								: 'NOON - 5PM',
-					});
-				}}
-				rush={true}
-				selections={selections}
-				selectedDate={selections.deliveryDate}
-				selectedTimeSlot={selections.deliveryTimeSlot}
-				title="Delivery Date &amp; Time"
-			/>
+			<div className="swdc-relative">
+				<DateSelectMenu
+					disabled={!isAddressValid()}
+					onDateSelect={(date) => {
+						onSelectionsChange({
+							...selections,
+							deliveryDate: date,
+							deliveryTimeSlot: 'rush', // Set this to indicate rush delivery
+							deliveryTime: '8AM - 11AM', // Set the time display for rush delivery
+						});
+					}}
+					onSelectionsChange={onSelectionsChange}
+					rush={true}
+					selections={selections}
+					selectedDate={selections.deliveryDate}
+					selectedTimeSlot={selections.deliveryTimeSlot}
+					title="Delivery Date"
+				/>
+			</div>
 
 			<DeliveryNotificationNumber
 				defaultValue={selections.deliveryDetails?.phone}
@@ -134,14 +147,6 @@ const DeliveryFulfillment = ({
 			<Button
 				onClick={() => {
 					setIsSaved(true);
-					const timeDisplay =
-						selections.deliveryTimeSlot === 'morning'
-							? '8AM - NOON'
-							: 'NOON - 5PM';
-					onSelectionsChange({
-						...selections,
-						deliveryTime: timeDisplay,
-					});
 					onContinue();
 				}}
 				className="swdc-mt-6"
@@ -152,4 +157,5 @@ const DeliveryFulfillment = ({
 		</>
 	);
 };
+
 export default DeliveryFulfillment;

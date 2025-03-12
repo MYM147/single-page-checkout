@@ -1,4 +1,4 @@
-import { Checkbox, IconRegularInformation, Input } from '@prism/dropcloth';
+import { Checkbox, Input } from '@prism/dropcloth';
 import { useState } from 'react';
 import { type Selections } from '../../types';
 import DetailTooltip from './DetailTooltip';
@@ -6,7 +6,7 @@ import DetailTooltip from './DetailTooltip';
 type Props = {
 	defaultValue: string;
 	selections: Selections;
-	onChange: (value: any) => void;
+	onChange: (phone: string) => void;
 	title?: string;
 };
 
@@ -47,9 +47,9 @@ const DeliveryNotificationNumber = ({ onChange, selections, title }: Props) => {
 				className="swdc-w-full md:swdc-w-[300px]"
 			/>
 			{error && (
-				<span className="swdc-text-sm swdc-text-[#93324C]">
+				<div className="swdc-mt-1 swdc-text-sm swdc-text-[#93324C]">
 					Please enter a valid phone number
-				</span>
+				</div>
 			)}
 			<div className="swdc-mt-2 swdc-flex">
 				<Checkbox name="sms-alerts" value="enabled">

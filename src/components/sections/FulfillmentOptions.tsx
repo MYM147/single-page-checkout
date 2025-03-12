@@ -93,11 +93,7 @@ const FulfillmentOptions = ({
 					pickupPhone={selections.pickupPersonDetails?.phone}
 					deliveryAddress={`${selections.deliveryDetails.address1}${selections.deliveryDetails.address2 ? `, ${selections.deliveryDetails.address2}` : ''}, ${selections.deliveryDetails.city}, ${selections.deliveryDetails.state} ${selections.deliveryDetails.zip}`}
 					deliveryDate={selections.deliveryDate}
-					deliveryTime={
-						selections.deliveryTimeSlot === 'morning'
-							? '8AM - NOON'
-							: 'NOON - 5PM'
-					}
+					deliveryTime={selections.deliveryTime}
 					deliveryPhone={selections.deliveryDetails.phone}
 					specialInstructions={selections.specialInstructions}
 				/>

@@ -28,7 +28,7 @@ const DeliveryAddress = ({ onChange, selections }: Props) => {
 		zip: selections.deliveryDetails?.zip || '',
 	});
 
-	const [errors] = useState({
+	const [errors, setErrors] = useState({
 		address1: false,
 		address2: false,
 		city: false,
@@ -57,6 +57,14 @@ const DeliveryAddress = ({ onChange, selections }: Props) => {
 		const { name, value } = e.target;
 		const newFormData = { ...formData, [name]: value };
 		setFormData(newFormData);
+
+		// Validate the field
+		const isValid = validateField(name, value);
+		setErrors((prev) => ({
+			...prev,
+			[name]: !isValid,
+		}));
+
 		onChange(newFormData);
 	};
 

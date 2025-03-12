@@ -114,7 +114,7 @@ const OrderSummaryDetails = ({
 							<p>
 								{deliveryDate}
 								<br />
-								{deliveryTime}
+								{deliveryTime === 'rush' ? '8AM - 11AM' : deliveryTime}
 							</p>
 						</div>
 					</div>
