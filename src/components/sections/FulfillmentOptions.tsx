@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { type Selections } from '../../types';
-import PickupOrDeliverySelector from '../global/PickupOrDeliverySelector';
 import SectionTitle from '../global/SectionTitle';
 import DeliveryFulfillment from './subsections/DeliveryFulfillment';
 import OrderSummaryDetails from './subsections/OrderSummaryDetails';
 import PickupFulfillment from './subsections/PickupFulfillment';
+import PickupOrDeliverySelector from './subsections/PickupOrDeliverySelector';
 
 type Props = {
 	className?: string;

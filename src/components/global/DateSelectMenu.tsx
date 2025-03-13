@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { Selections } from '../../types';
 import { getDates } from '../utils/dateUtils';
 import DetailTooltip from './DetailTooltip';
-import PickupOrDeliverySelector from './PickupOrDeliverySelector';
+import TimeSelector from './TimeSelector/TimeSelector';
+import TimeSlot from './TimeSelector/TimeSlot';
 
 type Props = {
 	disabled?: boolean;
@@ -33,7 +34,7 @@ export const DateSelectMenu = ({
 	);
 	const [selectedDateState, setSelectedDateState] = useState<string | null>(
 		selectedDate || selections.deliveryDate
-	); // Use selections.deliveryDate
+	);
 
 	useEffect(() => {
 		setSelectedDateState(selectedDate || selections.deliveryDate); // Update state when selections change
@@ -67,7 +68,7 @@ export const DateSelectMenu = ({
 			)}
 
 			<div
-				className={`date-scroll swdc-mt-2 swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-[13px] swdc-overflow-x-auto ${loading ? 'swdc-opacity-[.15]' : ''}`}
+				className={`date-scroll swdc-mt-2 swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-[25px] swdc-overflow-x-auto ${loading ? 'swdc-opacity-[.15]' : ''}`}
 			>
 				{weekDates.map((date, index) => (
 					<div
@@ -141,9 +142,9 @@ export const DateSelectMenu = ({
 			{loading && (
 				<div className="swdc-absolute swdc-bottom-[20%] swdc-left-[45%] swdc-items-center swdc-justify-center">
 					<img
-						src="/assets/color-wheel.svg"
 						alt="Loading..."
 						height="48px"
+						src="/assets/color-wheel.svg"
 						width="48px"
 					/>
 				</div>
@@ -157,16 +158,23 @@ export const DateSelectMenu = ({
 							<p>Please fill out delivery address to continue</p>
 						</div>
 					) : isRushSelected ? (
-						<PickupOrDeliverySelector
+						<TimeSlot
 							name="rush-delivery"
 							rushDelivery={true}
 							text="Get it by noon"
 							title="RUSH Delivery"
-							defaultValue={
-								selections.deliveryTimeSlot === 'rush' ? 'rush' : undefined
-							} // Ensure this is set correctly
+							value="rush"
+							defaultValue={selections.deliveryTimeSlot}
 							onSelect={(timeSlot) => {
-								const timeDisplay = '8AM - 11AM';
+								const timeDisplay =
+									timeSlot === 'morning'
+										? '8AM - NOON'
+										: timeSlot === 'afternoon'
+											? 'NOON - 5PM'
+											: timeSlot === 'rush'
+												? '8AM - 11AM'
+												: 'Standard Delivery';
+
 								onSelectionsChange({
 									...selections,
 									deliveryTimeSlot: timeSlot,
@@ -175,19 +183,35 @@ export const DateSelectMenu = ({
 							}}
 						/>
 					) : selectedDateState && !isRushSelected ? (
-						<PickupOrDeliverySelector
-							name="delivery-time"
-							name2="delivery-time"
-							text="8AM - NOON"
-							text2="NOON - 5PM"
-							title="Morning"
-							title2="Afternoon"
-							value="morning"
-							value2="afternoon"
-							defaultValue={selections.deliveryTimeSlot} // Ensure this reflects the current selection
+						<TimeSelector
+							timeSlots={[
+								{
+									deliveryIsFree: false,
+									price: 25,
+									text: '8AM - NOON',
+									title: 'Morning',
+									value: 'morning',
+								},
+								{
+									deliveryIsFree: true,
+									price: 25,
+									text: 'NOON - 5PM',
+									title: 'Afternoon',
+									value: 'afternoon',
+								},
+							]}
+							selections={selections}
+							defaultValue={selections.deliveryTimeSlot}
 							onSelect={(timeSlot) => {
 								const timeDisplay =
-									timeSlot === 'morning' ? '8AM - NOON' : 'NOON - 5PM';
+									timeSlot === 'morning'
+										? '8AM - NOON'
+										: timeSlot === 'afternoon'
+											? 'NOON - 5PM'
+											: timeSlot === 'rush'
+												? '8AM - 11AM'
+												: 'Standard Delivery';
+
 								onSelectionsChange({
 									...selections,
 									deliveryTimeSlot: timeSlot,

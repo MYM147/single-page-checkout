@@ -4,7 +4,7 @@ import { Sidebar } from './components/sidebar/Sidebar';
 
 function App() {
 	return (
-		<div className="swdc-bg-[#f6f6f6]">
+		<>
 			<FreeDeliveryBanner />
 			<div className="swdc-px-16 swdc-pb-[120px] lg:swdc-mx-[80px]">
 				<h1 className="swdc-ml-3 swdc-items-center swdc-py-4 swdc-text-4xl swdc-font-medium lg:swdc-ml-0 lg:swdc-text-[32px]">
@@ -15,7 +15,7 @@ function App() {
 					<Sidebar />
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

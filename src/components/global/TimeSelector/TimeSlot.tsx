@@ -1,45 +1,45 @@
 import { IconFillAlarm, Radio } from '@prism/dropcloth';
+import { useState } from 'react';
 
 type Props = {
 	defaultValue?: string;
-	name?: string;
-	name2?: string;
-	rushDelivery?: boolean;
-	text?: string;
-	text2?: string;
-	title: string;
-	title2?: string;
-	value?: string;
-	value2?: string;
+	deliveryIsFree?: boolean;
+	name: string;
 	onSelect: (value: string) => void;
-	disabled?: boolean;
+	price?: number;
+	rushDelivery?: boolean;
+	text: string;
+	time?: string;
+	title: string;
+	value: string;
 };
 
-const PickupOrDeliverySelector = ({
+const TimeSlot = ({
 	defaultValue,
+	deliveryIsFree,
 	name,
-	name2,
+	onSelect,
+	price,
 	rushDelivery,
 	text,
-	text2,
+	time,
 	title,
-	title2,
 	value,
-	value2,
-	onSelect,
 }: Props) => {
+	const [freeDelivery] = useState(deliveryIsFree);
+
 	return (
 		<>
 			{!rushDelivery ? (
 				<div
-					className={`has-large-radio swdc-flex swdc-w-full swdc-flex-shrink-0 swdc-gap-4 md:swdc-mt-0 ${name === 'delivery-time' ? 'swdc-mt-2 swdc-flex-col md:swdc-flex-row' : ''}`}
+					className={`has-large-radio swdc-mt-2 swdc-flex swdc-flex-shrink-0 swdc-gap-4 md:swdc-mt-0`}
 				>
 					<Radio
-						defaultChecked={defaultValue === value}
-						name={`${name}`}
+						checked={defaultValue === value}
+						name={name}
 						onChange={(e) => onSelect(e.target.value)}
 						value={value}
-						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1 ${name === 'pickup' ? 'swdc-block swdc-w-1/2 md:swdc-flex' : 'swdc-flex swdc-w-full'}`}
+						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1`}
 					>
 						<div
 							className={`swdc-w-full swdc-justify-between md:swdc-p-0 ${name === 'pickup' ? 'swdc-w-full swdc-flex-col swdc-pt-1' : 'swdc-flex swdc-items-center'}`}
@@ -54,38 +54,14 @@ const PickupOrDeliverySelector = ({
 									{text}
 								</p>
 							</div>
-							{name === 'delivery-time' && (
+							{!freeDelivery ? (
 								<div className="swdc-flex swdc-h-full swdc-rounded-[2px] swdc-bg-[#edece6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold">
-									$25
+									${price}
 								</div>
-							)}
-						</div>
-					</Radio>
-
-					<Radio
-						defaultChecked={defaultValue === value2}
-						name={`${name2}`}
-						onChange={(e) => onSelect(e.target.value)}
-						value={value2}
-						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1 ${name === 'pickup' ? 'swdc-block swdc-w-full md:swdc-flex' : ''}`}
-					>
-						<div
-							className={`swdc-flex swdc-w-full swdc-justify-between md:swdc-p-0 ${name === 'pickup' ? 'swdc swdc-w-full swdc-flex-col swdc-pt-1' : 'swdc-items-center'}`}
-						>
-							<div>
-								<p className="swdc-text-lg swdc-font-medium md:swdc-text-base">
-									{title2}
-								</p>
-								<p
-									className={`swdc-leading-tight md:swdc-text-[12px] md:swdc-font-normal ${name === 'delivery-time' ? 'swdc-text-sm swdc-font-medium' : ''}`}
-								>
-									{text2}
-								</p>
-							</div>
-							{name === 'delivery-time' && (
+							) : (
 								<div className="swdc-flex">
 									<div className="swdc-rounded-[2px] swdc-bg-[#f8f8f6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold swdc-text-[#b0b0b0] swdc-line-through">
-										$25
+										${price}
 									</div>
 									<div className="swdc-ml-1 swdc-rounded-[2px] swdc-bg-[#dae4df] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold swdc-text-[#466c5b]">
 										FREE
@@ -100,9 +76,8 @@ const PickupOrDeliverySelector = ({
 					className={`has-large-radio swdc-mt-2 swdc-flex swdc-w-full swdc-flex-shrink-0 swdc-gap-4 md:swdc-mt-0 ${name === 'delivery-time' ? 'swdc-mt-2 swdc-flex-col md:swdc-flex-row' : ''}`}
 				>
 					<Radio
-						defaultChecked={defaultValue === value}
+						checked={defaultValue === value}
 						name={`${name}`}
-						checked
 						onChange={(e) => onSelect(e.target.value)}
 						value={value}
 						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1 ${name === 'pickup' ? 'swdc-block swdc-w-1/2 md:swdc-flex' : 'swdc-flex swdc-w-full'}`}
@@ -116,7 +91,7 @@ const PickupOrDeliverySelector = ({
 									{title}
 								</p>
 								<p className="swdc-text-xs swdc-font-medium swdc-uppercase swdc-leading-tight swdc-text-[#6d6d6e] md:swdc-text-[12px] md:swdc-font-normal">
-									{text}
+									Get it by {time}
 								</p>
 							</div>
 							<div className="swdc-flex swdc-h-full swdc-rounded-[2px] swdc-bg-[#edece6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold">
@@ -130,4 +105,4 @@ const PickupOrDeliverySelector = ({
 	);
 };
 
-export default PickupOrDeliverySelector;
+export default TimeSlot;

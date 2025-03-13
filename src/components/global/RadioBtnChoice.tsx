@@ -1,5 +1,6 @@
 import { Radio } from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
+import { type Selections } from '../../types';
 import { weekDates } from '../utils/dateUtils';
 import PickupDateMenu from './DateSelectMenu';
 import PickupPersonMenu from './PickupPersonMenu';
@@ -9,10 +10,10 @@ type Props = {
 	name2: string;
 	option: string;
 	option2: string;
-	text?: string;
-	title: string;
-	value: string;
-	value2: string;
+	onSelectionChange: (selection: string, details?: any) => void;
+	onSelectionsChange: (selections: Selections) => void;
+	pickupDate?: string;
+	pickupDateSelection?: string | null;
 	pickupPerson?: string;
 	pickupPersonDetails?: {
 		firstName: string;
@@ -20,9 +21,11 @@ type Props = {
 		email: string;
 		phone: string;
 	};
-	pickupDate?: string;
-	pickupDateSelection?: string | null;
-	onSelectionChange: (selection: string, details?: any) => void;
+	selections: Selections;
+	text?: string;
+	title: string;
+	value: string;
+	value2: string;
 };
 
 const RadioBtnChoice = ({
@@ -31,14 +34,15 @@ const RadioBtnChoice = ({
 	onSelectionChange,
 	option,
 	option2,
+	pickupDate,
+	pickupDateSelection,
+	pickupPerson,
+	pickupPersonDetails,
+	selections,
 	text,
 	title,
 	value,
 	value2,
-	pickupPerson,
-	pickupPersonDetails,
-	pickupDate,
-	pickupDateSelection,
 }: Props) => {
 	const [selectedOption, setSelectedOption] = useState(
 		pickupPerson || pickupDate || ''
@@ -100,7 +104,12 @@ const RadioBtnChoice = ({
 						onDateSelect={(date) => {
 							onSelectionChange(selectedOption, date);
 						}}
-						selectedDate={pickupDateSelection}
+						selectedDate={pickupDateSelection || null}
+						onSelectionsChange={(newSelections) => {
+							onSelectionChange(selectedOption, newSelections);
+						}}
+						selectedTimeSlot={selections.deliveryTimeSlot}
+						selections={selections}
 					/>
 				)}
 			</div>
