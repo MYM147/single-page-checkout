@@ -6,12 +6,12 @@ import PickupDateMenu from './DateSelectMenu';
 import PickupPersonMenu from './PickupPersonMenu';
 
 type Props = {
-	name: string;
 	name2: string;
-	option: string;
-	option2: string;
+	name: string;
 	onSelectionChange: (selection: string, details?: any) => void;
 	onSelectionsChange: (selections: Selections) => void;
+	option2: string;
+	option: string;
 	pickupDate?: string;
 	pickupDateSelection?: string | null;
 	pickupPerson?: string;
@@ -24,8 +24,8 @@ type Props = {
 	selections: Selections;
 	text?: string;
 	title: string;
-	value: string;
 	value2: string;
+	value: string;
 };
 
 const RadioBtnChoice = ({
@@ -64,19 +64,21 @@ const RadioBtnChoice = ({
 			<div className="swdc-pt-2">
 				<Radio
 					className="hover:swdc-bg-[#fff]"
+					checked={selectedOption === value}
+					name={`${name}`}
 					onChange={(e) => {
 						setSelectedOption(e.target.value);
 						onSelectionChange(e.target.value);
 					}}
-					name={`${name}`}
 					value={`${value}`}
-					checked={selectedOption === value}
 				>
 					{option}
 				</Radio>
 				<br />
 				<Radio
 					className="hover:swdc-bg-[#fff]"
+					checked={selectedOption === value2}
+					name={`${name2}`}
 					onChange={(e) => {
 						setSelectedOption(e.target.value);
 						if (e.target.value === 'as-soon-as-possible') {
@@ -85,9 +87,7 @@ const RadioBtnChoice = ({
 							onSelectionChange(e.target.value);
 						}
 					}}
-					name={`${name2}`}
 					value={`${value2}`}
-					checked={selectedOption === value2}
 				>
 					{option2}
 				</Radio>
@@ -104,10 +104,10 @@ const RadioBtnChoice = ({
 						onDateSelect={(date) => {
 							onSelectionChange(selectedOption, date);
 						}}
-						selectedDate={pickupDateSelection || null}
 						onSelectionsChange={(newSelections) => {
 							onSelectionChange(selectedOption, newSelections);
 						}}
+						selectedDate={pickupDateSelection || null}
 						selectedTimeSlot={selections.deliveryTimeSlot}
 						selections={selections}
 					/>

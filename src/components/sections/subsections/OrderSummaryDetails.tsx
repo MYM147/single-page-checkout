@@ -11,33 +11,33 @@ import {
 
 import PickupStore from '../../global/PickupStore';
 interface Props {
+	deliveryAddress: string;
+	deliveryDate: string;
+	deliveryPhone: string;
+	deliveryTime: string;
 	fulfillmentType: string;
 	pickupDate: string;
 	pickupDateTime: string | Date | null;
-	pickupPhone: string;
-	deliveryAddress: string;
-	deliveryDate: string;
-	deliveryTime: string;
-	deliveryPhone: string;
-	specialInstructions: string;
 	pickupPerson: string;
 	pickupPersonDetails?: {
 		firstName: string;
 		lastName: string;
 		phone: string;
 	};
+	pickupPhone: string;
+	specialInstructions: string;
 }
 
 const OrderSummaryDetails = ({
+	deliveryAddress,
+	deliveryDate,
+	deliveryPhone,
+	deliveryTime,
 	fulfillmentType,
 	pickupDate,
+	pickupDateTime,
 	pickupPerson,
 	pickupPersonDetails,
-	pickupDateTime,
-	deliveryDate,
-	deliveryTime,
-	deliveryAddress,
-	deliveryPhone,
 	specialInstructions,
 }: Props) => {
 	return (
@@ -49,12 +49,12 @@ const OrderSummaryDetails = ({
 						<PickupStore
 							isHeading={false}
 							storeCity="Cleveland"
-							storeState="OH"
+							storeIsOpen={false}
 							storeNumber={721107}
+							storePhone="(216) 7412-6800"
+							storeState="OH"
 							storeStreet="4329 Lorain Ave."
 							storeZip="44113-3716"
-							storePhone="(216) 7412-6800"
-							storeIsOpen={false}
 						/>
 					</div>
 					<div className="swdc-mt-3 swdc-flex">

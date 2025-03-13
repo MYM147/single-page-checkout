@@ -1,20 +1,20 @@
 import { Input, InputGroup } from '@prism/dropcloth';
 
 interface Props {
-	title?: string;
-	text?: string;
 	label?: string;
 	maxLength?: number;
 	onChange: (value: string) => void;
+	text?: string;
+	title?: string;
 	value: string;
 }
 
 const SpecialInstructions = ({
-	title,
-	text,
 	label,
 	maxLength,
 	onChange,
+	text,
+	title,
 	value,
 }: Props) => {
 	return (

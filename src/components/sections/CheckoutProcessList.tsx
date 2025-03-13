@@ -10,24 +10,8 @@ const CheckoutProcessList = () => {
 
 	const [selections, setSelections] = useState<Selections>({
 		fulfillmentType: '',
-		pickupPerson: '',
-		pickupPersonDetails: {
-			firstName: '',
-			lastName: '',
-			email: '',
-			phone: '',
-		},
-		pickupDate: '',
-		pickupDateSelection: null,
-		storeDetails: {
-			storeCity: 'Cleveland',
-			storeState: 'OH',
-			storeNumber: 721107,
-			storeStreet: '4329 Lorain Ave.',
-			storeZip: '44113-3716',
-		},
-		specialInstructions: '',
 		deliveryAddress: '',
+		deliveryDate: '',
 		deliveryDetails: {
 			firstName: '',
 			lastName: '',
@@ -39,10 +23,26 @@ const CheckoutProcessList = () => {
 			state: '',
 			zip: '',
 		},
-		deliveryDate: '',
+		deliveryPhone: '',
 		deliveryTime: '',
 		deliveryTimeSlot: '',
-		deliveryPhone: '',
+		pickupDate: '',
+		pickupDateSelection: null,
+		pickupPerson: '',
+		pickupPersonDetails: {
+			firstName: '',
+			lastName: '',
+			email: '',
+			phone: '',
+		},
+		specialInstructions: '',
+		storeDetails: {
+			storeCity: 'Cleveland',
+			storeState: 'OH',
+			storeNumber: 721107,
+			storeStreet: '4329 Lorain Ave.',
+			storeZip: '44113-3716',
+		},
 	});
 
 	const handleEdit = (panelIndex: number) => {
@@ -61,33 +61,33 @@ const CheckoutProcessList = () => {
 			/>
 
 			<ContactDetails
-				isExpanded={expandedPanel === 1}
-				onContinue={() => setExpandedPanel(2)}
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
 					expandedPanel === 1
 						? 'swdc-h-auto swdc-opacity-100'
 						: 'swdc-pb-0 swdc-pt-[32px]'
 				} `}
+				isExpanded={expandedPanel === 1}
+				onContinue={() => setExpandedPanel(2)}
 			/>
 
 			<AccountDetails
-				isExpanded={expandedPanel === 2}
-				onContinue={() => setExpandedPanel(3)}
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
 					expandedPanel === 2
 						? 'swdc-h-auto swdc-opacity-100'
 						: 'swdc-pb-0 swdc-pt-[32px]'
 				} `}
+				isExpanded={expandedPanel === 2}
+				onContinue={() => setExpandedPanel(3)}
 			/>
 
 			<PaymentMethod
-				isExpanded={expandedPanel === 3}
-				onContinue={() => setExpandedPanel(4)}
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
 					expandedPanel === 3
 						? 'swdc-h-auto swdc-opacity-100'
 						: 'swdc-pb-0 swdc-pt-[32px]'
 				} `}
+				isExpanded={expandedPanel === 3}
+				onContinue={() => setExpandedPanel(4)}
 			/>
 		</div>
 	);

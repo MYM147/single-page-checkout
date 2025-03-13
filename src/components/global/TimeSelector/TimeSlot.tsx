@@ -35,15 +35,13 @@ const TimeSlot = ({
 					className={`has-large-radio swdc-mt-2 swdc-flex swdc-flex-shrink-0 swdc-gap-4 md:swdc-mt-0`}
 				>
 					<Radio
+						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1`}
 						checked={defaultValue === value}
 						name={name}
 						onChange={(e) => onSelect(e.target.value)}
 						value={value}
-						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1`}
 					>
-						<div
-							className={`swdc-w-full swdc-justify-between md:swdc-p-0 ${name === 'pickup' ? 'swdc-w-full swdc-flex-col swdc-pt-1' : 'swdc-flex swdc-items-center'}`}
-						>
+						<div className="swdc-w-full swdc-justify-between md:swdc-p-0">
 							<div>
 								<p className="swdc-text-lg swdc-font-medium md:swdc-text-base">
 									{title}
@@ -77,14 +75,12 @@ const TimeSlot = ({
 				>
 					<Radio
 						checked={defaultValue === value}
+						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1 ${name === 'pickup' ? 'swdc-block swdc-w-1/2 md:swdc-flex' : 'swdc-flex swdc-w-full'}`}
 						name={`${name}`}
 						onChange={(e) => onSelect(e.target.value)}
 						value={value}
-						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1 ${name === 'pickup' ? 'swdc-block swdc-w-1/2 md:swdc-flex' : 'swdc-flex swdc-w-full'}`}
 					>
-						<div
-							className={`swdc-w-full swdc-justify-between md:swdc-p-0 ${name === 'pickup' ? 'swdc-w-full swdc-flex-col swdc-pt-1' : 'swdc-flex swdc-items-center'}`}
-						>
+						<div className="swdc-w-full swdc-justify-between md:swdc-p-0">
 							<div>
 								<p className="swdc-flex swdc-items-center swdc-text-lg swdc-font-medium md:swdc-text-base">
 									<IconFillAlarm className="swdc-mr-[5px] swdc-h-2 swdc-w-2 swdc-fill-[#eec46f]" />{' '}

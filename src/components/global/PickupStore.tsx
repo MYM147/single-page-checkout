@@ -1,23 +1,23 @@
 type Props = {
 	isHeading: boolean;
 	storeCity: string;
-	storeState: string;
+	storeIsOpen: boolean;
 	storeNumber: number;
+	storePhone: string;
+	storeState: string;
 	storeStreet: string;
 	storeZip: string;
-	storePhone: string;
-	storeIsOpen: boolean;
 };
 
 const PickupStore = ({
 	isHeading,
 	storeCity,
-	storeState,
+	storeIsOpen,
 	storeNumber,
+	storePhone,
+	storeState,
 	storeStreet,
 	storeZip,
-	storePhone,
-	storeIsOpen,
 }: Props) => {
 	return (
 		<div className={`${isHeading ? 'swdc-mt-6' : 'swdc-ml-1'}`}>

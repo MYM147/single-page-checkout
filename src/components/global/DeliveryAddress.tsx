@@ -11,8 +11,8 @@ type Props = {
 		state: string;
 		zip: string;
 	};
-	selections: Selections;
 	onChange: (value: any) => void;
+	selections: Selections;
 };
 
 const addressRegex = /^[a-zA-Z0-9\s,.-]+$/;
@@ -75,10 +75,10 @@ const DeliveryAddress = ({ onChange, selections }: Props) => {
 				<div className="swdc-w-full md:swdc-w-1/2">
 					<p className="swdc-pb-1">Address line 1*</p>
 					<Input
+						error={errors.address1}
 						name="address1"
 						onChange={handleInputChange}
 						value={formData.address1}
-						error={errors.address1}
 					/>
 					{errors.address1 && (
 						<span className="swdc-text-sm swdc-text-[#93324C]">
@@ -90,10 +90,10 @@ const DeliveryAddress = ({ onChange, selections }: Props) => {
 				<div className="swdc-mt-4 swdc-w-full md:swdc-mt-0 md:swdc-w-1/2">
 					<p className="swdc-pb-1">Address line 2 (optional)</p>
 					<Input
+						error={errors.address2}
 						name="address2"
 						onChange={handleInputChange}
 						value={formData.address2}
-						error={errors.address2}
 					/>
 				</div>
 			</div>
@@ -102,11 +102,11 @@ const DeliveryAddress = ({ onChange, selections }: Props) => {
 				<div className="swdc-w-full">
 					<p className="swdc-pb-1">City*</p>
 					<Input
+						className="swdc-w-full md:swdc-w-[305px]"
+						error={errors.city}
 						name="city"
 						onChange={handleInputChange}
 						value={formData.city}
-						error={errors.city}
-						className="swdc-w-full md:swdc-w-[305px]"
 					/>
 					{errors.city && (
 						<span className="swdc-text-sm swdc-text-[#93324C]">

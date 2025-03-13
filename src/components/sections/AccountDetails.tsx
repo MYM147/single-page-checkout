@@ -1,15 +1,13 @@
 import { Button } from '@prism/dropcloth';
 import SectionTitle from '../global/SectionTitle';
-import OrderSummaryDetails from './subsections/OrderSummaryDetails';
-// import { saveOrderDetails } from '../utils/orderUtils';
 
 type Props = {
+	className?: string;
 	isExpanded: boolean;
 	onContinue: () => void;
-	className?: string;
 };
 
-const AccountDetails = ({ isExpanded, onContinue, className }: Props) => {
+const AccountDetails = ({ className, isExpanded, onContinue }: Props) => {
 	return (
 		<div
 			className={`swdc-bg-[#fff] swdc-py-4 swdc-pl-6 swdc-pr-6 swdc-drop-shadow-md ${className}`}
@@ -17,7 +15,7 @@ const AccountDetails = ({ isExpanded, onContinue, className }: Props) => {
 			<SectionTitle title="Account Details" />
 			{isExpanded && (
 				<>
-					<Button onClick={onContinue} className="swdc-mt-6">
+					<Button className="swdc-mt-6" onClick={onContinue}>
 						Save and Continue
 					</Button>
 				</>

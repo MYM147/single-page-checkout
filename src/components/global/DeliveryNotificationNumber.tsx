@@ -1,12 +1,12 @@
 import { Checkbox, Input } from '@prism/dropcloth';
 import { useState } from 'react';
 import { type Selections } from '../../types';
-import DetailTooltip from './DetailTooltip';
+import DetailTooltip from './Tooltips/DetailTooltip';
 
 type Props = {
 	defaultValue: string;
-	selections: Selections;
 	onChange: (phone: string) => void;
+	selections: Selections;
 	title?: string;
 };
 
@@ -21,14 +21,14 @@ const formatPhoneNumber = (value: string) => {
 };
 
 const DeliveryNotificationNumber = ({ onChange, selections, title }: Props) => {
-	const [phone, setPhone] = useState(selections.deliveryDetails?.phone || '');
 	const [error, setError] = useState(false);
+	const [phone, setPhone] = useState(selections.deliveryDetails?.phone || '');
 
 	const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const formattedNumber = formatPhoneNumber(e.target.value);
-		setPhone(formattedNumber);
-		setError(!phoneRegex.test(formattedNumber));
 		onChange(formattedNumber);
+		setError(!phoneRegex.test(formattedNumber));
+		setPhone(formattedNumber);
 	};
 
 	return (

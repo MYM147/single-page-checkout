@@ -12,7 +12,6 @@ type Props = {
 	onContinue: () => void;
 	onEdit: () => void;
 	onSelectionsChange: (selections: Selections) => void;
-	selections: Selections;
 	pickupDate?: string;
 	pickupDateSelection?: string;
 	pickupPerson?: string;
@@ -22,6 +21,7 @@ type Props = {
 		email: string;
 		phone: string;
 	};
+	selections: Selections;
 };
 
 const FulfillmentOptions = ({
@@ -44,40 +44,40 @@ const FulfillmentOptions = ({
 			className={`swdc-bg-[#fff] swdc-px-3 swdc-py-4 swdc-drop-shadow-md lg:swdc-pl-6 lg:swdc-pr-6 ${className} swdc-w-full`}
 		>
 			<SectionTitle
-				title="Fulfillment Options"
-				showEdit={isSaved}
 				onEdit={() => {
 					setIsSaved(false);
 					onEdit();
 				}}
+				title="Fulfillment Options"
+				showEdit={isSaved}
 			/>
 
 			{isExpanded && (
 				<>
 					<PickupOrDeliverySelector
-						name="pickup"
-						name2="pickup"
-						text="Ready in as little as 2 hours"
-						text2="Standard or rush delivery available"
-						title="Pickup"
-						title2="Delivery"
-						value="pickup"
-						value2="delivery"
-						onSelect={setFulfillmentType}
 						defaultValue={fulfillmentType}
+						name2="pickup"
+						name="pickup"
+						onSelect={setFulfillmentType}
+						text2="Standard or rush delivery available"
+						text="Ready in as little as 2 hours"
+						title2="Delivery"
+						title="Pickup"
+						value2="delivery"
+						value="pickup"
 					/>
 					{fulfillmentType === 'pickup' ? (
 						<PickupFulfillment
-							selections={selections}
-							onSelectionsChange={onSelectionsChange}
 							onContinue={onContinue}
+							onSelectionsChange={onSelectionsChange}
+							selections={selections}
 							setIsSaved={setIsSaved}
 						/>
 					) : (
 						<DeliveryFulfillment
-							selections={selections}
-							onSelectionsChange={onSelectionsChange}
 							onContinue={onContinue}
+							onSelectionsChange={onSelectionsChange}
+							selections={selections}
 							setIsSaved={setIsSaved}
 						/>
 					)}
@@ -85,16 +85,16 @@ const FulfillmentOptions = ({
 			)}
 			{!isExpanded && (
 				<OrderSummaryDetails
+					deliveryAddress={`${selections.deliveryDetails.address1}${selections.deliveryDetails.address2 ? `, ${selections.deliveryDetails.address2}` : ''}, ${selections.deliveryDetails.city}, ${selections.deliveryDetails.state} ${selections.deliveryDetails.zip}`}
+					deliveryDate={selections.deliveryDate}
+					deliveryPhone={selections.deliveryDetails.phone}
+					deliveryTime={selections.deliveryTime}
 					fulfillmentType={fulfillmentType}
 					pickupDate={selections.pickupDate}
 					pickupDateTime={selections.pickupDateSelection}
 					pickupPerson={selections.pickupPerson}
 					pickupPersonDetails={selections.pickupPersonDetails}
 					pickupPhone={selections.pickupPersonDetails?.phone}
-					deliveryAddress={`${selections.deliveryDetails.address1}${selections.deliveryDetails.address2 ? `, ${selections.deliveryDetails.address2}` : ''}, ${selections.deliveryDetails.city}, ${selections.deliveryDetails.state} ${selections.deliveryDetails.zip}`}
-					deliveryDate={selections.deliveryDate}
-					deliveryTime={selections.deliveryTime}
-					deliveryPhone={selections.deliveryDetails.phone}
 					specialInstructions={selections.specialInstructions}
 				/>
 			)}

@@ -10,9 +10,9 @@ const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
 
 type Props = {
 	onPersonDetailsChange: (details: {
+		email: string;
 		firstName: string;
 		lastName: string;
-		email: string;
 		phone: string;
 	}) => void;
 	selectedPerson:
@@ -28,23 +28,23 @@ type Props = {
 const PickupPersonMenu = ({
 	onPersonDetailsChange,
 	selectedPerson = {
+		email: '',
 		firstName: '',
 		lastName: '',
-		email: '',
 		phone: '',
 	},
 }: Props) => {
 	const [formData, setFormData] = useState({
+		email: selectedPerson.email,
 		firstName: selectedPerson.firstName,
 		lastName: selectedPerson.lastName,
-		email: selectedPerson.email,
 		phone: selectedPerson.phone,
 	});
 
 	const [errors, setErrors] = useState({
+		email: false,
 		firstName: false,
 		lastName: false,
-		email: false,
 		phone: false,
 	});
 
@@ -88,8 +88,8 @@ const PickupPersonMenu = ({
 			...formData,
 			[name]: formattedValue,
 		};
-		setFormData(newFormData);
 		onPersonDetailsChange(newFormData);
+		setFormData(newFormData);
 	};
 
 	const formatPhoneNumber = (value: string) => {
@@ -107,11 +107,11 @@ const PickupPersonMenu = ({
 				<br />
 				<Input
 					as="input"
+					className="swdc-w-full"
+					error={errors.firstName}
 					name="firstName"
 					onChange={handleInputChange}
 					value={formData.firstName}
-					error={errors.firstName}
-					className="swdc-w-full"
 				/>
 				{errors.firstName && (
 					<span className="swdc-text-sm">Please enter letters only</span>
@@ -122,11 +122,11 @@ const PickupPersonMenu = ({
 				<br />
 				<Input
 					as="input"
+					className="swdc-w-full"
+					error={errors.lastName}
 					name="lastName"
 					onChange={handleInputChange}
 					value={formData.lastName}
-					error={errors.lastName}
-					className="swdc-w-full"
 				/>
 				{errors.lastName && (
 					<span className="swdc-text-sm">Please enter letters only</span>
@@ -137,12 +137,12 @@ const PickupPersonMenu = ({
 				<br />
 				<Input
 					as="input"
-					name="email"
-					type="email"
-					onChange={handleInputChange}
-					value={formData.email}
-					error={errors.email}
 					className="swdc-w-full"
+					error={errors.email}
+					name="email"
+					onChange={handleInputChange}
+					type="email"
+					value={formData.email}
 				/>
 				{errors.email && (
 					<span className="swdc-text-sm">
@@ -155,11 +155,11 @@ const PickupPersonMenu = ({
 				<br />
 				<Input
 					as="input"
+					className="swdc-w-full"
+					error={errors.phone}
 					name="phone"
 					onChange={handleInputChange}
 					value={formData.phone}
-					error={errors.phone}
-					className="swdc-w-full"
 				/>
 				{errors.phone && (
 					<span className="swdc-text-sm">

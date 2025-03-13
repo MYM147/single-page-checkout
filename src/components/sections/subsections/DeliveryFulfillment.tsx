@@ -7,16 +7,16 @@ import DeliveryNotificationNumber from '../../global/DeliveryNotificationNumber'
 import SpecialInstructions from '../../global/SpecialInstructions';
 
 type Props = {
-	selections: Selections;
-	onSelectionsChange: (selections: Selections) => void;
 	onContinue: () => void;
+	onSelectionsChange: (selections: Selections) => void;
+	selections: Selections;
 	setIsSaved: (value: boolean) => void;
 };
 
 const DeliveryFulfillment = ({
-	selections,
-	onSelectionsChange,
 	onContinue,
+	onSelectionsChange,
+	selections,
 	setIsSaved,
 }: Props) => {
 	const [formData] = useState({
@@ -75,18 +75,10 @@ const DeliveryFulfillment = ({
 				selections.deliveryDetails?.zip
 		);
 
+		const dateValid = selections.deliveryDate;
 		const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
 		const phoneValid = phoneRegex.test(selections.deliveryDetails?.phone);
-		const dateValid = selections.deliveryDate;
 		const timeValid = selections.deliveryTimeSlot;
-
-		console.log({
-			addressValid,
-			phoneValid,
-			dateValid,
-			timeValid,
-			timeSlot: selections.deliveryTimeSlot,
-		});
 
 		return addressValid && phoneValid && dateValid && timeValid;
 	};
@@ -98,9 +90,9 @@ const DeliveryFulfillment = ({
 			</div>
 
 			<DeliveryAddress
-				selections={selections}
-				onChange={handleAddressChange}
 				defaultValues={formData}
+				onChange={handleAddressChange}
+				selections={selections}
 			/>
 
 			<div className="swdc-relative">
@@ -116,18 +108,18 @@ const DeliveryFulfillment = ({
 					}}
 					onSelectionsChange={onSelectionsChange}
 					rush={true}
-					selections={selections}
 					selectedDate={selections.deliveryDate}
 					selectedTimeSlot={selections.deliveryTimeSlot}
+					selections={selections}
 					title="Delivery Date"
 				/>
 			</div>
 
 			<DeliveryNotificationNumber
 				defaultValue={selections.deliveryDetails?.phone}
-				title="Delivery Notification Number"
-				selections={selections}
 				onChange={handlePhoneChange}
+				selections={selections}
+				title="Delivery Notification Number"
 			/>
 
 			<SpecialInstructions
@@ -145,12 +137,12 @@ const DeliveryFulfillment = ({
 			/>
 
 			<Button
-				onClick={() => {
-					setIsSaved(true);
-					onContinue();
-				}}
 				className="swdc-mt-6"
 				disabled={!isFormValid()}
+				onClick={() => {
+					onContinue();
+					setIsSaved(true);
+				}}
 			>
 				Save and Continue
 			</Button>

@@ -2,12 +2,12 @@ import { Button } from '@prism/dropcloth';
 import SectionTitle from '../global/SectionTitle';
 
 type Props = {
+	className?: string;
 	isExpanded: boolean;
 	onContinue: () => void;
-	className?: string;
 };
 
-const PaymentMethod = ({ isExpanded, onContinue, className }: Props) => {
+const PaymentMethod = ({ className, isExpanded, onContinue }: Props) => {
 	return (
 		<div
 			className={`swdc-bg-[#fff] swdc-py-4 swdc-pl-6 swdc-pr-6 swdc-drop-shadow-md ${className}`}

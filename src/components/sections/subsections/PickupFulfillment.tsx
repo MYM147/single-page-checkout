@@ -5,16 +5,16 @@ import RadioBtnChoice from '../../global/RadioBtnChoice';
 import SpecialInstructions from '../../global/SpecialInstructions';
 
 type Props = {
-	selections: Selections;
-	onSelectionsChange: (selections: Selections) => void;
 	onContinue: () => void;
+	onSelectionsChange: (selections: Selections) => void;
+	selections: Selections;
 	setIsSaved: (value: boolean) => void;
 };
 
 const PickupFulfillment = ({
-	selections,
-	onSelectionsChange,
 	onContinue,
+	onSelectionsChange,
+	selections,
 	setIsSaved,
 }: Props) => {
 	// Move the isFormValid function here
@@ -48,24 +48,16 @@ const PickupFulfillment = ({
 			<PickupStore
 				isHeading
 				storeCity="Cleveland"
-				storeState="OH"
+				storeIsOpen={false}
 				storeNumber={721107}
+				storePhone="(216) 7412-6800"
+				storeState="OH"
 				storeStreet="4329 Lorain Ave."
 				storeZip="44113-3716"
-				storePhone="(216) 7412-6800"
-				storeIsOpen={false}
 			/>
 			<RadioBtnChoice
-				name="pickup-person"
 				name2="pickup-person"
-				option="Me"
-				option2="Someone else"
-				title="Pickup Person *"
-				text="Who's picking up this order?"
-				value="self-pickup"
-				value2="someone-else"
-				pickupPerson={selections.pickupPerson}
-				pickupPersonDetails={selections.pickupPersonDetails}
+				name="pickup-person"
 				onSelectionChange={(selection, details) => {
 					onSelectionsChange({
 						...selections,
@@ -73,17 +65,20 @@ const PickupFulfillment = ({
 						pickupPersonDetails: details,
 					});
 				}}
+				onSelectionsChange={onSelectionsChange}
+				option2="Someone else"
+				option="Me"
+				pickupPerson={selections.pickupPerson}
+				pickupPersonDetails={selections.pickupPersonDetails}
+				selections={selections}
+				text="Who's picking up this order?"
+				title="Pickup Person *"
+				value2="someone-else"
+				value="self-pickup"
 			/>
 			<RadioBtnChoice
-				name="pickup-date"
 				name2="pickup-date"
-				option="As soon as possible"
-				option2="On a specific day"
-				title="Pickup Date *"
-				value="as-soon-as-possible"
-				value2="on-a-specific-day"
-				pickupDate={selections.pickupDate}
-				pickupDateSelection={selections.pickupDateSelection}
+				name="pickup-date"
 				onSelectionChange={(selection, details) => {
 					onSelectionsChange({
 						...selections,
@@ -91,6 +86,15 @@ const PickupFulfillment = ({
 						pickupDateSelection: details,
 					});
 				}}
+				onSelectionsChange={onSelectionsChange}
+				option2="On a specific day"
+				option="As soon as possible"
+				pickupDate={selections.pickupDate}
+				pickupDateSelection={selections.pickupDateSelection}
+				title="Pickup Date *"
+				value2="on-a-specific-day"
+				value="as-soon-as-possible"
+				selections={selections}
 			/>
 			<SpecialInstructions
 				label=""
@@ -106,12 +110,12 @@ const PickupFulfillment = ({
 				value={selections.specialInstructions}
 			/>
 			<Button
-				onClick={() => {
-					setIsSaved(true);
-					onContinue();
-				}}
 				className="swdc-mt-6"
 				disabled={!isFormValid()}
+				onClick={() => {
+					onContinue();
+					setIsSaved(true);
+				}}
 			>
 				Save and Continue
 			</Button>

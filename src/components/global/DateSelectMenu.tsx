@@ -2,9 +2,9 @@ import { IconFillAlarm } from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
 import { Selections } from '../../types';
 import { getDates } from '../utils/dateUtils';
-import DetailTooltip from './DetailTooltip';
 import TimeSelector from './TimeSelector/TimeSelector';
 import TimeSlot from './TimeSelector/TimeSlot';
+import StoreHoursTooltip from './Tooltips/StoreHoursTooltip';
 
 type Props = {
 	disabled?: boolean;
@@ -28,10 +28,10 @@ export const DateSelectMenu = ({
 	selections,
 	title,
 }: Props) => {
-	const [loading, setLoading] = useState<boolean>(false);
 	const [isRushSelected, setIsRushSelected] = useState<boolean>(
 		selections.deliveryTimeSlot === 'rush'
 	);
+	const [loading, setLoading] = useState<boolean>(false);
 	const [selectedDateState, setSelectedDateState] = useState<string | null>(
 		selectedDate || selections.deliveryDate
 	);
@@ -68,12 +68,12 @@ export const DateSelectMenu = ({
 			)}
 
 			<div
-				className={`date-scroll swdc-mt-2 swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-[25px] swdc-overflow-x-auto ${loading ? 'swdc-opacity-[.15]' : ''}`}
+				className={`date-scroll swdc-mt-2 swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-[25px] swdc-overflow-x-auto lg:swdc-gap-[15px] ${loading ? 'swdc-opacity-[.15]' : ''}`}
 			>
 				{weekDates.map((date, index) => (
 					<div
-						key={index}
 						className="swdc-flex swdc-flex-shrink-0 swdc-snap-center swdc-flex-col swdc-items-center"
+						key={index}
 					>
 						<span className="swdc-mb-1 swdc-text-sm">
 							{index === 0
@@ -103,18 +103,18 @@ export const DateSelectMenu = ({
 												month: 'short',
 												day: 'numeric',
 											});
-											setSelectedDateState(formattedDate);
 											onDateSelect(formattedDate);
+											setSelectedDateState(formattedDate);
 
 											// Check if the RUSH date is selected
 											if (index === 0) {
-												setIsRushSelected(true);
 												onSelectionsChange({
 													...selections,
 													deliveryDate: formattedDate, // This is the key addition
 													deliveryTimeSlot: 'rush',
 													deliveryTime: '8AM - 11AM',
 												});
+												setIsRushSelected(true);
 											} else {
 												setIsRushSelected(false);
 											}
@@ -159,12 +159,8 @@ export const DateSelectMenu = ({
 						</div>
 					) : isRushSelected ? (
 						<TimeSlot
-							name="rush-delivery"
-							rushDelivery={true}
-							text="Get it by noon"
-							title="RUSH Delivery"
-							value="rush"
 							defaultValue={selections.deliveryTimeSlot}
+							name="rush-delivery"
 							onSelect={(timeSlot) => {
 								const timeDisplay =
 									timeSlot === 'morning'
@@ -174,13 +170,16 @@ export const DateSelectMenu = ({
 											: timeSlot === 'rush'
 												? '8AM - 11AM'
 												: 'Standard Delivery';
-
 								onSelectionsChange({
 									...selections,
 									deliveryTimeSlot: timeSlot,
 									deliveryTime: timeDisplay,
 								});
 							}}
+							rushDelivery={true}
+							text="Get it by noon"
+							title="RUSH Delivery"
+							value="rush"
 						/>
 					) : selectedDateState && !isRushSelected ? (
 						<TimeSelector
@@ -200,7 +199,6 @@ export const DateSelectMenu = ({
 									value: 'afternoon',
 								},
 							]}
-							selections={selections}
 							defaultValue={selections.deliveryTimeSlot}
 							onSelect={(timeSlot) => {
 								const timeDisplay =
@@ -218,6 +216,7 @@ export const DateSelectMenu = ({
 									deliveryTime: timeDisplay,
 								});
 							}}
+							selections={selections}
 						/>
 					) : (
 						<div className="swdc-mt-2 swdc-flex swdc-h-[68px] swdc-w-full swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-opacity-50">
@@ -228,8 +227,7 @@ export const DateSelectMenu = ({
 			) : (
 				<div className={`${loading ? 'swdc-opacity-[.15]' : ''}`}>
 					<p className="swdc-mt-2">Two hours after store opens.</p>
-					<DetailTooltip text="This is required in case we need to contact you with questions about your delivery." />
-					<span className="swdc-font-medium">View store hours</span>
+					<StoreHoursTooltip />
 				</div>
 			)}
 		</>
