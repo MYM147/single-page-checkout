@@ -4,7 +4,7 @@ import { Selections } from '../../types';
 import { getDates } from '../utils/dateUtils';
 import TimeSelector from './timeselector/TimeSelector';
 import TimeSlot from './timeselector/TimeSlot';
-import StoreHoursTooltip from './tooltips/StoreHoursTooltip';
+import StoreHoursTooltip from './Tooltips/StoreHoursTooltip';
 
 type Props = {
 	disabled?: boolean;

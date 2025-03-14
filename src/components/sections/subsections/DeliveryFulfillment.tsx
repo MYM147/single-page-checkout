@@ -1,8 +1,8 @@
 import { Button } from '@prism/dropcloth';
 import { useState } from 'react';
 import { type Selections } from '../../../types';
-import DeliveryAddress from '../../delivery/DeliveryAddress';
-import DeliveryNotificationNumber from '../../delivery/DeliveryNotificationNumber';
+import DeliveryAddress from '../../Delivery/DeliveryAddress';
+import DeliveryNotificationNumber from '../../Delivery/DeliveryNotificationNumber';
 import DateSelectMenu from '../../global/DateSelectMenu';
 import SpecialInstructions from '../../global/SpecialInstructions';
 
