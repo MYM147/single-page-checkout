@@ -1,6 +1,6 @@
 import { IconRegularTruck } from '@prism/dropcloth';
 import { useState } from 'react';
-import DeliveryProgressBar from '../Delivery/DeliveryProgressBar';
+import DeliveryProgressBar from '../delivery/DeliveryProgressBar';
 
 const FreeDeliveryBanner = () => {
 	const [deliveryAmount] = useState(62.22);

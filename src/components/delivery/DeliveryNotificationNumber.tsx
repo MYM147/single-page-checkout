@@ -1,7 +1,7 @@
 import { Checkbox, Input } from '@prism/dropcloth';
 import { useState } from 'react';
 import { type Selections } from '../../types';
-import DetailTooltip from '../global/Tooltips/DetailTooltip';
+import DetailTooltip from '../global/tooltips/DetailTooltip';
 
 type Props = {
 	defaultValue: string;
