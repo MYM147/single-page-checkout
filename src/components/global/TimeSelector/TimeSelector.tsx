@@ -16,7 +16,7 @@ type Props = {
 
 const TimeSelector = ({ defaultValue, onSelect, timeSlots }: Props) => {
 	return (
-		<div className="swdc-flex swdc-flex-col lg:swdc-gap-5">
+		<div className="swdc-flex swdc-flex-col swdc-gap-4 md:swdc-flex-row">
 			{timeSlots.map((slot, index) => (
 				<TimeSlot
 					defaultValue={defaultValue}

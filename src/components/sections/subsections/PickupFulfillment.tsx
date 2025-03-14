@@ -70,12 +70,14 @@ const PickupFulfillment = ({
 				option="Me"
 				pickupPerson={selections.pickupPerson}
 				pickupPersonDetails={selections.pickupPersonDetails}
+				pickupDateSelection={null} // Add this line
 				selections={selections}
 				text="Who's picking up this order?"
 				title="Pickup Person *"
 				value2="someone-else"
 				value="self-pickup"
 			/>
+
 			<RadioBtnChoice
 				name2="pickup-date"
 				name="pickup-date"
@@ -90,7 +92,7 @@ const PickupFulfillment = ({
 				option2="On a specific day"
 				option="As soon as possible"
 				pickupDate={selections.pickupDate}
-				pickupDateSelection={selections.pickupDateSelection}
+				pickupDateSelection={selections.pickupDateSelection || null} // Add this line
 				title="Pickup Date *"
 				value2="on-a-specific-day"
 				value="as-soon-as-possible"

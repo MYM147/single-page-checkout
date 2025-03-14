@@ -19,7 +19,7 @@ $swdc-path-iconfont: '../node_modules/@prism/dropcloth/src/resources/iconfont/';
 :root {
   font-family: var(--swdc-text-family-brand);
   color: var(--swdc-color-dark-foreground-on-surface);
-  background-color: #f6f6f6;
+  background-color: var(--swdc-color-surface-diy-1);
 }
 
 h3 {

@@ -41,8 +41,8 @@ const TimeSlot = ({
 						onChange={(e) => onSelect(e.target.value)}
 						value={value}
 					>
-						<div className="swdc-w-full swdc-justify-between md:swdc-p-0">
-							<div>
+						<div className="swdc-flex swdc-w-full swdc-items-center swdc-justify-between md:swdc-p-0">
+							<div className="swdc-flex swdc-flex-col">
 								<p className="swdc-text-lg swdc-font-medium md:swdc-text-base">
 									{title}
 								</p>
@@ -53,7 +53,7 @@ const TimeSlot = ({
 								</p>
 							</div>
 							{!freeDelivery ? (
-								<div className="swdc-flex swdc-h-full swdc-rounded-[2px] swdc-bg-[#edece6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold">
+								<div className="swdc-h-full swdc-rounded-[2px] swdc-bg-[#edece6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold">
 									${price}
 								</div>
 							) : (
@@ -80,8 +80,8 @@ const TimeSlot = ({
 						onChange={(e) => onSelect(e.target.value)}
 						value={value}
 					>
-						<div className="swdc-w-full swdc-justify-between md:swdc-p-0">
-							<div>
+						<div className="swdc-flex swdc-w-full swdc-items-center swdc-justify-between md:swdc-p-0">
+							<div className="swdc-flex swdc-flex-col">
 								<p className="swdc-flex swdc-items-center swdc-text-lg swdc-font-medium md:swdc-text-base">
 									<IconFillAlarm className="swdc-mr-[5px] swdc-h-2 swdc-w-2 swdc-fill-[#eec46f]" />{' '}
 									{title}

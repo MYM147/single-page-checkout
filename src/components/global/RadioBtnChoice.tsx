@@ -13,7 +13,7 @@ type Props = {
 	option2: string;
 	option: string;
 	pickupDate?: string;
-	pickupDateSelection?: string | null;
+	pickupDateSelection: string | null;
 	pickupPerson?: string;
 	pickupPersonDetails?: {
 		firstName: string;
@@ -102,14 +102,17 @@ const RadioBtnChoice = ({
 				{name2 === 'pickup-date' && selectedOption === 'on-a-specific-day' && (
 					<PickupDateMenu
 						onDateSelect={(date) => {
-							onSelectionChange(selectedOption, date);
+							onSelectionChange('on-a-specific-day', date);
 						}}
-						onSelectionsChange={(newSelections) => {
-							onSelectionChange(selectedOption, newSelections);
-						}}
-						selectedDate={pickupDateSelection || null}
+						selectedDate={pickupDateSelection}
 						selectedTimeSlot={selections.deliveryTimeSlot}
 						selections={selections}
+						onSelectionsChange={(newSelections) => {
+							onSelectionChange(
+								'on-a-specific-day',
+								newSelections.pickupDateSelection
+							);
+						}}
 					/>
 				)}
 			</div>

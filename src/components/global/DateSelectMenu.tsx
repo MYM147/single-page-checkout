@@ -37,8 +37,10 @@ export const DateSelectMenu = ({
 	);
 
 	useEffect(() => {
-		setSelectedDateState(selectedDate || selections.deliveryDate); // Update state when selections change
-	}, [selectedDate, selections.deliveryDate]);
+		setSelectedDateState(
+			selectedDate || selections.pickupDateSelection || selections.deliveryDate
+		);
+	}, [selectedDate, selections.pickupDateSelection, selections.deliveryDate]);
 
 	useEffect(() => {
 		// Simulate loading time slots
@@ -103,20 +105,30 @@ export const DateSelectMenu = ({
 												month: 'short',
 												day: 'numeric',
 											});
-											onDateSelect(formattedDate);
 											setSelectedDateState(formattedDate);
+											onDateSelect(formattedDate);
 
-											// Check if the RUSH date is selected
-											if (index === 0) {
+											if (rush) {
+												// Keep existing delivery logic
+												const isRushDay = index === 0;
+												setIsRushSelected(isRushDay);
 												onSelectionsChange({
 													...selections,
-													deliveryDate: formattedDate, // This is the key addition
-													deliveryTimeSlot: 'rush',
-													deliveryTime: '8AM - 11AM',
+													deliveryDate: formattedDate,
+													deliveryTimeSlot: isRushDay
+														? 'rush'
+														: selections.deliveryTimeSlot,
+													deliveryTime: isRushDay
+														? '8AM - 11AM'
+														: selections.deliveryTime,
 												});
-												setIsRushSelected(true);
 											} else {
-												setIsRushSelected(false);
+												// Update both required pickup fields
+												onSelectionsChange({
+													...selections,
+													pickupDate: 'on-a-specific-day',
+													pickupDateSelection: formattedDate,
+												});
 											}
 										}
 									: undefined
