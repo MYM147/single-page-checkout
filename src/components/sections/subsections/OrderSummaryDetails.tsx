@@ -9,7 +9,7 @@ import {
 	IconRegularTruck,
 } from '@prism/dropcloth';
 
-import PickupStore from '../../global/PickupStore';
+import PickupStore from '../../pickup/PickupStore';
 interface Props {
 	deliveryAddress: string;
 	deliveryDate: string;

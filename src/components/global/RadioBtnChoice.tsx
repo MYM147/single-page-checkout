@@ -1,9 +1,9 @@
 import { Radio } from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
 import { type Selections } from '../../types';
+import PickupPersonMenu from '../pickup/PickupPersonMenu';
 import { weekDates } from '../utils/dateUtils';
 import PickupDateMenu from './DateSelectMenu';
-import PickupPersonMenu from './PickupPersonMenu';
 
 type Props = {
 	name2: string;

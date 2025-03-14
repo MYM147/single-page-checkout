@@ -2,9 +2,9 @@ import { IconFillAlarm } from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
 import { Selections } from '../../types';
 import { getDates } from '../utils/dateUtils';
-import TimeSelector from './TimeSelector/TimeSelector';
-import TimeSlot from './TimeSelector/TimeSlot';
-import StoreHoursTooltip from './Tooltips/StoreHoursTooltip';
+import TimeSelector from './timeselector/TimeSelector';
+import TimeSlot from './timeselector/TimeSlot';
+import StoreHoursTooltip from './tooltips/StoreHoursTooltip';
 
 type Props = {
 	disabled?: boolean;

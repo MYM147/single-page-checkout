@@ -1,8 +1,8 @@
 import { Button } from '@prism/dropcloth';
 import { type Selections } from '../../../types';
-import PickupStore from '../../global/PickupStore';
 import RadioBtnChoice from '../../global/RadioBtnChoice';
 import SpecialInstructions from '../../global/SpecialInstructions';
+import PickupStore from '../../pickup/PickupStore';
 
 type Props = {
 	onContinue: () => void;
