@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { LayoutProvider } from '../../context/LayoutContext';
 import { type Selections } from '../../types';
 import SectionTitle from '../global/SectionTitle';
 import DeliveryFulfillment from './subsections/DeliveryFulfillment';
@@ -54,7 +53,7 @@ const FulfillmentOptions = ({
 			/>
 
 			{isExpanded && (
-				<LayoutProvider>
+				<>
 					<PickupOrDeliverySelector
 						defaultValue={fulfillmentType}
 						name2="pickup"
@@ -82,7 +81,7 @@ const FulfillmentOptions = ({
 							setIsSaved={setIsSaved}
 						/>
 					)}
-				</LayoutProvider>
+				</>
 			)}
 			{!isExpanded && (
 				<OrderSummaryDetails

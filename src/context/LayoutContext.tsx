@@ -22,7 +22,7 @@ export const useLayout = () => {
 };
 
 export const LayoutProvider = ({ children }: LayoutProviderProps) => {
-	const [layoutType, setLayoutType] = useState<LayoutType>('DIY');
+	const [layoutType, setLayoutType] = useState<LayoutType>('PRO');
 
 	return (
 		<LayoutContext.Provider value={{ layoutType, setLayoutType }}>
