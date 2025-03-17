@@ -7,7 +7,6 @@ import PaymentMethod from './PaymentMethod';
 
 const CheckoutProcessList = () => {
 	const [expandedPanel, setExpandedPanel] = useState(0);
-
 	const [selections, setSelections] = useState<Selections>({
 		fulfillmentType: '',
 		deliveryAddress: '',

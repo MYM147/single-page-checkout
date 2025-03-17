@@ -39,3 +39,7 @@ export interface Selections {
 	};
 	deliveryTimeSlot: string;
 }
+
+export type UserType = {
+	layoutType: 'PRO' | 'DIY';
+};
