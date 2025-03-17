@@ -75,6 +75,7 @@ const FulfillmentOptions = ({
 						/>
 					) : (
 						<DeliveryFulfillment
+							membershipType="PRO"
 							onContinue={onContinue}
 							onSelectionsChange={onSelectionsChange}
 							selections={selections}

@@ -30,7 +30,7 @@ const StoreHoursTooltip = () => {
 			</div>
 
 			{isOpen && (
-				<div className="swdc-absolute swdc-z-50 swdc-w-[380px]">
+				<div className="swdc-absolute swdc-z-30 swdc-w-[380px]">
 					<IconFillPlay className="swdc-relative swdc-bottom-[0px] swdc-left-[40px] swdc-z-10 swdc-rotate-[-90deg] swdc-fill-[#545455] lg:swdc-left-[8px]" />
 					<div className="swdc-relative swdc-bottom-1 swdc-rounded swdc-bg-[#545455] swdc-p-3 swdc-text-white lg:swdc-right-[30px]">
 						<div className="swdc-flex swdc-justify-between">

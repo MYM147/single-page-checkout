@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { type Selections } from '../../../types';
 import DeliveryAddress from '../../delivery/DeliveryAddress';
 import DeliveryNotificationNumber from '../../delivery/DeliveryNotificationNumber';
+import SavedDeliveryAddresses from '../../delivery/SavedDeliveryAddresses';
 import DateSelectMenu from '../../global/DateSelectMenu';
 import SpecialInstructions from '../../global/SpecialInstructions';
 
 type Props = {
+	membershipType: 'PRO' | 'DIY';
 	onContinue: () => void;
 	onSelectionsChange: (selections: Selections) => void;
 	selections: Selections;
@@ -14,6 +16,7 @@ type Props = {
 };
 
 const DeliveryFulfillment = ({
+	membershipType,
 	onContinue,
 	onSelectionsChange,
 	selections,
@@ -27,7 +30,7 @@ const DeliveryFulfillment = ({
 		zip: selections.deliveryDetails?.zip || '',
 		phone: selections.deliveryDetails?.phone || '',
 	});
-	// Conditionally renders layouts based on membership type
+
 	const [, setLoading] = useState(false); // Loading state
 
 	const handleAddressChange = (addressData: any) => {
@@ -89,31 +92,40 @@ const DeliveryFulfillment = ({
 				<p className="swdc-text-sm"> * Required</p>
 			</div>
 
-			<DeliveryAddress
-				defaultValues={formData}
-				onChange={handleAddressChange}
-				selections={selections}
-			/>
+			{membershipType === 'PRO' ? (
+				<>
+					<SavedDeliveryAddresses />
+				</>
+			) : (
+				<>
+					<DeliveryAddress
+						// membershipType={membershipType}
+						defaultValues={formData}
+						onChange={handleAddressChange}
+						selections={selections}
+					/>
 
-			<div className="swdc-relative">
-				<DateSelectMenu
-					disabled={!isAddressValid()}
-					onDateSelect={(date) => {
-						onSelectionsChange({
-							...selections,
-							deliveryDate: date,
-							deliveryTimeSlot: 'rush', // Set this to indicate rush delivery
-							deliveryTime: '8AM - 11AM', // Set the time display for rush delivery
-						});
-					}}
-					onSelectionsChange={onSelectionsChange}
-					rush={true}
-					selectedDate={selections.deliveryDate}
-					selectedTimeSlot={selections.deliveryTimeSlot}
-					selections={selections}
-					title="Delivery Date"
-				/>
-			</div>
+					<div className="swdc-relative">
+						<DateSelectMenu
+							disabled={!isAddressValid()}
+							onDateSelect={(date) => {
+								onSelectionsChange({
+									...selections,
+									deliveryDate: date,
+									deliveryTimeSlot: 'rush', // Set this to indicate rush delivery
+									deliveryTime: '8AM - 11AM', // Set the time display for rush delivery
+								});
+							}}
+							onSelectionsChange={onSelectionsChange}
+							rush={true}
+							selectedDate={selections.deliveryDate}
+							selectedTimeSlot={selections.deliveryTimeSlot}
+							selections={selections}
+							title="Delivery Date"
+						/>
+					</div>
+				</>
+			)}
 
 			<DeliveryNotificationNumber
 				defaultValue={selections.deliveryDetails?.phone}
@@ -123,7 +135,6 @@ const DeliveryFulfillment = ({
 			/>
 
 			<SpecialInstructions
-				label=""
 				maxLength={100}
 				onChange={(value) => {
 					onSelectionsChange({

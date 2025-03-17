@@ -37,12 +37,12 @@ const PickupStore = ({
 			</p>
 			{!storeIsOpen ? (
 				<p className="swdc-text-md swdc-mt-1 swdc-flex md:swdc-text-sm">
-					<div className="swdc-relative swdc-top-[10px] swdc-mr-1 swdc-h-[10px] swdc-w-[10px] swdc-rounded-full swdc-bg-[#93324C] md:swdc-top-[5px] md:swdc-h-[8px] md:swdc-w-[8px]"></div>
+					<span className="swdc-relative swdc-top-[10px] swdc-mr-1 swdc-h-[10px] swdc-w-[10px] swdc-rounded-full swdc-bg-[#93324C] md:swdc-top-[5px] md:swdc-h-[8px] md:swdc-w-[8px]"></span>
 					Closed until 11:00 AM tomorrow
 				</p>
 			) : (
 				<p className="swdc-text-md swdc-mt-1 swdc-flex md:swdc-text-sm">
-					<div className="swdc-relative swdc-top-[10px] swdc-mr-1 swdc-h-[10px] swdc-w-[10px] swdc-rounded-full swdc-bg-[#329352] md:swdc-top-[5px] md:swdc-h-[8px] md:swdc-w-[8px]"></div>
+					<span className="swdc-relative swdc-top-[10px] swdc-mr-1 swdc-h-[10px] swdc-w-[10px] swdc-rounded-full swdc-bg-[#329352] md:swdc-top-[5px] md:swdc-h-[8px] md:swdc-w-[8px]"></span>
 					Open until 9:00 PM today
 				</p>
 			)}

@@ -1,32 +1,34 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
 
-type LayoutType = 'PRO' | 'DIY';
+type MembershipType = 'PRO' | 'DIY';
 
-interface LayoutContextType {
-	layoutType: LayoutType;
-	setLayoutType: (type: LayoutType) => void;
+interface MembershipContextType {
+	membershipType: MembershipType;
+	setMembershipType: (type: MembershipType) => void;
 }
 
-interface LayoutProviderProps {
+interface MembershipProviderProps {
 	children: ReactNode;
 }
 
-const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
+const MembershipContext = createContext<MembershipContextType | undefined>(
+	undefined
+);
 
-export const useLayout = () => {
-	const context = useContext(LayoutContext);
+export const useMembership = () => {
+	const context = useContext(MembershipContext);
 	if (!context) {
-		throw new Error('useLayout must be used within a LayoutProvider');
+		throw new Error('useMembership must be used within a MembershipProvider');
 	}
 	return context;
 };
 
-export const LayoutProvider = ({ children }: LayoutProviderProps) => {
-	const [layoutType, setLayoutType] = useState<LayoutType>('PRO');
+export const MembershipProvider = ({ children }: MembershipProviderProps) => {
+	const [membershipType, setMembershipType] = useState<MembershipType>('DIY');
 
 	return (
-		<LayoutContext.Provider value={{ layoutType, setLayoutType }}>
+		<MembershipContext.Provider value={{ membershipType, setMembershipType }}>
 			{children}
-		</LayoutContext.Provider>
+		</MembershipContext.Provider>
 	);
 };
