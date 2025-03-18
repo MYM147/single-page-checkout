@@ -80,6 +80,7 @@ const FulfillmentOptions = ({
 							onSelectionsChange={onSelectionsChange}
 							selections={selections}
 							setIsSaved={setIsSaved}
+							savedAddresses={true}
 						/>
 					)}
 				</>

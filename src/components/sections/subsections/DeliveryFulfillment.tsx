@@ -11,6 +11,7 @@ type Props = {
 	membershipType: 'PRO' | 'DIY';
 	onContinue: () => void;
 	onSelectionsChange: (selections: Selections) => void;
+	savedAddresses?: boolean;
 	selections: Selections;
 	setIsSaved: (value: boolean) => void;
 };
@@ -19,6 +20,7 @@ const DeliveryFulfillment = ({
 	membershipType,
 	onContinue,
 	onSelectionsChange,
+	savedAddresses,
 	selections,
 	setIsSaved,
 }: Props) => {
@@ -94,12 +96,20 @@ const DeliveryFulfillment = ({
 
 			{membershipType === 'PRO' ? (
 				<>
-					<SavedDeliveryAddresses />
+				{savedAddresses ? (
+					<SavedDeliveryAddresses/>
+				) : (
+					<DeliveryAddress
+						defaultValues={formData}
+						onChange={handleAddressChange}
+						selections={selections}
+					/>
+				)}
+					
 				</>
 			) : (
 				<>
 					<DeliveryAddress
-						// membershipType={membershipType}
 						defaultValues={formData}
 						onChange={handleAddressChange}
 						selections={selections}
