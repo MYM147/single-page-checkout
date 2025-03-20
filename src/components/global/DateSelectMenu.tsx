@@ -43,6 +43,19 @@ export const DateSelectMenu = ({
 	}, [selectedDate, selections.pickupDateSelection, selections.deliveryDate]);
 
 	useEffect(() => {
+		if (selectedDateState) {
+			const today = weekDates[0].toLocaleDateString('en-US', {
+				weekday: 'long',
+				month: 'short',
+				day: 'numeric',
+			});
+
+			// Ensure we're passing a boolean, not undefined
+			setIsRushSelected(Boolean(selectedDateState === today && rush));
+		}
+	}, [selectedDateState, rush]);
+
+	useEffect(() => {
 		// Simulate loading time slots
 		setLoading(true);
 		const timer = setTimeout(() => {
@@ -174,14 +187,7 @@ export const DateSelectMenu = ({
 							defaultValue={selections.deliveryTimeSlot}
 							name="rush-delivery"
 							onSelect={(timeSlot) => {
-								const timeDisplay =
-									timeSlot === 'morning'
-										? '8AM - NOON'
-										: timeSlot === 'afternoon'
-											? 'NOON - 5PM'
-											: timeSlot === 'rush'
-												? '8AM - 11AM'
-												: 'Standard Delivery';
+								const timeDisplay = '8AM - 11AM';
 								onSelectionsChange({
 									...selections,
 									deliveryTimeSlot: timeSlot,

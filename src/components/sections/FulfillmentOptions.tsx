@@ -1,4 +1,10 @@
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+	setExpanded,
+	setFulfillmentType,
+	setSaved,
+	updateSelections,
+} from '../../store/slices/fulfillmentSlice';
 import { type Selections } from '../../types';
 import SectionTitle from '../global/SectionTitle';
 import DeliveryFulfillment from './subsections/DeliveryFulfillment';
@@ -12,32 +18,41 @@ type Props = {
 	onContinue: () => void;
 	onEdit: () => void;
 	onSelectionsChange: (selections: Selections) => void;
-	pickupDate?: string;
-	pickupDateSelection?: string;
-	pickupPerson?: string;
-	pickupPersonDetails?: {
-		firstName: string;
-		lastName: string;
-		email: string;
-		phone: string;
-	};
 	selections: Selections;
 };
 
-const FulfillmentOptions = ({
-	className,
-	isExpanded,
-	onContinue,
-	onEdit,
-	onSelectionsChange,
-	selections,
-}: Props) => {
-	const [fulfillmentType, setFulfillmentType] = useState(() => {
-		if (selections.deliveryDetails?.address1) return 'delivery';
-		if (selections.pickupPerson) return 'pickup';
-		return 'pickup';
-	});
-	const [isSaved, setIsSaved] = useState(false);
+// Container component that manages fulfillment type selection and displays appropriate forms
+const FulfillmentOptions = ({ className, onContinue, onEdit }: Props) => {
+	const dispatch = useAppDispatch();
+	const { fulfillmentType, selections, isSaved, isExpanded } = useAppSelector(
+		(state) => state.fulfillment
+	);
+
+	const handleSelectionsChange = (newSelections: Partial<Selections>) => {
+		dispatch(updateSelections(newSelections));
+	};
+
+	const handleSetIsSaved = (value: boolean) => {
+		dispatch(setSaved(value));
+	};
+
+	//Determines initial fulfillment type based on existing selections
+	const handleFulfillmentTypeChange = (type: string) => {
+		if (type === 'pickup' || type === 'delivery') {
+			dispatch(setFulfillmentType(type));
+		}
+	};
+
+	//Toggles between pickup and delivery fulfillment options
+	const toggleExpanded = (value: boolean) => {
+		dispatch(setExpanded(value));
+	};
+
+	const handleContinue = () => {
+		dispatch(setExpanded(false));
+		dispatch(setSaved(true));
+		onContinue();
+	};
 
 	return (
 		<div
@@ -45,20 +60,20 @@ const FulfillmentOptions = ({
 		>
 			<SectionTitle
 				onEdit={() => {
-					setIsSaved(false);
+					dispatch(setSaved(false));
+					toggleExpanded(true);
 					onEdit();
 				}}
 				title="Fulfillment Options"
 				showEdit={isSaved}
 			/>
-
 			{isExpanded && (
 				<>
 					<PickupOrDeliverySelector
 						defaultValue={fulfillmentType}
 						name2="pickup"
 						name="pickup"
-						onSelect={setFulfillmentType}
+						onSelect={handleFulfillmentTypeChange}
 						text2="Standard or rush delivery available"
 						text="Ready in as little as 2 hours"
 						title2="Delivery"
@@ -66,25 +81,25 @@ const FulfillmentOptions = ({
 						value2="delivery"
 						value="pickup"
 					/>
+					{/* Conditionally renders either pickup or delivery form based on user selection */}
 					{fulfillmentType === 'pickup' ? (
 						<PickupFulfillment
-							onContinue={onContinue}
-							onSelectionsChange={onSelectionsChange}
+							onContinue={handleContinue}
 							selections={selections}
-							setIsSaved={setIsSaved}
+							onSelectionsChange={handleSelectionsChange}
+							setIsSaved={handleSetIsSaved}
 						/>
 					) : (
 						<DeliveryFulfillment
-							membershipType="PRO"
-							onContinue={onContinue}
-							onSelectionsChange={onSelectionsChange}
+							onContinue={handleContinue}
 							selections={selections}
-							setIsSaved={setIsSaved}
-							savedAddresses={true}
+							onSelectionsChange={handleSelectionsChange}
+							setIsSaved={handleSetIsSaved}
 						/>
 					)}
 				</>
 			)}
+			{/* Displays read-only summary when section is completed */}
 			{!isExpanded && (
 				<OrderSummaryDetails
 					deliveryAddress={`${selections.deliveryDetails.address1}${selections.deliveryDetails.address2 ? `, ${selections.deliveryDetails.address2}` : ''}, ${selections.deliveryDetails.city}, ${selections.deliveryDetails.state} ${selections.deliveryDetails.zip}`}

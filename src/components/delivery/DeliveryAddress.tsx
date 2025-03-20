@@ -1,4 +1,4 @@
-import { Input, Select } from '@prism/dropcloth';
+import { Checkbox, Input, Select } from '@prism/dropcloth';
 import { useState } from 'react';
 import { type Selections } from '../../types';
 import { states } from '../utils/statesUtils';
@@ -11,22 +11,28 @@ type Props = {
 		state: string;
 		zip: string;
 	};
+	hideForSavedAddresses?: boolean; // Add this prop
 	membershipType?: string;
 	onChange: (value: any) => void;
 	selections: Selections;
 };
 
-const addressRegex = /^[a-zA-Z0-9\s,.-]+$/;
-const cityRegex = /^[a-zA-Z\s.-]+$/;
-const zipRegex = /^\d{5}$/;
+const addressRegex = /^[a-zA-Z0-9\s,.-]+$/; // Only alphanumeric, spaces, commas, periods, hyphens
+const cityRegex = /^[a-zA-Z\s.-]+$/; // Only letters, spaces, periods, hyphens
+const zipRegex = /^\d{5}$/; // Only 5 digits
 
-const DeliveryAddress = ({ onChange, selections }: Props) => {
+const DeliveryAddress = ({
+	hideForSavedAddresses,
+	onChange,
+	selections,
+}: Props) => {
 	const [formData, setFormData] = useState({
 		address1: selections.deliveryDetails?.address1 || '',
 		address2: selections.deliveryDetails?.address2 || '',
 		city: selections.deliveryDetails?.city || '',
 		state: selections.deliveryDetails?.state || '',
 		zip: selections.deliveryDetails?.zip || '',
+		locationName: selections.deliveryDetails?.locationName || '', // Correct property name
 	});
 
 	const [errors, setErrors] = useState({
@@ -35,6 +41,7 @@ const DeliveryAddress = ({ onChange, selections }: Props) => {
 		city: false,
 		state: false,
 		zip: false,
+		locationName: false,
 	});
 
 	const validateField = (name: string, value: string) => {
@@ -49,6 +56,10 @@ const DeliveryAddress = ({ onChange, selections }: Props) => {
 				return value.length > 0 && value.length <= 50 && cityRegex.test(value);
 			case 'zip':
 				return zipRegex.test(value);
+			case 'locationName': // Add validation for locationName
+				return (
+					!value || (value.length <= 50 && /^[a-zA-Z0-9\s.-]+$/.test(value))
+				);
 			default:
 				return true;
 		}
@@ -70,8 +81,12 @@ const DeliveryAddress = ({ onChange, selections }: Props) => {
 	};
 
 	return (
-		<div className="swdc-mr-[20px] swdc-mt-6 swdc-flex swdc-flex-shrink-0 swdc-flex-col swdc-gap-4">
-			<h3 className="swdc-font-bold swdc-uppercase">Delivery Address</h3>
+		<div
+			className={`${!hideForSavedAddresses ? 'swdc-mt-6' : 'swdc-mt-2'} swdc-flex swdc-flex-shrink-0 swdc-flex-col swdc-gap-4`}
+		>
+			{!hideForSavedAddresses && (
+				<h3 className="swdc-font-bold swdc-uppercase">Delivery Address</h3>
+			)}
 			<div className="swdc-gap-4 md:swdc-flex">
 				<div className="swdc-w-full md:swdc-w-1/2">
 					<p className="swdc-pb-1">Address line 1*</p>
@@ -115,7 +130,6 @@ const DeliveryAddress = ({ onChange, selections }: Props) => {
 						</span>
 					)}
 				</div>
-
 				<div className="swdc-mt-4 swdc-flex swdc-gap-4 md:swdc-mt-0 md:swdc-flex-none">
 					<div className="swdc-w-4/6 md:swdc-w-[180px]">
 						<p className="swdc-pb-1">State/Territory*</p>
@@ -157,12 +171,37 @@ const DeliveryAddress = ({ onChange, selections }: Props) => {
 					</div>
 				</div>
 			</div>
-			<p className="swdc-text-sm">
-				No address?{' '}
-				<a href="#" className="swdc-ml-1 swdc-font-medium hover:swdc-underline">
-					Set your delivery spot on a map.
-				</a>
-			</p>
+
+			<div className="swdc-flex-none swdc-gap-4 md:swdc-flex">
+				<Checkbox name="" polarity="dark" value="save-address-to-account">
+					Save this address to my account
+				</Checkbox>
+				<div className="swdc-mt-2 swdc-w-full">
+					<p className="swdc-pb-1">Name this location</p>
+					<Input
+						className="swdc-w-full md:swdc-w-[305px]"
+						name="locationName"
+						onChange={handleInputChange}
+						value={formData.locationName}
+					/>
+					{errors.locationName && (
+						<span className="swdc-text-sm swdc-text-[#93324C]">
+							Please enter letters, numbers, spaces and hyphens only
+						</span>
+					)}
+				</div>
+			</div>
+			{!hideForSavedAddresses && (
+				<p className="swdc-text-sm">
+					No address?{' '}
+					<a
+						href="#"
+						className="swdc-ml-1 swdc-font-medium hover:swdc-underline"
+					>
+						Set your delivery spot on a map.
+					</a>
+				</p>
+			)}
 		</div>
 	);
 };

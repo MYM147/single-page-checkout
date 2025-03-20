@@ -1,15 +1,93 @@
 import {
+	Button,
 	IconRegularCaretDown,
 	IconRegularCaretUp,
 	IconRegularClose,
 } from '@prism/dropcloth';
 import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+	setSavedAddressSelected,
+	updateDeliveryDetails,
+} from '../../store/slices/fulfillmentSlice';
 import { savedAddresses } from '../utils/savedAddressUtil';
+import DeliveryAddress from './DeliveryAddress';
 
 const SavedDeliveryAddresses = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedAddress, setSelectedAddress] = useState(savedAddresses[0]);
+	const { selections } = useAppSelector((state) => state.fulfillment);
+	const [addresses, setAddresses] = useState(savedAddresses);
 
+	const dispatch = useAppDispatch();
+	const [addNewAddressForm, setAddNewAddressForm] = useState(false);
+
+	const handleAddNewAddress = () => {
+		setAddNewAddressForm(true);
+	};
+
+	const handleCancelNewAddress = () => {
+		setAddNewAddressForm(false);
+	};
+
+	const validateLocationName = (name: string) => {
+		const locationNameRegex = /^[a-zA-Z0-9\s.-]+$/;
+		return name.length > 0 && name.length <= 50 && locationNameRegex.test(name);
+	};
+
+	const [formData, setFormData] = useState({
+		address1: '',
+		address2: '',
+		city: '',
+		state: '',
+		zip: '',
+		phone: '',
+	});
+
+	const handleAddressChange = (data: {
+		address1: string;
+		address2: string;
+		city: string;
+		state: string;
+		zip: string;
+		phone?: string;
+	}) => {
+		setFormData({
+			...data,
+			phone: data.phone || '',
+		});
+	};
+
+	const handleSaveNewAddress = (formData: {
+		address1: string;
+		address2: string;
+		city: string;
+		state: string;
+		zip: string;
+		phone?: string;
+		locationName?: string;
+	}) => {
+		// Validate location name if provided
+		const locationName =
+			formData.locationName || `New Address ${addresses.length + 1}`;
+		if (!validateLocationName(locationName)) {
+			// Show error or use default name
+			return;
+		}
+
+		const newAddress = {
+			locationName: locationName,
+			streetAddress: formData.address1,
+			city: formData.city,
+			state: formData.state,
+			zip: formData.zip,
+		};
+
+		setAddresses([...addresses, newAddress]);
+		setSelectedAddress(newAddress);
+		setAddNewAddressForm(false);
+	};
+	
 	return (
 		<div className="swdc-mt-6 swdc-flex swdc-flex-shrink-0 swdc-flex-col swdc-gap-2 lg:swdc-mr-[20px]">
 			<h3 className="swdc-font-bold swdc-uppercase">Delivery Address</h3>
@@ -36,12 +114,21 @@ const SavedDeliveryAddresses = () => {
 
 				{isOpen && (
 					<div className="swdc-border-top-[0px] swdc-absolute swdc-z-50 swdc-w-full swdc-border-x swdc-border-b swdc-bg-white">
-						{savedAddresses.map((address) => (
+						{addresses.map((address) => (
 							<div
 								key={address.locationName}
 								onClick={() => {
 									setSelectedAddress(address);
 									setIsOpen(false);
+									dispatch(setSavedAddressSelected(true));
+									dispatch(
+										updateDeliveryDetails({
+											address1: address.streetAddress,
+											city: address.city,
+											state: address.state,
+											zip: address.zip,
+										})
+									);
 								}}
 								className="hover:swdc-bg-gray-100 swdc-cursor-pointer swdc-p-2 hover:swdc-bg-[#f6f6f6]"
 							>
@@ -57,12 +144,50 @@ const SavedDeliveryAddresses = () => {
 					</div>
 				)}
 			</div>
-			<div>
-				<p className="swdc-ml-2 swdc-mt-2 swdc-flex swdc-font-bold swdc-uppercase swdc-tracking-[1.5px]">
-					<IconRegularClose className="swdc-mr-1 swdc-rotate-45" />
-					ADD A NEW ADDRESS
-				</p>
-			</div>
+			{addNewAddressForm ? (
+				<>
+					<DeliveryAddress
+						defaultValues={formData}
+						onChange={handleAddressChange}
+						selections={selections}
+						hideForSavedAddresses={true}
+					/>
+					<div className="swdc-mt-4 swdc-flex swdc-justify-end swdc-gap-4">
+						<Button
+							onClick={handleCancelNewAddress}
+							polarity="dark"
+							type="button"
+							variant="outlined"
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={() => handleSaveNewAddress(formData)}
+							polarity="dark"
+							type="button"
+							variant="filled"
+						>
+							Save
+						</Button>
+					</div>
+				</>
+			) : (
+				<>
+					<p
+						className="swdc-ml-2 swdc-mt-2 swdc-flex swdc-cursor-pointer swdc-font-bold swdc-uppercase swdc-tracking-[1.5px]"
+						onClick={handleAddNewAddress}
+					>
+						<IconRegularClose className="swdc-mr-1 swdc-rotate-45" />
+						ADD A NEW ADDRESS
+					</p>
+				</>
+			)}
+			<p className="swdc-mt-4 swdc-text-sm">
+				No address?{' '}
+				<a href="#" className="swdc-ml-1 swdc-font-medium hover:swdc-underline">
+					Set your delivery spot on a map.
+				</a>
+			</p>
 		</div>
 	);
 };

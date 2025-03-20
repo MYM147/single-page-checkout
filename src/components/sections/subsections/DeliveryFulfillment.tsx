@@ -1,41 +1,79 @@
 import { Button } from '@prism/dropcloth';
-import { useState } from 'react';
-import { type Selections } from '../../../types';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import {
+	setLoading,
+	setSaved,
+	updateDeliveryDetails,
+	updateSelections,
+} from '../../../store/slices/fulfillmentSlice';
+import { Selections } from '../../../types';
 import DeliveryAddress from '../../delivery/DeliveryAddress';
 import DeliveryNotificationNumber from '../../delivery/DeliveryNotificationNumber';
 import SavedDeliveryAddresses from '../../delivery/SavedDeliveryAddresses';
 import DateSelectMenu from '../../global/DateSelectMenu';
 import SpecialInstructions from '../../global/SpecialInstructions';
+import { getDates } from '../../utils/dateUtils';
 
 type Props = {
-	membershipType: 'PRO' | 'DIY';
 	onContinue: () => void;
-	onSelectionsChange: (selections: Selections) => void;
-	savedAddresses?: boolean;
+	onSelectionsChange: (selections: Partial<Selections>) => void;
 	selections: Selections;
 	setIsSaved: (value: boolean) => void;
 };
 
+// Form component for delivery options
 const DeliveryFulfillment = ({
-	membershipType,
 	onContinue,
 	onSelectionsChange,
-	savedAddresses,
 	selections,
 	setIsSaved,
 }: Props) => {
-	const [formData] = useState({
+	const dispatch = useAppDispatch();
+	const { membershipType, savedAddressSelected } = useAppSelector(
+		(state) => state.fulfillment
+	);
+
+	const weekDates = getDates();
+
+	// Handles date selection and determines if rush delivery is available
+	const handleDateSelect = (date: string) => {
+		const isRushDay =
+			date ===
+			weekDates[0].toLocaleDateString('en-US', {
+				weekday: 'long',
+				month: 'short',
+				day: 'numeric',
+			});
+
+		dispatch(
+			updateSelections({
+				deliveryDate: date,
+				deliveryTimeSlot: isRushDay ? 'rush' : selections.deliveryTimeSlot,
+				deliveryTime: isRushDay ? '8AM - 11AM' : selections.deliveryTime,
+			})
+		);
+
+		onSelectionsChange({
+			...selections,
+			deliveryDate: date,
+			deliveryTimeSlot: isRushDay ? 'rush' : selections.deliveryTimeSlot,
+			deliveryTime: isRushDay ? '8AM - 11AM' : selections.deliveryTime,
+		});
+	};
+
+	// Form data for delivery address
+	const formData = {
 		address1: selections.deliveryDetails?.address1 || '',
 		address2: selections.deliveryDetails?.address2 || '',
 		city: selections.deliveryDetails?.city || '',
 		state: selections.deliveryDetails?.state || '',
 		zip: selections.deliveryDetails?.zip || '',
 		phone: selections.deliveryDetails?.phone || '',
-	});
+	};
 
-	const [, setLoading] = useState(false); // Loading state
-
-	const handleAddressChange = (addressData: any) => {
+	// Updates delivery address and triggers loading state when valid
+	const handleAddressChange = (addressData: Partial<typeof formData>) => {
+		dispatch(updateDeliveryDetails(addressData));
 		onSelectionsChange({
 			...selections,
 			deliveryDetails: {
@@ -46,13 +84,14 @@ const DeliveryFulfillment = ({
 
 		// Check if the address is valid
 		if (isAddressValid()) {
-			setLoading(true); // Start loading
+			dispatch(setLoading(true));
 			setTimeout(() => {
-				setLoading(false); // Stop loading after a delay (simulate loading)
-			}, 10000); // Simulate a 1 second loading time
+				dispatch(setLoading(false));
+			}, 1000);
 		}
 	};
 
+	// Validates address has all required fields
 	const isAddressValid = () => {
 		return (
 			selections.deliveryDetails?.address1 &&
@@ -62,7 +101,9 @@ const DeliveryFulfillment = ({
 		);
 	};
 
+	// Updates phone number for delivery notifications
 	const handlePhoneChange = (phone: string) => {
+		dispatch(updateDeliveryDetails({ phone }));
 		onSelectionsChange({
 			...selections,
 			deliveryDetails: {
@@ -72,6 +113,7 @@ const DeliveryFulfillment = ({
 		});
 	};
 
+	// Validates all required fields before enabling continue button
 	const isFormValid = () => {
 		const addressValid = Boolean(
 			selections.deliveryDetails?.address1 &&
@@ -94,59 +136,44 @@ const DeliveryFulfillment = ({
 				<p className="swdc-text-sm"> * Required</p>
 			</div>
 
+			{/* Conditionally renders saved addresses for PRO members else DIY members */}
 			{membershipType === 'PRO' ? (
-				<>
-				{savedAddresses ? (
-					<SavedDeliveryAddresses/>
-				) : (
-					<DeliveryAddress
-						defaultValues={formData}
-						onChange={handleAddressChange}
-						selections={selections}
-					/>
-				)}
-					
-				</>
+				<SavedDeliveryAddresses />
 			) : (
-				<>
-					<DeliveryAddress
-						defaultValues={formData}
-						onChange={handleAddressChange}
-						selections={selections}
-					/>
-
-					<div className="swdc-relative">
-						<DateSelectMenu
-							disabled={!isAddressValid()}
-							onDateSelect={(date) => {
-								onSelectionsChange({
-									...selections,
-									deliveryDate: date,
-									deliveryTimeSlot: 'rush', // Set this to indicate rush delivery
-									deliveryTime: '8AM - 11AM', // Set the time display for rush delivery
-								});
-							}}
-							onSelectionsChange={onSelectionsChange}
-							rush={true}
-							selectedDate={selections.deliveryDate}
-							selectedTimeSlot={selections.deliveryTimeSlot}
-							selections={selections}
-							title="Delivery Date"
-						/>
-					</div>
-				</>
+				<DeliveryAddress
+					defaultValues={formData}
+					onChange={handleAddressChange}
+					selections={selections}
+				/>
 			)}
-
+			<div className="swdc-relative">
+				<DateSelectMenu
+					disabled={
+						membershipType === 'PRO' ? !savedAddressSelected : !isAddressValid()
+					}
+					onDateSelect={handleDateSelect}
+					onSelectionsChange={onSelectionsChange}
+					rush={true}
+					selectedDate={selections.deliveryDate}
+					selectedTimeSlot={selections.deliveryTimeSlot}
+					selections={selections}
+					title="Delivery Date"
+				/>
+			</div>
 			<DeliveryNotificationNumber
 				defaultValue={selections.deliveryDetails?.phone}
 				onChange={handlePhoneChange}
 				selections={selections}
 				title="Delivery Notification Number"
 			/>
-
 			<SpecialInstructions
 				maxLength={100}
 				onChange={(value) => {
+					dispatch(
+						updateSelections({
+							specialInstructions: value,
+						})
+					);
 					onSelectionsChange({
 						...selections,
 						specialInstructions: value,
@@ -156,13 +183,13 @@ const DeliveryFulfillment = ({
 				title="Special Instructions (Optional)"
 				value={selections.specialInstructions}
 			/>
-
 			<Button
 				className="swdc-mt-6"
 				disabled={!isFormValid()}
 				onClick={() => {
 					onContinue();
 					setIsSaved(true);
+					dispatch(setSaved(true));
 				}}
 			>
 				Save and Continue

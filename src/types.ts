@@ -36,6 +36,7 @@ export interface Selections {
 		city: string;
 		state: string;
 		zip: string;
+		locationName?: string;
 	};
 	deliveryTimeSlot: string;
 }
