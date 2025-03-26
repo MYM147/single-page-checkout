@@ -2,12 +2,14 @@ import { IconFillAlarm } from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
 import { Selections } from '../../types';
 import { getDates } from '../utils/dateUtils';
-import TimeSelector from './timeselector/TimeSelector';
-import TimeSlot from './timeselector/TimeSlot';
+import BasicTimeSelector from './timeselector/BasicTimeSelector';
+import BasicTimeSlot from './timeselector/BasicTimeSlot';
+import ProTimeSelector from './timeselector/ProTimeSelector'; // Add this import
 import StoreHoursTooltip from './tooltips/StoreHoursTooltip';
 
 type Props = {
 	disabled?: boolean;
+	membershipType?: 'PRO' | 'DIY'; // Add this prop
 	onDateSelect: (date: string) => void;
 	onSelectionsChange: (selections: Selections) => void;
 	rush?: boolean;
@@ -21,6 +23,7 @@ const weekDates = getDates();
 
 export const DateSelectMenu = ({
 	disabled = false,
+	membershipType = 'DIY', // Default to DIY if not provided
 	onDateSelect,
 	onSelectionsChange,
 	rush,
@@ -43,6 +46,7 @@ export const DateSelectMenu = ({
 	}, [selectedDate, selections.pickupDateSelection, selections.deliveryDate]);
 
 	useEffect(() => {
+		// Check if the selected date is today (rush day)
 		if (selectedDateState) {
 			const today = weekDates[0].toLocaleDateString('en-US', {
 				weekday: 'long',
@@ -50,7 +54,6 @@ export const DateSelectMenu = ({
 				day: 'numeric',
 			});
 
-			// Ensure we're passing a boolean, not undefined
 			setIsRushSelected(Boolean(selectedDateState === today && rush));
 		}
 	}, [selectedDateState, rush]);
@@ -183,7 +186,7 @@ export const DateSelectMenu = ({
 							<p>Please fill out delivery address to continue</p>
 						</div>
 					) : isRushSelected ? (
-						<TimeSlot
+						<BasicTimeSlot
 							defaultValue={selections.deliveryTimeSlot}
 							name="rush-delivery"
 							onSelect={(timeSlot) => {
@@ -200,42 +203,104 @@ export const DateSelectMenu = ({
 							value="rush"
 						/>
 					) : selectedDateState && !isRushSelected ? (
-						<TimeSelector
-							timeSlots={[
-								{
-									deliveryIsFree: false,
-									price: 25,
-									text: '8AM - NOON',
-									title: 'Morning',
-									value: 'morning',
-								},
-								{
-									deliveryIsFree: true,
-									price: 25,
-									text: 'NOON - 5PM',
-									title: 'Afternoon',
-									value: 'afternoon',
-								},
-							]}
-							defaultValue={selections.deliveryTimeSlot}
-							onSelect={(timeSlot) => {
-								const timeDisplay =
-									timeSlot === 'morning'
-										? '8AM - NOON'
-										: timeSlot === 'afternoon'
-											? 'NOON - 5PM'
-											: timeSlot === 'rush'
-												? '8AM - 11AM'
-												: 'Standard Delivery';
+						membershipType === 'PRO' ? (
+							// PRO member time selector with courier options
+							<ProTimeSelector
+								timeSlots={[
+									{
+										courierType: 'S-W Delivery',
+										deliveryIsFree: false,
+										price: 25,
+										text: 'Standard delivery',
+										title: '9AM - 5PM',
+										value: 'sw-morning',
+									},
+									{
+										courierType: 'S-W Delivery',
+										deliveryIsFree: true,
+										price: 25,
+										text: 'Free with PRO membership',
+										title: '12PM - 8PM',
+										value: 'sw-afternoon',
+									},
+									{
+										courierType: 'Local Courier',
+										deliveryIsFree: false,
+										price: 35,
+										text: 'Express delivery',
+										title: '10AM - 2PM',
+										value: 'local-morning',
+									},
+									{
+										courierType: 'Local Courier',
+										deliveryIsFree: false,
+										price: 30,
+										text: 'Same-day delivery',
+										title: '3PM - 7PM',
+										value: 'local-afternoon',
+									},
+								]}
+								defaultValue={selections.deliveryTimeSlot}
+								onSelect={(timeSlot) => {
+									// Determine time display based on selected slot
+									const timeDisplay =
+										timeSlot === 'sw-morning'
+											? '9AM - 5PM'
+											: timeSlot === 'sw-afternoon'
+												? '12PM - 8PM'
+												: timeSlot === 'local-morning'
+													? '10AM - 2PM'
+													: timeSlot === 'local-afternoon'
+														? '3PM - 7PM'
+														: 'Standard Delivery';
 
-								onSelectionsChange({
-									...selections,
-									deliveryTimeSlot: timeSlot,
-									deliveryTime: timeDisplay,
-								});
-							}}
-							selections={selections}
-						/>
+									onSelectionsChange({
+										...selections,
+										deliveryTimeSlot: timeSlot,
+										deliveryTime: timeDisplay,
+									});
+								}}
+								selections={selections}
+							/>
+						) : (
+							// DIY member time selector (original)
+							<BasicTimeSelector
+								timeSlots={[
+									{
+										deliveryIsFree: false,
+										price: 25,
+										text: '8AM - NOON',
+										title: 'Morning',
+										value: 'morning',
+									},
+									{
+										deliveryIsFree: true,
+										price: 25,
+										text: 'NOON - 5PM',
+										title: 'Afternoon',
+										value: 'afternoon',
+									},
+								]}
+								defaultValue={selections.deliveryTimeSlot}
+								onSelect={(timeSlot) => {
+									const timeDisplay =
+										timeSlot === 'morning'
+											? '8AM - NOON'
+											: timeSlot === 'afternoon'
+												? 'NOON - 5PM'
+												: timeSlot === 'rush'
+													? '8AM - 11AM'
+													: 'Standard Delivery';
+
+									onSelectionsChange({
+										...selections,
+										deliveryTimeSlot: timeSlot,
+										deliveryTime: timeDisplay,
+									});
+								}}
+								selections={selections}
+							/>
+						)
 					) : (
 						<div className="swdc-mt-2 swdc-flex swdc-h-[68px] swdc-w-full swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-opacity-50">
 							<p>Please select a date to find available timeslots</p>

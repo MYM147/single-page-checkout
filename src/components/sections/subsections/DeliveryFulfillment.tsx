@@ -140,17 +140,35 @@ const DeliveryFulfillment = ({
 			{membershipType === 'PRO' ? (
 				<SavedDeliveryAddresses />
 			) : (
-				<DeliveryAddress
-					defaultValues={formData}
-					onChange={handleAddressChange}
-					selections={selections}
-				/>
+				<>
+					<DeliveryAddress
+						defaultValues={formData}
+						onChange={handleAddressChange}
+						selections={selections}
+					/>
+					<DateSelectMenu
+						disabled={
+							membershipType === 'PRO'
+								? !savedAddressSelected
+								: !isAddressValid()
+						}
+						membershipType={membershipType}
+						onDateSelect={handleDateSelect}
+						onSelectionsChange={onSelectionsChange}
+						rush={true}
+						selectedDate={selections.deliveryDate}
+						selectedTimeSlot={selections.deliveryTimeSlot}
+						selections={selections}
+						title="Delivery Date"
+					/>
+				</>
 			)}
 			<div className="swdc-relative">
 				<DateSelectMenu
 					disabled={
 						membershipType === 'PRO' ? !savedAddressSelected : !isAddressValid()
 					}
+					membershipType={membershipType}
 					onDateSelect={handleDateSelect}
 					onSelectionsChange={onSelectionsChange}
 					rush={true}
@@ -197,5 +215,4 @@ const DeliveryFulfillment = ({
 		</>
 	);
 };
-
 export default DeliveryFulfillment;

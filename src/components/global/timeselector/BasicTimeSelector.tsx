@@ -1,5 +1,5 @@
 import { type Selections } from '../../../types';
-import TimeSlot from './TimeSlot';
+import TimeSlot from './BasicTimeSlot';
 
 type Props = {
 	defaultValue?: string;
