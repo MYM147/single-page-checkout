@@ -45,7 +45,11 @@ input[type="number"] {
   display: none;
 }
 
-.has-large-radio .swdc-radio {
+.swdc-radio {
+  margin-left: 10px
+}
+
+.has-large-radio.swdc-radio {
   width: 35px !important;
   height: 35px !important;
 

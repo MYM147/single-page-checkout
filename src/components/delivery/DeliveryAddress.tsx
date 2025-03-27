@@ -171,27 +171,32 @@ const DeliveryAddress = ({
 				</div>
 			</div>
 			<div className="swdc-flex swdc-w-full swdc-items-center swdc-justify-between swdc-gap-4">
-				<Checkbox
-					name="save-address-to-account"
-					polarity="dark"
-					value="save-address-to-account"
-				>
-					Save this address to my account
-				</Checkbox>
-				<div className="swdc-w-full md:swdc-w-[300px]">
-					<p className="swdc-pb-1">Name this location</p>
-					<Input
-						className="swdc-w-full md:swdc-w-full"
-						name="locationName"
-						onChange={handleInputChange}
-						value={formData.locationName}
-					/>
-					{errors.locationName && (
-						<span className="swdc-text-sm swdc-text-[#93324C]">
-							Please enter letters, numbers, spaces and hyphens only
-						</span>
-					)}
-				</div>
+				{hideForSavedAddresses && (
+					<div className="swdc-flex swdc-items-center swdc-gap-2">
+						<Checkbox
+							name="save-address-to-account"
+							polarity="dark"
+							value="save-address-to-account"
+						>
+							Save this address to my account
+						</Checkbox>
+						<div className="swdc-w-full md:swdc-w-[300px]">
+							<p className="swdc-pb-1">Name this location</p>
+							<Input
+								className="swdc-w-full md:swdc-w-full"
+								name="locationName"
+								onChange={handleInputChange}
+								value={formData.locationName}
+							/>
+							{errors.locationName && (
+								<span className="swdc-text-sm swdc-text-[#93324C]">
+									Please enter letters, numbers, spaces and hyphens only
+								</span>
+							)}
+						</div>
+					</div>
+				)}
+
 			</div>
 			{!hideForSavedAddresses && (
 				<p className="swdc-text-sm">

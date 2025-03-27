@@ -23,7 +23,6 @@ const TimeSlot = ({
 	price,
 	rushDelivery,
 	text,
-	time,
 	title,
 	value,
 }: Props) => {
@@ -77,12 +76,11 @@ const TimeSlot = ({
 				>
 					<Radio
 						checked={defaultValue === value}
-						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1 ${name === 'pickup' ? 'swdc-block swdc-w-1/2 md:swdc-flex' : 'swdc-flex swdc-w-full'}`}
+						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-mt-2 swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1 ${name === 'pickup' ? 'swdc-block swdc-w-1/2 md:swdc-flex' : 'swdc-flex swdc-w-full'}`}
 						name={`${name}`}
 						onChange={(e) => onSelect(e.target.value)}
 						value={value}
 					>
-						{/* Renders rush delivery time slot with special styling */}
 						<div className="swdc-flex swdc-w-full swdc-items-center swdc-justify-between md:swdc-p-0">
 							<div className="swdc-flex swdc-flex-col">
 								<p className="swdc-flex swdc-items-center swdc-text-lg swdc-font-medium md:swdc-text-base">
@@ -90,7 +88,7 @@ const TimeSlot = ({
 									{title}
 								</p>
 								<p className="swdc-text-xs swdc-font-medium swdc-uppercase swdc-leading-tight swdc-text-[#6d6d6e] md:swdc-text-[12px] md:swdc-font-normal">
-									Get it by {time}
+									Get it by noon
 								</p>
 							</div>
 							<div className="swdc-flex swdc-h-full swdc-rounded-[2px] swdc-bg-[#edece6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold">

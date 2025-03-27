@@ -139,7 +139,6 @@ export const DateSelectMenu = ({
 														: selections.deliveryTime,
 												});
 											} else {
-												// Update both required pickup fields
 												onSelectionsChange({
 													...selections,
 													pickupDate: 'on-a-specific-day',
@@ -180,69 +179,63 @@ export const DateSelectMenu = ({
 
 			{title ? (
 				<div className={`${loading ? 'swdc-opacity-[.15]' : ''}`}>
-					<p className="swdc-mt-2">Time*</p>
+					{membershipType === 'DIY' && <h3 className="swdc-mt-2">Time*</h3>}
 					{disabled ? (
 						<div className="opacity-50 swdc-mt-2 swdc-flex swdc-h-[68px] swdc-w-full swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-opacity-50">
 							<p>Please fill out delivery address to continue</p>
 						</div>
 					) : isRushSelected ? (
-						<BasicTimeSlot
-							defaultValue={selections.deliveryTimeSlot}
-							name="rush-delivery"
-							onSelect={(timeSlot) => {
-								const timeDisplay = '8AM - 11AM';
-								onSelectionsChange({
-									...selections,
-									deliveryTimeSlot: timeSlot,
-									deliveryTime: timeDisplay,
-								});
-							}}
-							rushDelivery={true}
-							text="Get it by noon"
-							title="RUSH Delivery"
-							value="rush"
-						/>
+						<>
+							<h3 className="swdc-mt-5">Time*</h3>
+							<BasicTimeSlot
+								defaultValue={selections.deliveryTimeSlot}
+								name="rush-delivery"
+								onSelect={(timeSlot) => {
+									const timeDisplay = '8AM - 11AM';
+									onSelectionsChange({
+										...selections,
+										deliveryTimeSlot: timeSlot,
+										deliveryTime: timeDisplay,
+									});
+								}}
+								rushDelivery={true}
+								text="Get it by noon"
+								title="RUSH Delivery"
+								value="rush"
+							/>
+						</>
 					) : selectedDateState && !isRushSelected ? (
 						membershipType === 'PRO' ? (
 							// PRO member time selector with courier options
 							<ProTimeSelector
 								timeSlots={[
 									{
-										courierType: 'S-W Delivery',
-										deliveryIsFree: false,
-										price: 25,
+										courierType: 'Sherwin-Williams Delivery',
 										text: 'Standard delivery',
 										title: '9AM - 5PM',
 										value: 'sw-morning',
 									},
 									{
-										courierType: 'S-W Delivery',
-										deliveryIsFree: true,
-										price: 25,
-										text: 'Free with PRO membership',
+										courierType: 'Sherwin-Williams Delivery',
+										text: 'Standard delivery',
 										title: '12PM - 8PM',
 										value: 'sw-afternoon',
 									},
 									{
 										courierType: 'Local Courier',
-										deliveryIsFree: false,
-										price: 35,
-										text: 'Express delivery',
+										text: 'Standard delivery',
 										title: '10AM - 2PM',
 										value: 'local-morning',
 									},
 									{
 										courierType: 'Local Courier',
-										deliveryIsFree: false,
-										price: 30,
-										text: 'Same-day delivery',
+										text: 'Standard delivery',
 										title: '3PM - 7PM',
 										value: 'local-afternoon',
 									},
 								]}
 								defaultValue={selections.deliveryTimeSlot}
 								onSelect={(timeSlot) => {
-									// Determine time display based on selected slot
 									const timeDisplay =
 										timeSlot === 'sw-morning'
 											? '9AM - 5PM'
