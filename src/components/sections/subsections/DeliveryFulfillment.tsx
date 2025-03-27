@@ -9,7 +9,6 @@ import {
 import { Selections } from '../../../types';
 import DeliveryAddress from '../../delivery/DeliveryAddress';
 import DeliveryNotificationNumber from '../../delivery/DeliveryNotificationNumber';
-import ProDeliveryAddress from '../../delivery/ProDeliveryAddress';
 import SavedDeliveryAddresses from '../../delivery/SavedDeliveryAddresses';
 import DateSelectMenu from '../../global/DateSelectMenu';
 import SpecialInstructions from '../../global/SpecialInstructions';
