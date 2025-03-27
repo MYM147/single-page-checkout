@@ -23,6 +23,7 @@ const zipRegex = /^\d{5}$/; // Only 5 digits
 
 const DeliveryAddress = ({
 	hideForSavedAddresses,
+	membershipType,
 	onChange,
 	selections,
 }: Props) => {
@@ -170,14 +171,18 @@ const DeliveryAddress = ({
 					</div>
 				</div>
 			</div>
+
 			<div className="swdc-flex swdc-w-full swdc-items-center swdc-justify-between swdc-gap-4">
-				<Checkbox
-					name="save-address-to-account"
-					polarity="dark"
-					value="save-address-to-account"
-				>
-					Save this address to my account
-				</Checkbox>
+				{membershipType === 'PRO' && (
+					<Checkbox
+						name="save-address-to-account"
+						polarity="dark"
+						value="save-address-to-account"
+					>
+						Save this address to my account
+					</Checkbox>
+				)}
+
 				<div className="swdc-w-full md:swdc-w-[300px]">
 					<p className="swdc-pb-1">Name this location</p>
 					<Input

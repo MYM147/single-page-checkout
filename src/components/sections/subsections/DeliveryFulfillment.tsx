@@ -9,6 +9,7 @@ import {
 import { Selections } from '../../../types';
 import DeliveryAddress from '../../delivery/DeliveryAddress';
 import DeliveryNotificationNumber from '../../delivery/DeliveryNotificationNumber';
+import ProDeliveryAddress from '../../delivery/ProDeliveryAddress';
 import SavedDeliveryAddresses from '../../delivery/SavedDeliveryAddresses';
 import DateSelectMenu from '../../global/DateSelectMenu';
 import SpecialInstructions from '../../global/SpecialInstructions';
@@ -135,33 +136,14 @@ const DeliveryFulfillment = ({
 			<div className="swdc-mt-6">
 				<p className="swdc-text-sm"> * Required</p>
 			</div>
-
-			{/* Conditionally renders saved addresses for PRO members else DIY members */}
 			{membershipType === 'PRO' ? (
 				<SavedDeliveryAddresses />
 			) : (
-				<>
-					<DeliveryAddress
-						defaultValues={formData}
-						onChange={handleAddressChange}
-						selections={selections}
-					/>
-					<DateSelectMenu
-						disabled={
-							membershipType === 'PRO'
-								? !savedAddressSelected
-								: !isAddressValid()
-						}
-						membershipType={membershipType}
-						onDateSelect={handleDateSelect}
-						onSelectionsChange={onSelectionsChange}
-						rush={true}
-						selectedDate={selections.deliveryDate}
-						selectedTimeSlot={selections.deliveryTimeSlot}
-						selections={selections}
-						title="Delivery Date"
-					/>
-				</>
+				<DeliveryAddress
+					defaultValues={formData}
+					onChange={handleAddressChange}
+					selections={selections}
+				/>
 			)}
 			<div className="swdc-relative">
 				<DateSelectMenu
