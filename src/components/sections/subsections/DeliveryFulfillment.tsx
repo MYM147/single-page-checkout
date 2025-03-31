@@ -16,18 +16,13 @@ import { getDates } from '../../utils/dateUtils';
 
 type Props = {
 	onContinue: () => void;
-	onSelectionsChange: (selections: Partial<Selections>) => void;
 	selections: Selections;
 	setIsSaved: (value: boolean) => void;
 };
 
 // Form component for delivery options
-const DeliveryFulfillment = ({
-	onContinue,
-	onSelectionsChange,
-	selections,
-	setIsSaved,
-}: Props) => {
+
+const DeliveryFulfillment = ({ onContinue, selections, setIsSaved }: Props) => {
 	const dispatch = useAppDispatch();
 	const { membershipType, savedAddressSelected } = useAppSelector(
 		(state) => state.fulfillment
@@ -35,7 +30,6 @@ const DeliveryFulfillment = ({
 
 	const weekDates = getDates();
 
-	// Handles date selection and determines if rush delivery is available
 	const handleDateSelect = (date: string) => {
 		const isRushDay =
 			date ===
@@ -52,13 +46,6 @@ const DeliveryFulfillment = ({
 				deliveryTime: isRushDay ? '8AM - 11AM' : selections.deliveryTime,
 			})
 		);
-
-		onSelectionsChange({
-			...selections,
-			deliveryDate: date,
-			deliveryTimeSlot: isRushDay ? 'rush' : selections.deliveryTimeSlot,
-			deliveryTime: isRushDay ? '8AM - 11AM' : selections.deliveryTime,
-		});
 	};
 
 	// Form data for delivery address
@@ -74,16 +61,9 @@ const DeliveryFulfillment = ({
 	// Updates delivery address and triggers loading state when valid
 	const handleAddressChange = (addressData: Partial<typeof formData>) => {
 		dispatch(updateDeliveryDetails(addressData));
-		onSelectionsChange({
-			...selections,
-			deliveryDetails: {
-				...selections.deliveryDetails,
-				...addressData,
-			},
-		});
 
-		// Check if the address is valid
-		if (isAddressValid()) {
+		// Pass addressData to isAddressValid
+		if (isAddressValid(addressData)) {
 			dispatch(setLoading(true));
 			setTimeout(() => {
 				dispatch(setLoading(false));
@@ -92,39 +72,28 @@ const DeliveryFulfillment = ({
 	};
 
 	// Validates address has all required fields
-	const isAddressValid = () => {
+	const isAddressValid = (addressData: Partial<typeof formData>) => {
 		return (
-			selections.deliveryDetails?.address1 &&
-			selections.deliveryDetails?.city &&
-			selections.deliveryDetails?.state &&
-			selections.deliveryDetails?.zip
+			addressData.address1 &&
+			addressData.city &&
+			addressData.state &&
+			addressData.zip
 		);
 	};
 
 	// Updates phone number for delivery notifications
 	const handlePhoneChange = (phone: string) => {
 		dispatch(updateDeliveryDetails({ phone }));
-		onSelectionsChange({
-			...selections,
-			deliveryDetails: {
-				...selections.deliveryDetails,
-				phone,
-			},
-		});
 	};
 
 	// Validates all required fields before enabling continue button
 	const isFormValid = () => {
-		const addressValid = Boolean(
-			selections.deliveryDetails?.address1 &&
-				selections.deliveryDetails?.city &&
-				selections.deliveryDetails?.state &&
-				selections.deliveryDetails?.zip
-		);
-
+		const { address1, city, state, zip, phone } =
+			selections.deliveryDetails || {};
+		const addressValid = address1 && city && state && zip;
 		const dateValid = selections.deliveryDate;
 		const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
-		const phoneValid = phoneRegex.test(selections.deliveryDetails?.phone);
+		const phoneValid = phoneRegex.test(phone); // No optional chaining needed here
 		const timeValid = selections.deliveryTimeSlot;
 
 		return addressValid && phoneValid && dateValid && timeValid;
@@ -147,14 +116,19 @@ const DeliveryFulfillment = ({
 			<div className="swdc-relative">
 				<DateSelectMenu
 					disabled={
-						membershipType === 'PRO' ? !savedAddressSelected : !isAddressValid()
+						membershipType === 'PRO'
+							? !savedAddressSelected
+							: !isAddressValid(selections.deliveryDetails)
 					}
 					membershipType={membershipType}
 					onDateSelect={handleDateSelect}
-					onSelectionsChange={onSelectionsChange}
+					onSelectionsChange={(updatedSelections) => {
+						// Directly dispatch to Redux
+						dispatch(updateSelections(updatedSelections));
+					}}
 					rush={true}
 					selectedDate={selections.deliveryDate}
-					selectedTimeSlot={selections.deliveryTimeSlot}
+					selectedTimeSlot={selections.deliveryTimeSlot} // Make sure this is passed
 					selections={selections}
 					title="Delivery Date"
 				/>
@@ -168,15 +142,7 @@ const DeliveryFulfillment = ({
 			<SpecialInstructions
 				maxLength={100}
 				onChange={(value) => {
-					dispatch(
-						updateSelections({
-							specialInstructions: value,
-						})
-					);
-					onSelectionsChange({
-						...selections,
-						specialInstructions: value,
-					});
+					dispatch(updateSelections({ specialInstructions: value }));
 				}}
 				text="If you have any special instructions for delivery, add them here."
 				title="Special Instructions (Optional)"

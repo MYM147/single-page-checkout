@@ -87,7 +87,7 @@ const SavedDeliveryAddresses = () => {
 		setSelectedAddress(newAddress);
 		setAddNewAddressForm(false);
 	};
-	
+
 	return (
 		<div className="swdc-mt-6 swdc-flex swdc-flex-shrink-0 swdc-flex-col swdc-gap-2 lg:swdc-mr-[20px]">
 			<h3 className="swdc-font-bold swdc-uppercase">Delivery Address</h3>
@@ -106,7 +106,7 @@ const SavedDeliveryAddresses = () => {
 							<IconRegularCaretDown className="swdc-relative swdc-top-2" />
 						)}
 					</div>
-					<div className="swdc-truncate swdc-text-[#6d6d6e]">
+					<div className="swdc-truncate swdc-pr-4 swdc-text-[#6d6d6e]">
 						{selectedAddress.streetAddress} {selectedAddress.city},{' '}
 						{selectedAddress.state} {selectedAddress.zip}
 					</div>

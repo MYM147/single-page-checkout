@@ -36,14 +36,12 @@ const FulfillmentOptions = ({ className, onContinue, onEdit }: Props) => {
 		dispatch(setSaved(value));
 	};
 
-	//Determines initial fulfillment type based on existing selections
 	const handleFulfillmentTypeChange = (type: string) => {
 		if (type === 'pickup' || type === 'delivery') {
 			dispatch(setFulfillmentType(type));
 		}
 	};
 
-	//Toggles between pickup and delivery fulfillment options
 	const toggleExpanded = (value: boolean) => {
 		dispatch(setExpanded(value));
 	};
@@ -81,7 +79,6 @@ const FulfillmentOptions = ({ className, onContinue, onEdit }: Props) => {
 						value2="delivery"
 						value="pickup"
 					/>
-					{/* Conditionally renders either pickup or delivery form based on user selection */}
 					{fulfillmentType === 'pickup' ? (
 						<PickupFulfillment
 							onContinue={handleContinue}
@@ -93,13 +90,11 @@ const FulfillmentOptions = ({ className, onContinue, onEdit }: Props) => {
 						<DeliveryFulfillment
 							onContinue={handleContinue}
 							selections={selections}
-							onSelectionsChange={handleSelectionsChange}
 							setIsSaved={handleSetIsSaved}
 						/>
 					)}
 				</>
 			)}
-			{/* Displays read-only summary when section is completed */}
 			{!isExpanded && (
 				<OrderSummaryDetails
 					deliveryAddress={`${selections.deliveryDetails.address1}${selections.deliveryDetails.address2 ? `, ${selections.deliveryDetails.address2}` : ''}, ${selections.deliveryDetails.city}, ${selections.deliveryDetails.state} ${selections.deliveryDetails.zip}`}

@@ -4,12 +4,12 @@ import { Selections } from '../../types';
 import { getDates } from '../utils/dateUtils';
 import BasicTimeSelector from './timeselector/BasicTimeSelector';
 import BasicTimeSlot from './timeselector/BasicTimeSlot';
-import ProTimeSelector from './timeselector/ProTimeSelector'; // Add this import
+import ProTimeSelector from './timeselector/ProTimeSelector';
 import StoreHoursTooltip from './tooltips/StoreHoursTooltip';
 
 type Props = {
 	disabled?: boolean;
-	membershipType?: 'PRO' | 'DIY'; // Add this prop
+	membershipType?: 'PRO' | 'DIY';
 	onDateSelect: (date: string) => void;
 	onSelectionsChange: (selections: Selections) => void;
 	rush?: boolean;
@@ -19,11 +19,18 @@ type Props = {
 	title?: string;
 };
 
+type TimeSlot = {
+	courierType: 'Sherwin-Williams Delivery' | 'Local Courier';
+	text: string;
+	title: string;
+	value: string;
+};
+
 const weekDates = getDates();
 
 export const DateSelectMenu = ({
 	disabled = false,
-	membershipType = 'DIY', // Default to DIY if not provided
+	membershipType = 'DIY',
 	onDateSelect,
 	onSelectionsChange,
 	rush,
@@ -31,22 +38,77 @@ export const DateSelectMenu = ({
 	selections,
 	title,
 }: Props) => {
-	const [isRushSelected, setIsRushSelected] = useState<boolean>(
+	const [isRushSelected, setIsRushSelected] = useState(
 		selections.deliveryTimeSlot === 'rush'
 	);
-	const [loading, setLoading] = useState<boolean>(false);
-	const [selectedDateState, setSelectedDateState] = useState<string | null>(
+	const [loading, setLoading] = useState(false);
+	const [selectedDateState, setSelectedDateState] = useState(
 		selectedDate || selections.deliveryDate
 	);
+
+	const [selectedTimeSlot, setSelectedTimeSlot] = useState(
+		selections.deliveryTimeSlot
+	);
+
+	const proTimeSlots: TimeSlot[] = [
+		{
+			courierType: 'Sherwin-Williams Delivery',
+			text: 'Standard delivery',
+			title: '7AM - 9AM',
+			value: 'sw-morning-7-9',
+		},
+		{
+			courierType: 'Sherwin-Williams Delivery',
+			text: 'Standard delivery',
+			title: '9AM - 11AM',
+			value: 'sw-afternoon-9-11',
+		},
+		{
+			courierType: 'Sherwin-Williams Delivery',
+			text: 'Standard delivery',
+			title: '11AM - 2PM',
+			value: 'sw-afternoon-11-2',
+		},
+		{
+			courierType: 'Sherwin-Williams Delivery',
+			text: 'Standard delivery',
+			title: '2PM - 5PM',
+			value: 'sw-afternoon-2-5',
+		},
+		{
+			courierType: 'Local Courier',
+			text: 'Standard delivery',
+			title: '9AM - 10AM',
+			value: 'local-morning-9-10',
+		},
+		{
+			courierType: 'Local Courier',
+			text: 'Standard delivery',
+			title: '5PM - 7PM',
+			value: 'local-morning-5-7',
+		},
+		{
+			courierType: 'Local Courier',
+			text: 'Standard delivery',
+			title: '7PM - 9PM',
+			value: 'local-afternoon-7-9',
+		},
+	];
 
 	useEffect(() => {
 		setSelectedDateState(
 			selectedDate || selections.pickupDateSelection || selections.deliveryDate
 		);
-	}, [selectedDate, selections.pickupDateSelection, selections.deliveryDate]);
+		// Keep local state in sync with Redux
+		setSelectedTimeSlot(selections.deliveryTimeSlot);
+	}, [
+		selectedDate,
+		selections.pickupDateSelection,
+		selections.deliveryDate,
+		selections.deliveryTimeSlot,
+	]);
 
 	useEffect(() => {
-		// Check if the selected date is today (rush day)
 		if (selectedDateState) {
 			const today = weekDates[0].toLocaleDateString('en-US', {
 				weekday: 'long',
@@ -59,14 +121,34 @@ export const DateSelectMenu = ({
 	}, [selectedDateState, rush]);
 
 	useEffect(() => {
-		// Simulate loading time slots
 		setLoading(true);
 		const timer = setTimeout(() => {
 			setLoading(false);
-		}, 1000); // Simulate a 1 second loading time
+		}, 1000);
 
 		return () => clearTimeout(timer);
 	}, []);
+
+	// Handle time slot selection with local state update first
+	const handleTimeSlotSelect = (uniqueId: string) => {
+		// Extract the actual value from the uniqueId (e.g., "sw-morning-7-9" from "sw-morning-7-9-0")
+		const value = uniqueId.split('-').slice(0, -1).join('-');
+
+		// Find the corresponding time slot in the proTimeSlots array to get its title
+		const selectedSlot = proTimeSlots.find((slot: TimeSlot) =>
+			uniqueId.startsWith(`${slot.value}-`)
+		);
+
+		// Use the title from the selected slot as the display time
+		const timeDisplay = selectedSlot?.title || value;
+
+		// Update Redux with both the time slot value and display time
+		onSelectionsChange({
+			...selections,
+			deliveryTimeSlot: uniqueId, // Store the uniqueId to maintain selection
+			deliveryTime: timeDisplay, // Store the human-readable time for display
+		});
+	};
 
 	return (
 		<>
@@ -125,7 +207,6 @@ export const DateSelectMenu = ({
 											onDateSelect(formattedDate);
 
 											if (rush) {
-												// Keep existing delivery logic
 												const isRushDay = index === 0;
 												setIsRushSelected(isRushDay);
 												onSelectionsChange({
@@ -188,10 +269,11 @@ export const DateSelectMenu = ({
 						<>
 							<h3 className="swdc-mt-5">Time*</h3>
 							<BasicTimeSlot
-								defaultValue={selections.deliveryTimeSlot}
+								defaultValue={selectedTimeSlot}
 								name="rush-delivery"
 								onSelect={(timeSlot) => {
 									const timeDisplay = '8AM - 11AM';
+									setSelectedTimeSlot(timeSlot);
 									onSelectionsChange({
 										...selections,
 										deliveryTimeSlot: timeSlot,
@@ -206,58 +288,18 @@ export const DateSelectMenu = ({
 						</>
 					) : selectedDateState && !isRushSelected ? (
 						membershipType === 'PRO' ? (
-							// PRO member time selector with courier options
 							<ProTimeSelector
-								timeSlots={[
-									{
-										courierType: 'Sherwin-Williams Delivery',
-										text: 'Standard delivery',
-										title: '9AM - 5PM',
-										value: 'sw-morning',
-									},
-									{
-										courierType: 'Sherwin-Williams Delivery',
-										text: 'Standard delivery',
-										title: '12PM - 8PM',
-										value: 'sw-afternoon',
-									},
-									{
-										courierType: 'Local Courier',
-										text: 'Standard delivery',
-										title: '10AM - 2PM',
-										value: 'local-morning',
-									},
-									{
-										courierType: 'Local Courier',
-										text: 'Standard delivery',
-										title: '3PM - 7PM',
-										value: 'local-afternoon',
-									},
-								]}
-								defaultValue={selections.deliveryTimeSlot}
-								onSelect={(timeSlot) => {
-									const timeDisplay =
-										timeSlot === 'sw-morning'
-											? '9AM - 5PM'
-											: timeSlot === 'sw-afternoon'
-												? '12PM - 8PM'
-												: timeSlot === 'local-morning'
-													? '10AM - 2PM'
-													: timeSlot === 'local-afternoon'
-														? '3PM - 7PM'
-														: 'Standard Delivery';
-
-									onSelectionsChange({
-										...selections,
-										deliveryTimeSlot: timeSlot,
-										deliveryTime: timeDisplay,
-									});
-								}}
+								selectedValue={selections.deliveryTimeSlot}
+								onSelect={handleTimeSlotSelect}
 								selections={selections}
+								timeSlots={proTimeSlots}
 							/>
 						) : (
-							// DIY member time selector (original)
 							<BasicTimeSelector
+								key={selectedDateState}
+								defaultValue={selectedTimeSlot}
+								onSelect={handleTimeSlotSelect}
+								selections={selections}
 								timeSlots={[
 									{
 										deliveryIsFree: false,
@@ -274,24 +316,6 @@ export const DateSelectMenu = ({
 										value: 'afternoon',
 									},
 								]}
-								defaultValue={selections.deliveryTimeSlot}
-								onSelect={(timeSlot) => {
-									const timeDisplay =
-										timeSlot === 'morning'
-											? '8AM - NOON'
-											: timeSlot === 'afternoon'
-												? 'NOON - 5PM'
-												: timeSlot === 'rush'
-													? '8AM - 11AM'
-													: 'Standard Delivery';
-
-									onSelectionsChange({
-										...selections,
-										deliveryTimeSlot: timeSlot,
-										deliveryTime: timeDisplay,
-									});
-								}}
-								selections={selections}
 							/>
 						)
 					) : (
