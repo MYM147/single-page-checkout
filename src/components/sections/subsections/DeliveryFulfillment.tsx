@@ -144,12 +144,12 @@ const DeliveryFulfillment = ({ onContinue, selections, setIsSaved }: Props) => {
 				onChange={(value) => {
 					dispatch(updateSelections({ specialInstructions: value }));
 				}}
-				text="If you have any special instructions for delivery, add them here."
+				text="If you have any special instructions for the store or delivery driver, add them here."
 				title="Special Instructions (Optional)"
 				value={selections.specialInstructions}
 			/>
 			<Button
-				className="swdc-mt-6"
+				className="swdc-mt-10 swdc-w-full md:swdc-w-1/2"
 				disabled={!isFormValid()}
 				onClick={() => {
 					onContinue();
