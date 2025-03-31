@@ -1,6 +1,10 @@
+import { createContext, useState } from 'react';
 import FreeDeliveryBanner from './components/global/FreeDeliveryBanner';
 import CheckoutProcessList from './components/sections/CheckoutProcessList';
 import { Sidebar } from './components/sidebar/Sidebar';
+import { UserType } from './types';
+
+export const UserContext = createContext<UserType | null>(null);
 
 function App() {
 	return (

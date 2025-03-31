@@ -1,6 +1,6 @@
 import { IconRegularTruck } from '@prism/dropcloth';
 import { useState } from 'react';
-import DeliveryProgressBar from '../Delivery/DeliveryProgressBar';
+import DeliveryProgressBar from '../delivery/DeliveryProgressBar';
 
 const FreeDeliveryBanner = () => {
 	const [deliveryAmount] = useState(62.22);
@@ -17,7 +17,7 @@ const FreeDeliveryBanner = () => {
 			) : (
 				<div className="swdc-flex swdc-w-full swdc-items-center swdc-bg-[#fff] swdc-px-3 swdc-py-2 md:swdc-hidden">
 					<p className="swdc-w-1/3 swdc-align-middle">
-						Add ${200 - deliveryAmount}
+						Add ${100 - deliveryAmount}
 						<br />
 						for FREE delivery
 					</p>

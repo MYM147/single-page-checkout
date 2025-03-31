@@ -19,7 +19,7 @@ $swdc-path-iconfont: '../node_modules/@prism/dropcloth/src/resources/iconfont/';
 :root {
   font-family: var(--swdc-text-family-brand);
   color: var(--swdc-color-dark-foreground-on-surface);
-  background-color: var(--swdc-color-surface-diy-1);
+  background-color: #f6f6f6;
 }
 
 h3 {
@@ -45,7 +45,11 @@ input[type="number"] {
   display: none;
 }
 
-.has-large-radio .swdc-radio {
+.swdc-radio {
+  margin-left: 10px
+}
+
+.has-large-radio.swdc-radio {
   width: 35px !important;
   height: 35px !important;
 

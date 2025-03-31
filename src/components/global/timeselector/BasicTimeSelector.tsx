@@ -1,5 +1,5 @@
 import { type Selections } from '../../../types';
-import TimeSlot from './TimeSlot';
+import TimeSlot from './BasicTimeSlot';
 
 type Props = {
 	defaultValue?: string;
@@ -13,10 +13,11 @@ type Props = {
 		value: string;
 	}>;
 };
-
+// Container for multiple time slot options
 const TimeSelector = ({ defaultValue, onSelect, timeSlots }: Props) => {
 	return (
 		<div className="swdc-flex swdc-flex-col swdc-gap-4 md:swdc-flex-row">
+			{/* Maps through available time slots and renders each option */}
 			{timeSlots.map((slot, index) => (
 				<TimeSlot
 					defaultValue={defaultValue}

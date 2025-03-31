@@ -36,6 +36,11 @@ export interface Selections {
 		city: string;
 		state: string;
 		zip: string;
+		locationName?: string;
 	};
 	deliveryTimeSlot: string;
 }
+
+export type UserType = {
+	layoutType: 'PRO' | 'DIY';
+};

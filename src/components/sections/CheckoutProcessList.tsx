@@ -5,9 +5,11 @@ import ContactDetails from './ContactDetails';
 import FulfillmentOptions from './FulfillmentOptions';
 import PaymentMethod from './PaymentMethod';
 
+// Main component that manages the checkout flow and expanded panel state
 const CheckoutProcessList = () => {
 	const [expandedPanel, setExpandedPanel] = useState(0);
 
+	// Initial state for all user selections throughout the checkout process
 	const [selections, setSelections] = useState<Selections>({
 		fulfillmentType: '',
 		deliveryAddress: '',
@@ -51,6 +53,7 @@ const CheckoutProcessList = () => {
 
 	return (
 		<div className="swdc-flex swdc-w-full swdc-max-w-[752px] swdc-flex-col swdc-gap-4">
+			{/* Controls which panel is currently expanded in the checkout flow */}
 			<FulfillmentOptions
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${expandedPanel === 0 ? 'swdc-h-auto swdc-opacity-100' : ''} `}
 				isExpanded={expandedPanel === 0}
@@ -59,7 +62,6 @@ const CheckoutProcessList = () => {
 				onSelectionsChange={setSelections}
 				selections={selections}
 			/>
-
 			<ContactDetails
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
 					expandedPanel === 1
@@ -69,7 +71,6 @@ const CheckoutProcessList = () => {
 				isExpanded={expandedPanel === 1}
 				onContinue={() => setExpandedPanel(2)}
 			/>
-
 			<AccountDetails
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
 					expandedPanel === 2
@@ -79,7 +80,6 @@ const CheckoutProcessList = () => {
 				isExpanded={expandedPanel === 2}
 				onContinue={() => setExpandedPanel(3)}
 			/>
-
 			<PaymentMethod
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
 					expandedPanel === 3
