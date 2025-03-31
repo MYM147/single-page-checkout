@@ -87,7 +87,7 @@ const CustomRadioTimeSlot = ({
 					</div>
 
 					{/* Text content - shifted right to make room for icon */}
-					<div className="swdc-ml-6 swdc-flex swdc-flex-col">
+					<div className="swdc-ml-7 swdc-flex swdc-flex-col">
 						<p className="swdc-text-[13px] swdc-font-bold swdc-uppercase swdc-text-[#6d6d6e] md:swdc-text-[10px]">
 							{courierType}
 						</p>

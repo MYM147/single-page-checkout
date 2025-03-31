@@ -94,24 +94,6 @@ export const DateSelectMenu = ({
 			value: 'sw-afternoon-1-3',
 		},
 		{
-			courierType: 'Sherwin-Williams Delivery',
-			text: 'Standard delivery',
-			title: '1PM - 3PM',
-			value: 'sw-afternoon-1-3',
-		},
-		{
-			courierType: 'Local Courier',
-			text: 'Standard delivery',
-			title: '7AM - 11AM',
-			value: 'local-morning-7-11',
-		},
-		{
-			courierType: 'Local Courier',
-			text: 'Standard delivery',
-			title: '7AM - 11AM',
-			value: 'local-morning-7-11',
-		},
-		{
 			courierType: 'Local Courier',
 			text: 'Standard delivery',
 			title: '7AM - 11AM',

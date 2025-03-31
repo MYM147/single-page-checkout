@@ -3,7 +3,7 @@ import {
 	IconRegularArrowLongRight,
 	IconRegularTruck,
 } from '@prism/dropcloth';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { type Selections } from '../../../types';
 import CustomRadioTimeSlot from './CustomRadioTimeSlot';
 import logo from '/public/assets/logo-sm.png';
@@ -32,30 +32,15 @@ type Props = {
 	timeSlots: TimeSlotData[];
 };
 
-// Helper function to extract start time in 24-hour format for sorting
-const getStartTimeInMinutes = (timeString: string | undefined): number => {
-	if (!timeString) return 0;
-
-	// Extract the start time (e.g., "7AM" from "7AM - 9AM")
-	const match = timeString.match(/(\d+)([AP]M)/i);
-	if (!match) return 0;
-
-	let hours = parseInt(match[1], 10);
-	const isPM = match[2].toUpperCase() === 'PM';
-
-	// Convert to 24-hour format
-	if (isPM && hours < 12) hours += 12;
-	if (!isPM && hours === 12) hours = 0;
-
-	return hours * 60; // Convert to minutes for easier comparison
-};
-
 const SLOTS_PER_PAGE = 8;
 
 const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 	const [activeFilter, setActiveFilter] = useState<FilterType>('All Couriers');
 	const [localSelectedValue, setLocalSelectedValue] = useState(selectedValue);
 	const [currentPage, setCurrentPage] = useState(0);
+
+	// Use a ref to track if we're in the middle of a page change
+	const isChangingPage = useRef(false);
 
 	// Keep local state in sync with prop
 	useEffect(() => {
@@ -70,25 +55,20 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 		);
 	});
 
-	// Then sort by start time
-	const sortedTimeSlots = [...filteredTimeSlots].sort((a, b) => {
-		const aStartTime = getStartTimeInMinutes(a.title);
-		const bStartTime = getStartTimeInMinutes(b.title);
-		return aStartTime - bStartTime;
-	});
-
-	// Generate stable uniqueIds for ALL time slots (not just current page)
-	const allTimeSlotIds = sortedTimeSlots.map((slot, index) => ({
+	// Then sort by start time and generate stable IDs
+	const allTimeSlotIds = filteredTimeSlots.map((slot, index) => ({
 		...slot,
 		uniqueId: `${slot.value}-${index}`,
 	}));
 
 	// Calculate total pages
-	const totalPages = Math.ceil(sortedTimeSlots.length / SLOTS_PER_PAGE);
+	const totalPages = Math.ceil(allTimeSlotIds.length / SLOTS_PER_PAGE);
 
 	// When filter changes, check if selected slot is still visible
 	useEffect(() => {
-		// Find the selected slot in the filtered and sorted list
+		if (isChangingPage.current) return;
+
+		// Find the selected slot in the filtered list
 		const selectedSlotIndex = allTimeSlotIds.findIndex(
 			(slot) => slot.uniqueId === localSelectedValue
 		);
@@ -119,14 +99,41 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 		onSelect(value);
 	};
 
-	// Pagination handlers
-	const goToPreviousPage = () => {
-		setCurrentPage((prev) => Math.max(0, prev - 1));
+	// Pagination handlers with debounce to prevent double clicks
+	const goToPreviousPage = (e: React.MouseEvent) => {
+		e.stopPropagation();
+
+		if (isChangingPage.current || currentPage <= 0) return;
+
+		isChangingPage.current = true;
+		console.log('Going to previous page from', currentPage);
+		setCurrentPage((prev) => prev - 1);
+
+		// Reset the changing flag after a short delay
+		setTimeout(() => {
+			isChangingPage.current = false;
+		}, 300);
 	};
 
-	const goToNextPage = () => {
-		setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
+	const goToNextPage = (e: React.MouseEvent) => {
+		e.stopPropagation();
+
+		if (isChangingPage.current || currentPage >= totalPages - 1) return;
+
+		isChangingPage.current = true;
+		console.log('Going to next page from', currentPage);
+		setCurrentPage((prev) => prev + 1);
+
+		// Reset the changing flag after a short delay
+		setTimeout(() => {
+			isChangingPage.current = false;
+		}, 300);
 	};
+
+	// Debug current page changes
+	useEffect(() => {
+		console.log('Current page changed to:', currentPage);
+	}, [currentPage]);
 
 	return (
 		<div className="swdc-mt-4 swdc-flex swdc-flex-col swdc-gap-3">
@@ -135,21 +142,21 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 
 				{/* Scrollable filter buttons container */}
 				<div className="swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-overflow-x-auto swdc-pb-2 md:swdc-w-auto md:swdc-justify-end">
-					<div className="swdc-flex swdc-min-w-max swdc-gap-1 md:swdc-gap-2">
+					<div className="swdc-flex swdc-min-w-max swdc-gap-2">
 						{(
 							['All Couriers', 'S-W Delivery', 'Local Courier'] as FilterType[]
 						).map((filter) => (
 							<button
 								key={filter}
 								onClick={() => setActiveFilter(filter)}
-								className={`swdc-flex swdc-items-center swdc-gap-2 swdc-whitespace-nowrap swdc-rounded-3xl swdc-px-3 swdc-py-1 swdc-text-sm swdc-font-bold swdc-transition-colors ${
+								className={`swdc-flex swdc-items-center swdc-gap-2 swdc-whitespace-nowrap swdc-rounded-3xl swdc-px-3 swdc-py-1 swdc-text-xs swdc-font-bold swdc-transition-colors ${
 									activeFilter === filter
 										? 'swdc-bg-[#2F2F30] swdc-text-white'
 										: 'swdc-border swdc-border-[#2F2F30]/[0.45] swdc-bg-[#f6f6f6] swdc-text-[#2F2F30]'
 								}`}
 							>
 								{filter === 'S-W Delivery' && (
-									<img src={logo} className="swdc-w-2" alt="Sherwin Williams" />
+									<img src={logo} className="swdc-h-3" alt="Sherwin Williams" />
 								)}
 								{filter === 'Local Courier' && (
 									<IconRegularTruck
@@ -175,6 +182,7 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 						selectedValue={localSelectedValue}
 						name="delivery-time-slot"
 						onSelect={handleSelect}
+						text={slot.text}
 						title={slot.title || ''}
 						value={slot.value}
 						uniqueId={slot.uniqueId}
@@ -184,10 +192,11 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 
 			{/* Pagination controls - only show if we have more than one page */}
 			{totalPages > 1 && (
-				<div className="swdc-flex swdc-items-center swdc-justify-center swdc-gap-4">
+				<div className="swdc-flex swdc-w-full swdc-items-center swdc-justify-center swdc-gap-4 sm:swdc-items-end sm:swdc-justify-end">
 					<button
+						type="button"
 						onClick={goToPreviousPage}
-						disabled={currentPage === 0}
+						disabled={currentPage === 0 || isChangingPage.current}
 						className={`swdc-flex swdc-h-8 swdc-w-8 swdc-items-center swdc-justify-center swdc-rounded-full swdc-transition-colors ${
 							currentPage === 0
 								? 'swdc-cursor-not-allowed swdc-opacity-50'
@@ -199,8 +208,9 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 					</button>
 
 					<button
+						type="button"
 						onClick={goToNextPage}
-						disabled={currentPage === totalPages - 1}
+						disabled={currentPage === totalPages - 1 || isChangingPage.current}
 						className={`swdc-flex swdc-h-8 swdc-w-8 swdc-items-center swdc-justify-center swdc-rounded-full swdc-transition-colors ${
 							currentPage === totalPages - 1
 								? 'swdc-cursor-not-allowed swdc-opacity-50'
