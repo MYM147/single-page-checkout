@@ -35,7 +35,7 @@ const CustomRadioTimeSlot = ({
 	};
 
 	return (
-		<div className="swdc-mt-2 swdc-flex swdc-flex-shrink-0 swdc-gap-4 md:swdc-mt-0">
+		<div className="swdc-mt-0 swdc-flex swdc-flex-shrink-0 swdc-gap-4">
 			<div
 				className={`swdc-relative swdc-w-full swdc-cursor-pointer swdc-rounded-[2px] swdc-border-2 swdc-p-3 swdc-transition-all swdc-duration-200 ${
 					isSelected
@@ -88,7 +88,7 @@ const CustomRadioTimeSlot = ({
 
 					{/* Text content - shifted right to make room for icon */}
 					<div className="swdc-ml-6 swdc-flex swdc-flex-col">
-						<p className="swdc-text-[10px] swdc-font-bold swdc-uppercase swdc-text-[#6d6d6e]">
+						<p className="swdc-text-[13px] swdc-font-bold swdc-uppercase swdc-text-[#6d6d6e] md:swdc-text-[10px]">
 							{courierType}
 						</p>
 						<p className="swdc-text-lg swdc-font-medium md:swdc-text-base">

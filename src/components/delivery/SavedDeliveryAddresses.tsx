@@ -174,7 +174,7 @@ const SavedDeliveryAddresses = () => {
 			) : (
 				<>
 					<p
-						className="swdc-ml-2 swdc-mt-2 swdc-flex swdc-cursor-pointer swdc-font-bold swdc-uppercase swdc-tracking-[1.5px]"
+						className="md:swdc-text-md swdc-ml-2 swdc-mt-2 swdc-flex swdc-cursor-pointer swdc-justify-center swdc-text-xl swdc-font-bold swdc-uppercase swdc-tracking-[1.5px] md:swdc-justify-start"
 						onClick={handleAddNewAddress}
 					>
 						<IconRegularClose className="swdc-mr-1 swdc-rotate-45" />
@@ -182,7 +182,7 @@ const SavedDeliveryAddresses = () => {
 					</p>
 				</>
 			)}
-			<p className="swdc-mt-4 swdc-text-sm">
+			<p className="swdc-mt-4 swdc-text-center swdc-text-lg md:swdc-text-left md:swdc-text-sm">
 				No address?{' '}
 				<a href="#" className="swdc-ml-1 swdc-font-medium hover:swdc-underline">
 					Set your delivery spot on a map.

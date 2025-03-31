@@ -102,7 +102,7 @@ const DeliveryFulfillment = ({ onContinue, selections, setIsSaved }: Props) => {
 	return (
 		<>
 			<div className="swdc-mt-6">
-				<p className="swdc-text-sm"> * Required</p>
+				<p className="md:swdc-text-sm"> *Required</p>
 			</div>
 			{membershipType === 'PRO' ? (
 				<SavedDeliveryAddresses />

@@ -62,20 +62,6 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 		setLocalSelectedValue(selectedValue);
 	}, [selectedValue]);
 
-	// Reset pagination when filter changes
-	useEffect(() => {
-		setCurrentPage(0);
-	}, [activeFilter]);
-
-	// Handle selection with a wrapper function to ensure consistent behavior
-	const handleSelect = (value: string) => {
-		console.log('Selected time slot:', value);
-		// Update local state immediately for responsive UI
-		setLocalSelectedValue(value);
-		// Call the parent's onSelect function
-		onSelect(value);
-	};
-
 	// First filter by courier type
 	const filteredTimeSlots = timeSlots.filter((slot) => {
 		const mappedCourierType = filterToCourierMap[activeFilter];
@@ -91,20 +77,47 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 		return aStartTime - bStartTime;
 	});
 
+	// Generate stable uniqueIds for ALL time slots (not just current page)
+	const allTimeSlotIds = sortedTimeSlots.map((slot, index) => ({
+		...slot,
+		uniqueId: `${slot.value}-${index}`,
+	}));
+
 	// Calculate total pages
 	const totalPages = Math.ceil(sortedTimeSlots.length / SLOTS_PER_PAGE);
 
+	// When filter changes, check if selected slot is still visible
+	useEffect(() => {
+		// Find the selected slot in the filtered and sorted list
+		const selectedSlotIndex = allTimeSlotIds.findIndex(
+			(slot) => slot.uniqueId === localSelectedValue
+		);
+
+		// If selected slot exists in the current filter
+		if (selectedSlotIndex !== -1) {
+			// Calculate which page it's on and navigate there
+			const pageOfSelectedSlot = Math.floor(selectedSlotIndex / SLOTS_PER_PAGE);
+			setCurrentPage(pageOfSelectedSlot);
+		} else {
+			// If selected slot is not in the current filter, reset to page 0
+			setCurrentPage(0);
+		}
+	}, [activeFilter, localSelectedValue, allTimeSlotIds]);
+
 	// Get current page slots
-	const currentSlots = sortedTimeSlots.slice(
+	const currentSlots = allTimeSlotIds.slice(
 		currentPage * SLOTS_PER_PAGE,
 		(currentPage + 1) * SLOTS_PER_PAGE
 	);
 
-	// Generate stable uniqueIds for each time slot
-	const timeSlotIds = currentSlots.map((slot, index) => ({
-		...slot,
-		uniqueId: `${slot.value}-${index + currentPage * SLOTS_PER_PAGE}`,
-	}));
+	// Handle selection with a wrapper function to ensure consistent behavior
+	const handleSelect = (value: string) => {
+		console.log('Selected time slot:', value);
+		// Update local state immediately for responsive UI
+		setLocalSelectedValue(value);
+		// Call the parent's onSelect function
+		onSelect(value);
+	};
 
 	// Pagination handlers
 	const goToPreviousPage = () => {
@@ -115,59 +128,47 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 		setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
 	};
 
-	console.log('Current selectedValue:', selectedValue);
-	console.log('Local selectedValue:', localSelectedValue);
-	console.log('Total pages:', totalPages, 'Current page:', currentPage);
-
 	return (
 		<div className="swdc-mt-4 swdc-flex swdc-flex-col swdc-gap-3">
-			<div className="swdc-items-left swdc-flex swdc-items-center swdc-justify-between">
-				<h3>Time*</h3>
-				<div className="swdc-items-right swdc-flex swdc-justify-end swdc-self-stretch">
-					{(
-						['All Couriers', 'S-W Delivery', 'Local Courier'] as FilterType[]
-					).map((filter) => (
-						<button
-							key={filter}
-							onClick={() => setActiveFilter(filter)}
-							className={`swdc-ml-1 swdc-flex swdc-items-center swdc-gap-[10px] swdc-rounded-2xl swdc-px-[16px] swdc-py-[8px] swdc-text-sm swdc-transition-colors focus:swdc-bg-[#000] focus:swdc-text-[#fff] active:swdc-bg-[#000] active:swdc-text-[#fff] ${
-								activeFilter === filter
-									? 'swdc-bg-[#2F2F30] swdc-text-white'
-									: 'swdc-border swdc-border-[#2F2F30]/[0.45] swdc-bg-[#f6f6f6] swdc-text-[#2F2F30] hover:swdc-bg-[#f6f6f6]'
-							}`}
-						>
-							{filter === 'S-W Delivery' && (
-								<img
-									src={logo}
-									className="swdc-w-[16px]"
-									alt="Sherwin Williams"
-								/>
-							)}
-							{filter === 'Local Courier' && (
-								<IconRegularTruck
-									className={`swdc-h-4 swdc-w-4 ${
-										activeFilter === 'Local Courier'
-											? 'swdc-fill-white swdc-text-white'
-											: 'swdc-fill-[#2F2F30] swdc-text-[#2F2F30]'
-									}`}
-								/>
-							)}
-							<span
-								className={`swdc-font-medium swdc-uppercase ${
+			<div className="swdc-flex swdc-flex-col swdc-items-start swdc-gap-2 md:swdc-flex-row md:swdc-items-center md:swdc-justify-between">
+				<h3 className="swdc-text-base swdc-font-medium">Time*</h3>
+
+				{/* Scrollable filter buttons container */}
+				<div className="swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-overflow-x-auto swdc-pb-2 md:swdc-w-auto md:swdc-justify-end">
+					<div className="swdc-flex swdc-min-w-max swdc-gap-1 md:swdc-gap-2">
+						{(
+							['All Couriers', 'S-W Delivery', 'Local Courier'] as FilterType[]
+						).map((filter) => (
+							<button
+								key={filter}
+								onClick={() => setActiveFilter(filter)}
+								className={`swdc-flex swdc-items-center swdc-gap-2 swdc-whitespace-nowrap swdc-rounded-3xl swdc-px-3 swdc-py-1 swdc-text-sm swdc-font-bold swdc-transition-colors ${
 									activeFilter === filter
-										? 'swdc-text-white'
-										: 'swdc-text-[#2F2F30]'
+										? 'swdc-bg-[#2F2F30] swdc-text-white'
+										: 'swdc-border swdc-border-[#2F2F30]/[0.45] swdc-bg-[#f6f6f6] swdc-text-[#2F2F30]'
 								}`}
 							>
-								{filter}
-							</span>
-						</button>
-					))}
+								{filter === 'S-W Delivery' && (
+									<img src={logo} className="swdc-w-2" alt="Sherwin Williams" />
+								)}
+								{filter === 'Local Courier' && (
+									<IconRegularTruck
+										className={`swdc-h-4 swdc-w-4 ${
+											activeFilter === 'Local Courier'
+												? 'swdc-fill-white'
+												: 'swdc-fill-[#2F2F30]'
+										}`}
+									/>
+								)}
+								<span className="swdc-uppercase">{filter}</span>
+							</button>
+						))}
+					</div>
 				</div>
 			</div>
 
 			<div className="swdc-grid swdc-grid-cols-1 swdc-gap-4 md:swdc-grid-cols-2">
-				{timeSlotIds.map((slot) => (
+				{currentSlots.map((slot) => (
 					<CustomRadioTimeSlot
 						key={slot.uniqueId}
 						courierType={slot.courierType}
@@ -181,17 +182,20 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 				))}
 			</div>
 
+			{/* Pagination controls - only show if we have more than one page */}
 			{totalPages > 1 && (
-				<div className="swdc-flex swdc-items-center swdc-justify-end">
+				<div className="swdc-flex swdc-items-center swdc-justify-center swdc-gap-4">
 					<button
 						onClick={goToPreviousPage}
 						disabled={currentPage === 0}
 						className={`swdc-flex swdc-h-8 swdc-w-8 swdc-items-center swdc-justify-center swdc-rounded-full swdc-transition-colors ${
-							currentPage === 0 ? 'swdc-cursor-not-allowed swdc-opacity-50' : ''
+							currentPage === 0
+								? 'swdc-cursor-not-allowed swdc-opacity-50'
+								: 'swdc-bg-[#f6f6f6] hover:swdc-bg-[#e0e0e0]'
 						}`}
 						aria-label="Previous page"
 					>
-						<IconRegularArrowLongLeft className="swdc-icon-2" />
+						<IconRegularArrowLongLeft className="swdc-icon-3" />
 					</button>
 
 					<button
@@ -200,11 +204,11 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 						className={`swdc-flex swdc-h-8 swdc-w-8 swdc-items-center swdc-justify-center swdc-rounded-full swdc-transition-colors ${
 							currentPage === totalPages - 1
 								? 'swdc-cursor-not-allowed swdc-opacity-50'
-								: ''
+								: 'swdc-bg-[#f6f6f6] hover:swdc-bg-[#e0e0e0]'
 						}`}
 						aria-label="Next page"
 					>
-						<IconRegularArrowLongRight className="swdc-icon-2" />
+						<IconRegularArrowLongRight className="swdc-icon-3" />
 					</button>
 				</div>
 			)}

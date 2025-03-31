@@ -210,7 +210,7 @@ export const DateSelectMenu = ({
 					<h3 className="swdc-mt-6 swdc-text-base swdc-font-bold swdc-uppercase swdc-tracking-[1.5px]">
 						{title}
 					</h3>
-					<p className="swdc-mt-1">
+					<p className="swdc-mt-2 swdc-pr-[100px] md:swdc-mt-1 md:swdc-pr-0">
 						Choose a convenient time within the next 7 days to receive your
 						order.
 					</p>
