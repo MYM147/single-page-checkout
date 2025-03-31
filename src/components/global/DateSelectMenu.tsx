@@ -66,32 +66,86 @@ export const DateSelectMenu = ({
 		{
 			courierType: 'Sherwin-Williams Delivery',
 			text: 'Standard delivery',
-			title: '11AM - 2PM',
-			value: 'sw-afternoon-11-2',
+			title: '11AM - 1PM',
+			value: 'sw-afternoon-11-1',
 		},
 		{
 			courierType: 'Sherwin-Williams Delivery',
 			text: 'Standard delivery',
-			title: '2PM - 5PM',
-			value: 'sw-afternoon-2-5',
+			title: '1PM - 3PM',
+			value: 'sw-afternoon-1-3',
+		},
+		{
+			courierType: 'Sherwin-Williams Delivery',
+			text: 'Standard delivery',
+			title: '1PM - 3PM',
+			value: 'sw-afternoon-1-3',
+		},
+		{
+			courierType: 'Sherwin-Williams Delivery',
+			text: 'Standard delivery',
+			title: '1PM - 3PM',
+			value: 'sw-afternoon-1-3',
+		},
+		{
+			courierType: 'Sherwin-Williams Delivery',
+			text: 'Standard delivery',
+			title: '1PM - 3PM',
+			value: 'sw-afternoon-1-3',
+		},
+		{
+			courierType: 'Sherwin-Williams Delivery',
+			text: 'Standard delivery',
+			title: '1PM - 3PM',
+			value: 'sw-afternoon-1-3',
 		},
 		{
 			courierType: 'Local Courier',
 			text: 'Standard delivery',
-			title: '9AM - 10AM',
-			value: 'local-morning-9-10',
+			title: '7AM - 11AM',
+			value: 'local-morning-7-11',
 		},
 		{
 			courierType: 'Local Courier',
 			text: 'Standard delivery',
-			title: '5PM - 7PM',
-			value: 'local-morning-5-7',
+			title: '7AM - 11AM',
+			value: 'local-morning-7-11',
+		},
+		{
+			courierType: 'Local Courier',
+			text: 'Standard delivery',
+			title: '7AM - 11AM',
+			value: 'local-morning-7-11',
+		},
+		{
+			courierType: 'Local Courier',
+			text: 'Standard delivery',
+			title: '7AM - 11AM',
+			value: 'local-morning-7-11',
+		},
+		{
+			courierType: 'Local Courier',
+			text: 'Standard delivery',
+			title: '7AM - 11AM',
+			value: 'local-morning-7-11',
+		},
+		{
+			courierType: 'Local Courier',
+			text: 'Standard delivery',
+			title: '8AM - 12PM',
+			value: 'local-morning-8-12',
 		},
 		{
 			courierType: 'Local Courier',
 			text: 'Standard delivery',
 			title: '7PM - 9PM',
 			value: 'local-afternoon-7-9',
+		},
+		{
+			courierType: 'Local Courier',
+			text: 'Standard delivery',
+			title: '2PM - 6PM',
+			value: 'local-afternoon-2-6',
 		},
 	];
 
@@ -131,7 +185,6 @@ export const DateSelectMenu = ({
 
 	// Handle time slot selection with local state update first
 	const handleTimeSlotSelect = (uniqueId: string) => {
-		// Extract the actual value from the uniqueId (e.g., "sw-morning-7-9" from "sw-morning-7-9-0")
 		const value = uniqueId.split('-').slice(0, -1).join('-');
 
 		// Find the corresponding time slot in the proTimeSlots array to get its title

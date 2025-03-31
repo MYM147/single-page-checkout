@@ -1,4 +1,8 @@
-import { IconRegularTruck } from '@prism/dropcloth';
+import {
+	IconRegularArrowLongLeft,
+	IconRegularArrowLongRight,
+	IconRegularTruck,
+} from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
 import { type Selections } from '../../../types';
 import CustomRadioTimeSlot from './CustomRadioTimeSlot';
@@ -15,7 +19,7 @@ const filterToCourierMap: Record<FilterType, CourierType | 'All'> = {
 
 type TimeSlotData = {
 	courierType: CourierType;
-	price?: number; // Keep this optional but we won't use it
+	price?: number;
 	text?: string;
 	title?: string;
 	value: string;
@@ -28,14 +32,40 @@ type Props = {
 	timeSlots: TimeSlotData[];
 };
 
+// Helper function to extract start time in 24-hour format for sorting
+const getStartTimeInMinutes = (timeString: string | undefined): number => {
+	if (!timeString) return 0;
+
+	// Extract the start time (e.g., "7AM" from "7AM - 9AM")
+	const match = timeString.match(/(\d+)([AP]M)/i);
+	if (!match) return 0;
+
+	let hours = parseInt(match[1], 10);
+	const isPM = match[2].toUpperCase() === 'PM';
+
+	// Convert to 24-hour format
+	if (isPM && hours < 12) hours += 12;
+	if (!isPM && hours === 12) hours = 0;
+
+	return hours * 60; // Convert to minutes for easier comparison
+};
+
+const SLOTS_PER_PAGE = 8;
+
 const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 	const [activeFilter, setActiveFilter] = useState<FilterType>('All Couriers');
 	const [localSelectedValue, setLocalSelectedValue] = useState(selectedValue);
+	const [currentPage, setCurrentPage] = useState(0);
 
 	// Keep local state in sync with prop
 	useEffect(() => {
 		setLocalSelectedValue(selectedValue);
 	}, [selectedValue]);
+
+	// Reset pagination when filter changes
+	useEffect(() => {
+		setCurrentPage(0);
+	}, [activeFilter]);
 
 	// Handle selection with a wrapper function to ensure consistent behavior
 	const handleSelect = (value: string) => {
@@ -46,6 +76,7 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 		onSelect(value);
 	};
 
+	// First filter by courier type
 	const filteredTimeSlots = timeSlots.filter((slot) => {
 		const mappedCourierType = filterToCourierMap[activeFilter];
 		return (
@@ -53,14 +84,40 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 		);
 	});
 
+	// Then sort by start time
+	const sortedTimeSlots = [...filteredTimeSlots].sort((a, b) => {
+		const aStartTime = getStartTimeInMinutes(a.title);
+		const bStartTime = getStartTimeInMinutes(b.title);
+		return aStartTime - bStartTime;
+	});
+
+	// Calculate total pages
+	const totalPages = Math.ceil(sortedTimeSlots.length / SLOTS_PER_PAGE);
+
+	// Get current page slots
+	const currentSlots = sortedTimeSlots.slice(
+		currentPage * SLOTS_PER_PAGE,
+		(currentPage + 1) * SLOTS_PER_PAGE
+	);
+
 	// Generate stable uniqueIds for each time slot
-	const timeSlotIds = filteredTimeSlots.map((slot, index) => ({
+	const timeSlotIds = currentSlots.map((slot, index) => ({
 		...slot,
-		uniqueId: `${slot.value}-${index}`,
+		uniqueId: `${slot.value}-${index + currentPage * SLOTS_PER_PAGE}`,
 	}));
+
+	// Pagination handlers
+	const goToPreviousPage = () => {
+		setCurrentPage((prev) => Math.max(0, prev - 1));
+	};
+
+	const goToNextPage = () => {
+		setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
+	};
 
 	console.log('Current selectedValue:', selectedValue);
 	console.log('Local selectedValue:', localSelectedValue);
+	console.log('Total pages:', totalPages, 'Current page:', currentPage);
 
 	return (
 		<div className="swdc-mt-4 swdc-flex swdc-flex-col swdc-gap-3">
@@ -123,6 +180,34 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 					/>
 				))}
 			</div>
+
+			{totalPages > 1 && (
+				<div className="swdc-flex swdc-items-center swdc-justify-end">
+					<button
+						onClick={goToPreviousPage}
+						disabled={currentPage === 0}
+						className={`swdc-flex swdc-h-8 swdc-w-8 swdc-items-center swdc-justify-center swdc-rounded-full swdc-transition-colors ${
+							currentPage === 0 ? 'swdc-cursor-not-allowed swdc-opacity-50' : ''
+						}`}
+						aria-label="Previous page"
+					>
+						<IconRegularArrowLongLeft className="swdc-icon-2" />
+					</button>
+
+					<button
+						onClick={goToNextPage}
+						disabled={currentPage === totalPages - 1}
+						className={`swdc-flex swdc-h-8 swdc-w-8 swdc-items-center swdc-justify-center swdc-rounded-full swdc-transition-colors ${
+							currentPage === totalPages - 1
+								? 'swdc-cursor-not-allowed swdc-opacity-50'
+								: ''
+						}`}
+						aria-label="Next page"
+					>
+						<IconRegularArrowLongRight className="swdc-icon-2" />
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };
