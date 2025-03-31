@@ -118,7 +118,7 @@ const PickupFulfillment = ({
 				value2="on-a-specific-day"
 				value="as-soon-as-possible"
 			/>
-			{/* Optional special instructions for pickup */}
+
 			<SpecialInstructions
 				maxLength={100}
 				onChange={(value) => {
