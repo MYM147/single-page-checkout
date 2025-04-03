@@ -129,7 +129,7 @@ const OrderSummaryDetails = ({
 					</div>
 				</>
 			)}
-			<div className="swdc-mt-3 swdc-flex">
+			<div className="swdc-mt-3 swdc-flex swdc-pb-4">
 				<IconRegularNotepad />
 				<div className="swdc-ml-1">
 					<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">

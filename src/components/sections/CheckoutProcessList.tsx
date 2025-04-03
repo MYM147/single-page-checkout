@@ -61,7 +61,7 @@ const CheckoutProcessList = () => {
 		<div className="swdc-flex swdc-w-full swdc-max-w-[752px] swdc-flex-col swdc-gap-4">
 			{/* Controls which panel is currently expanded in the checkout flow */}
 			<FulfillmentOptions
-				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${expandedPanel === 0 ? 'swdc-h-auto swdc-opacity-100' : ''} `}
+				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${expandedPanel === 0 ? 'swdc-h-auto swdc-opacity-100' : 'swdc-pb-0 swdc-pt-[32px]'} `}
 				isExpanded={expandedPanel === 0}
 				onContinue={() => setExpandedPanel(1)}
 				onEdit={() => handleEdit(0)}
@@ -86,8 +86,8 @@ const CheckoutProcessList = () => {
 						? 'swdc-h-auto swdc-opacity-100'
 						: 'swdc-pb-0 swdc-pt-[32px]'
 				} `}
-				isExpanded={expandedPanel === 3}
-				onContinue={() => setExpandedPanel(2)}
+				isExpanded={expandedPanel === 2}
+				onContinue={() => setExpandedPanel(3)}
 			/>
 			<PaymentMethod
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${

@@ -43,31 +43,27 @@ const ContactDetailsMenu = ({
 			className={`swdc-bg-[#fff] swdc-px-3 swdc-py-4 swdc-drop-shadow-md lg:swdc-pl-6 lg:swdc-pr-6 ${className} swdc-w-full`}
 		>
 			<SectionTitle
-				onEdit={onEdit}
+				onEdit={() => {
+					setIsSaved(false);
+					onEdit();
+				}}
 				title="Contact Details"
 				showEdit={isSaved}
 			/>
-			<div
-				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
-					isExpanded
-						? 'swdc-h-auto swdc-opacity-100'
-						: 'swdc-h-0 swdc-opacity-0'
-				} ${className}`}
-			>
-				{isSaved ? (
+			{isExpanded && (
+				<ContactDetailsForm
+					onContinue={() => {
+						setIsSaved(true);
+						onContinue();
+					}}
+					onSelectionsChange={onSelectionsChange}
+					selections={selections}
+					setIsSaved={setIsSaved}
+				/>
+			)}
+				{!isExpanded && (
 					<ContactDetailsSummary contactDetails={contactDetails} />
-				) : (
-					<ContactDetailsForm
-						onContinue={() => {
-							setIsSaved(true);
-							onContinue();
-						}}
-						onSelectionsChange={onSelectionsChange}
-						selections={selections}
-						setIsSaved={setIsSaved}
-					/>
 				)}
-			</div>
 		</div>
 	);
 };
