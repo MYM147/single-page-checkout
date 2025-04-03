@@ -39,6 +39,14 @@ export interface Selections {
 		locationName?: string;
 	};
 	deliveryTimeSlot: string;
+
+	// Contact properties
+	contactDetails: {
+		firstName: string;
+		lastName: string;
+		email: string;
+		phone: string;
+	};
 }
 
 export type UserType = {

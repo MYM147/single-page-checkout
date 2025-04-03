@@ -13,6 +13,7 @@ import SavedDeliveryAddresses from '../../delivery/SavedDeliveryAddresses';
 import DateSelectMenu from '../../global/DateSelectMenu';
 import SpecialInstructions from '../../global/SpecialInstructions';
 import { getDates } from '../../utils/dateUtils';
+import { phoneRegex } from '../../utils/regexUtils';
 
 type Props = {
 	onContinue: () => void;
@@ -21,7 +22,6 @@ type Props = {
 };
 
 // Form component for delivery options
-
 const DeliveryFulfillment = ({ onContinue, selections, setIsSaved }: Props) => {
 	const dispatch = useAppDispatch();
 	const { membershipType, savedAddressSelected } = useAppSelector(
@@ -92,7 +92,6 @@ const DeliveryFulfillment = ({ onContinue, selections, setIsSaved }: Props) => {
 			selections.deliveryDetails || {};
 		const addressValid = address1 && city && state && zip;
 		const dateValid = selections.deliveryDate;
-		const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
 		const phoneValid = phoneRegex.test(phone); // No optional chaining needed here
 		const timeValid = selections.deliveryTimeSlot;
 
@@ -128,7 +127,7 @@ const DeliveryFulfillment = ({ onContinue, selections, setIsSaved }: Props) => {
 					}}
 					rush={true}
 					selectedDate={selections.deliveryDate}
-					selectedTimeSlot={selections.deliveryTimeSlot} // Make sure this is passed
+					selectedTimeSlot={selections.deliveryTimeSlot}
 					selections={selections}
 					title="Delivery Date"
 				/>

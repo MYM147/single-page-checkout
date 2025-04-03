@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { type Selections } from '../../types';
 import AccountDetails from './AccountDetails';
-import ContactDetails from './ContactDetails';
+import ContactDetailsMenu from './ContactDetailsMenu';
 import FulfillmentOptions from './FulfillmentOptions';
 import PaymentMethod from './PaymentMethod';
 
@@ -45,6 +45,12 @@ const CheckoutProcessList = () => {
 			storeStreet: '4329 Lorain Ave.',
 			storeZip: '44113-3716',
 		},
+		contactDetails: {
+			firstName: '',
+			lastName: '',
+			email: '',
+			phone: '',
+		},
 	});
 
 	const handleEdit = (panelIndex: number) => {
@@ -62,7 +68,7 @@ const CheckoutProcessList = () => {
 				onSelectionsChange={setSelections}
 				selections={selections}
 			/>
-			<ContactDetails
+			<ContactDetailsMenu
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
 					expandedPanel === 1
 						? 'swdc-h-auto swdc-opacity-100'
@@ -70,6 +76,9 @@ const CheckoutProcessList = () => {
 				} `}
 				isExpanded={expandedPanel === 1}
 				onContinue={() => setExpandedPanel(2)}
+				onEdit={() => handleEdit(1)}
+				onSelectionsChange={setSelections}
+				selections={selections}
 			/>
 			<AccountDetails
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
@@ -77,8 +86,8 @@ const CheckoutProcessList = () => {
 						? 'swdc-h-auto swdc-opacity-100'
 						: 'swdc-pb-0 swdc-pt-[32px]'
 				} `}
-				isExpanded={expandedPanel === 2}
-				onContinue={() => setExpandedPanel(3)}
+				isExpanded={expandedPanel === 3}
+				onContinue={() => setExpandedPanel(2)}
 			/>
 			<PaymentMethod
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
@@ -92,4 +101,5 @@ const CheckoutProcessList = () => {
 		</div>
 	);
 };
+
 export default CheckoutProcessList;

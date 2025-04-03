@@ -2,6 +2,7 @@ import { IconFillAlarm } from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
 import { Selections } from '../../types';
 import { getDates } from '../utils/dateUtils';
+import { proTimeSlots, TimeSlot } from '../utils/timeSlotUtil';
 import BasicTimeSelector from './timeselector/BasicTimeSelector';
 import BasicTimeSlot from './timeselector/BasicTimeSlot';
 import ProTimeSelector from './timeselector/ProTimeSelector';
@@ -17,13 +18,6 @@ type Props = {
 	selectedTimeSlot: string;
 	selections: Selections;
 	title?: string;
-};
-
-type TimeSlot = {
-	courierType: 'Sherwin-Williams Delivery' | 'Local Courier';
-	text: string;
-	title: string;
-	value: string;
 };
 
 const weekDates = getDates();
@@ -49,87 +43,6 @@ export const DateSelectMenu = ({
 	const [selectedTimeSlot, setSelectedTimeSlot] = useState(
 		selections.deliveryTimeSlot
 	);
-
-	const proTimeSlots: TimeSlot[] = [
-		{
-			courierType: 'Sherwin-Williams Delivery',
-			text: 'Standard delivery',
-			title: '7AM - 9AM',
-			value: 'sw-morning-7-9',
-		},
-		{
-			courierType: 'Sherwin-Williams Delivery',
-			text: 'Standard delivery',
-			title: '9AM - 11AM',
-			value: 'sw-afternoon-9-11',
-		},
-		{
-			courierType: 'Sherwin-Williams Delivery',
-			text: 'Standard delivery',
-			title: '11AM - 1PM',
-			value: 'sw-afternoon-11-1',
-		},
-		{
-			courierType: 'Sherwin-Williams Delivery',
-			text: 'Standard delivery',
-			title: '1PM - 3PM',
-			value: 'sw-afternoon-1-3',
-		},
-		{
-			courierType: 'Sherwin-Williams Delivery',
-			text: 'Standard delivery',
-			title: '1PM - 3PM',
-			value: 'sw-afternoon-1-3',
-		},
-		{
-			courierType: 'Sherwin-Williams Delivery',
-			text: 'Standard delivery',
-			title: '1PM - 3PM',
-			value: 'sw-afternoon-1-3',
-		},
-		{
-			courierType: 'Sherwin-Williams Delivery',
-			text: 'Standard delivery',
-			title: '1PM - 3PM',
-			value: 'sw-afternoon-1-3',
-		},
-		{
-			courierType: 'Local Courier',
-			text: 'Standard delivery',
-			title: '7AM - 11AM',
-			value: 'local-morning-7-11',
-		},
-		{
-			courierType: 'Local Courier',
-			text: 'Standard delivery',
-			title: '7AM - 11AM',
-			value: 'local-morning-7-11',
-		},
-		{
-			courierType: 'Local Courier',
-			text: 'Standard delivery',
-			title: '7AM - 11AM',
-			value: 'local-morning-7-11',
-		},
-		{
-			courierType: 'Local Courier',
-			text: 'Standard delivery',
-			title: '8AM - 12PM',
-			value: 'local-morning-8-12',
-		},
-		{
-			courierType: 'Local Courier',
-			text: 'Standard delivery',
-			title: '7PM - 9PM',
-			value: 'local-afternoon-7-9',
-		},
-		{
-			courierType: 'Local Courier',
-			text: 'Standard delivery',
-			title: '2PM - 6PM',
-			value: 'local-afternoon-2-6',
-		},
-	];
 
 	useEffect(() => {
 		setSelectedDateState(

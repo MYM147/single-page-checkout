@@ -137,7 +137,7 @@ const PickupFulfillment = ({
 				value={selections.specialInstructions}
 			/>
 			<Button
-				className="swdc-mt-6"
+				className="swdc-mt-6 swdc-full md:swdc-w-[250px]"
 				disabled={!isFormValid()}
 				onClick={() => {
 					onContinue();

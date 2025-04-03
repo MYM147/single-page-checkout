@@ -2,6 +2,7 @@ import { Checkbox, Input } from '@prism/dropcloth';
 import { useState } from 'react';
 import { type Selections } from '../../types';
 import DetailTooltip from '../global/tooltips/DetailTooltip';
+import { phoneRegex } from '../utils/regexUtils';
 
 type Props = {
 	defaultValue: string;
@@ -9,8 +10,6 @@ type Props = {
 	selections: Selections;
 	title?: string;
 };
-
-const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
 
 const formatPhoneNumber = (value: string) => {
 	const numbers = value.replace(/\D/g, '');

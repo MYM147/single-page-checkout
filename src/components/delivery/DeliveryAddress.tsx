@@ -2,6 +2,7 @@ import { Checkbox, Input, Select } from '@prism/dropcloth';
 import { useState } from 'react';
 import { type Selections } from '../../types';
 import { states } from '../utils/statesUtils';
+import { addressRegex, cityRegex, zipRegex } from '../utils/regexUtils';
 
 type Props = {
 	defaultValues: {
@@ -16,10 +17,6 @@ type Props = {
 	onChange: (value: any) => void;
 	selections: Selections;
 };
-
-const addressRegex = /^[a-zA-Z0-9\s,.-]+$/; // Only alphanumeric, spaces, commas, periods, hyphens
-const cityRegex = /^[a-zA-Z\s.-]+$/; // Only letters, spaces, periods, hyphens
-const zipRegex = /^\d{5}$/; // Only 5 digits
 
 const DeliveryAddress = ({
 	hideForSavedAddresses,

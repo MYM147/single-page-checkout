@@ -41,7 +41,7 @@ const OrderSummaryDetails = ({
 	specialInstructions,
 }: Props) => {
 	return (
-		<div>
+		<>
 			{fulfillmentType === 'pickup' ? (
 				<>
 					<div className="swdc-flex">
@@ -138,7 +138,7 @@ const OrderSummaryDetails = ({
 					<p className="swdc-mt-1">{specialInstructions || 'N/A'}</p>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

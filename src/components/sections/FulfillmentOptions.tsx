@@ -22,14 +22,27 @@ type Props = {
 };
 
 // Container component that manages fulfillment type selection and displays appropriate forms
-const FulfillmentOptions = ({ className, onContinue, onEdit }: Props) => {
+const FulfillmentOptions = ({
+	className,
+	onContinue,
+	onEdit,
+	onSelectionsChange,
+}: Props) => {
 	const dispatch = useAppDispatch();
 	const { fulfillmentType, selections, isSaved, isExpanded } = useAppSelector(
 		(state) => state.fulfillment
 	);
 
 	const handleSelectionsChange = (newSelections: Partial<Selections>) => {
+		onSelectionsChange({
+			...selections,
+			...newSelections,
+		});
 		dispatch(updateSelections(newSelections));
+		onSelectionsChange({
+			...selections,
+			...newSelections,
+		});
 	};
 
 	const handleSetIsSaved = (value: boolean) => {
