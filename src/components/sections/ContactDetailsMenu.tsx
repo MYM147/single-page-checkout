@@ -1,42 +1,41 @@
-import { useEffect, useState } from 'react';
-import { Selections } from '../../types';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+	setExpanded,
+	setSaved,
+	updateSelections,
+} from '../../store/slices/ContactDetailsSlice';
 import SectionTitle from '../global/SectionTitle';
 import ContactDetailsForm from '../sections/subsections/ContactDetailsForm';
 import ContactDetailsSummary from './subsections/ContactDetailsSummary';
 
 type Props = {
 	className?: string;
-	isExpanded: boolean;
 	onContinue: () => void;
 	onEdit: () => void;
-	onSelectionsChange: (selections: Selections) => void;
-	selections: Selections;
 };
 
-const ContactDetailsMenu = ({
-	className,
-	isExpanded,
-	onContinue,
-	onEdit,
-	onSelectionsChange,
-	selections,
-}: Props) => {
-	const [isSaved, setIsSaved] = useState(false);
+const ContactDetailsMenu = ({ className, onContinue, onEdit }: Props) => {
+	const dispatch = useAppDispatch();
+	const { isExpanded, isSaved, selections } = useAppSelector(
+		(state) => state.contactDetails
+	);
 
 	useEffect(() => {
 		if (!isExpanded) {
-			setIsSaved(false);
+			dispatch(setSaved(false));
 		}
-	}, [isExpanded]);
+	}, [isExpanded, dispatch]);
 
-	const defaultContactDetails = {
-		firstName: '',
-		lastName: '',
-		email: '',
-		phone: '',
+	const handleSelectionsChange = (newSelections: Partial<Selections>) => {
+		dispatch(updateSelections(newSelections));
 	};
 
-	const contactDetails = selections.contactDetails || defaultContactDetails;
+	const handleContinue = () => {
+		dispatch(setExpanded(false));
+		dispatch(setSaved(true));
+		onContinue();
+	};
 
 	return (
 		<div
@@ -44,26 +43,24 @@ const ContactDetailsMenu = ({
 		>
 			<SectionTitle
 				onEdit={() => {
-					setIsSaved(false);
+					dispatch(setSaved(false));
+					dispatch(setExpanded(true));
 					onEdit();
 				}}
 				title="Contact Details"
-				showEdit={isSaved}
+				showEdit={!isExpanded && isSaved}
 			/>
 			{isExpanded && (
 				<ContactDetailsForm
-					onContinue={() => {
-						setIsSaved(true);
-						onContinue();
-					}}
-					onSelectionsChange={onSelectionsChange}
+					onContinue={handleContinue}
+					onSelectionsChange={handleSelectionsChange}
 					selections={selections}
-					setIsSaved={setIsSaved}
+					setIsSaved={(value: boolean) => dispatch(setSaved(value))}
 				/>
 			)}
-				{!isExpanded && (
-					<ContactDetailsSummary contactDetails={contactDetails} />
-				)}
+			{!isExpanded && isSaved && (
+				<ContactDetailsSummary contactDetails={selections.contactDetails} />
+			)}
 		</div>
 	);
 };

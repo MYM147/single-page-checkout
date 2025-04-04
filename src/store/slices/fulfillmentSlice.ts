@@ -47,6 +47,12 @@ const initialState: FulfillmentState = {
 		},
 		deliveryAddress: '',
 		deliveryPhone: '',
+		contactDetails: {
+			firstName: '',
+			lastName: '',
+			email: '',
+			phone: '',
+		},
 	},
 	fulfillmentType: 'pickup',
 	isExpanded: true,
