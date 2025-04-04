@@ -55,7 +55,7 @@ const initialState: ContactDetailsState = {
 	isSaved: false,
 };
 
-const ContactDetailsSlice = createSlice({
+const contactDetailsSlice = createSlice({
 	name: 'contactDetails',
 	initialState,
 	reducers: {
@@ -72,5 +72,5 @@ const ContactDetailsSlice = createSlice({
 });
 
 export const { setExpanded, setSaved, updateSelections } =
-	ContactDetailsSlice.actions;
-export default ContactDetailsSlice.reducer;
+	contactDetailsSlice.actions;
+export default contactDetailsSlice.reducer;
