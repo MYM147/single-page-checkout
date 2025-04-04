@@ -4,7 +4,7 @@ import {
 	setExpanded,
 	setSaved,
 	updateSelections,
-} from '../../store/slices/ContactDetailsSlice';
+} from '../../store/slices/contactDetailsSlice';
 import SectionTitle from '../global/SectionTitle';
 import ContactDetailsForm from '../sections/subsections/ContactDetailsForm';
 import ContactDetailsSummary from './subsections/ContactDetailsSummary';
