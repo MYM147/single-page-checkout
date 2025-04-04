@@ -1,12 +1,12 @@
 import { Button, Input } from '@prism/dropcloth';
 import { useState } from 'react';
-import { Selections } from '../../../types';
+import { ContactDetails } from '../../../types';
 import { emailRegex, nameRegex, phoneRegex } from '../../utils/regexUtils';
 
 type Props = {
 	onContinue: () => void;
-	onSelectionsChange: (selections: Selections) => void;
-	selections: Selections;
+	onSelectionsChange: (contactDetails: Partial<ContactDetails>) => void;
+	selections: ContactDetails;
 	setIsSaved: (value: boolean) => void;
 };
 
@@ -23,7 +23,7 @@ const ContactDetailsForm = ({
 		phone: '',
 	};
 
-	const contactDetails = selections.contactDetails || defaultContactDetails;
+	const contactDetails = selections || defaultContactDetails;
 
 	const [formData, setFormData] = useState({
 		email: contactDetails.email,
@@ -77,11 +77,8 @@ const ContactDetailsForm = ({
 
 		// Update the selections with the new contact details
 		const newSelections = {
-			...selections,
-			contactDetails: {
-				...selections.contactDetails,
-				[name]: formattedValue,
-			},
+			...contactDetails,
+			[name]: formattedValue,
 		};
 		onSelectionsChange(newSelections);
 	};

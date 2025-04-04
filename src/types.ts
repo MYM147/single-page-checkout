@@ -1,9 +1,13 @@
-export interface Selections {
-	// Shared properties
+export interface ContactDetails {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phone: string;
+}
+
+export interface FulfillmentSelections {
 	fulfillmentType: string;
 	specialInstructions: string;
-
-	// Pickup properties
 	pickupPerson: string;
 	pickupPersonDetails: {
 		firstName: string;
@@ -20,8 +24,6 @@ export interface Selections {
 		storeStreet: string;
 		storeZip: string;
 	};
-
-	// Delivery properties
 	deliveryAddress: string;
 	deliveryDate: string;
 	deliveryTime: string;
@@ -39,14 +41,6 @@ export interface Selections {
 		locationName?: string;
 	};
 	deliveryTimeSlot: string;
-
-	// Contact properties
-	contactDetails: {
-		firstName: string;
-		lastName: string;
-		email: string;
-		phone: string;
-	};
 }
 
 export type UserType = {

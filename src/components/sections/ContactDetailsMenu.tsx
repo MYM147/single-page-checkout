@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-	setExpanded, setSaved, updateSelections
+	setExpanded,
+	setSaved,
+	updateContactDetails,
 } from '../../store/slices/contactSlice';
-import { Selections } from '../../types';
+import { ContactDetails } from '../../types';
 import SectionTitle from '../global/SectionTitle';
 import ContactDetailsForm from '../sections/subsections/ContactDetailsForm';
 import ContactDetailsSummary from './subsections/ContactDetailsSummary';
@@ -12,23 +13,22 @@ type Props = {
 	className?: string;
 	onContinue: () => void;
 	onEdit: () => void;
-	selections: Selections
+	isActive?: boolean; // New prop to control whether this component is active
 };
 
-const ContactDetailsMenu = ({ className, onContinue, onEdit }: Props) => {
+const ContactDetailsMenu = ({
+	className,
+	onContinue,
+	onEdit,
+	isActive = false,
+}: Props) => {
 	const dispatch = useAppDispatch();
-	const { isExpanded, isSaved, selections } = useAppSelector(
-		(state) => state.fulfillment
+	const { isExpanded, isSaved, contactDetails } = useAppSelector(
+		(state) => state.contact
 	);
 
-	useEffect(() => {
-		if (!isExpanded) {
-			dispatch(setSaved(false));
-		}
-	}, [isExpanded, dispatch]);
-
-	const handleSelectionsChange = (newSelections: Partial<Selections>) => {
-		dispatch(updateSelections(newSelections));
+	const handleContactDetailsChange = (newDetails: Partial<ContactDetails>) => {
+		dispatch(updateContactDetails(newDetails));
 	};
 
 	const handleContinue = () => {
@@ -50,16 +50,16 @@ const ContactDetailsMenu = ({ className, onContinue, onEdit }: Props) => {
 				title="Contact Details"
 				showEdit={!isExpanded && isSaved}
 			/>
-			{isExpanded && (
+			{isExpanded && isActive && (
 				<ContactDetailsForm
 					onContinue={handleContinue}
-					onSelectionsChange={handleSelectionsChange}
-					selections={selections}
+					onSelectionsChange={handleContactDetailsChange}
+					selections={contactDetails}
 					setIsSaved={(value: boolean) => dispatch(setSaved(value))}
 				/>
 			)}
 			{!isExpanded && isSaved && (
-				<ContactDetailsSummary contactDetails={selections.contactDetails} />
+				<ContactDetailsSummary contactDetails={contactDetails} />
 			)}
 		</div>
 	);
