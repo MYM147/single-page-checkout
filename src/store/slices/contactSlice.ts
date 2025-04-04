@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Selections } from '../../types';
 
-interface ContactDetailsState {
+interface ContactState {
 	selections: Selections;
 	isExpanded: boolean;
 	isSaved: boolean;
 }
 
-const initialState: ContactDetailsState = {
+const initialState: ContactState = {
 	selections: {
 		contactDetails: {
 			firstName: '',
@@ -55,7 +55,7 @@ const initialState: ContactDetailsState = {
 	isSaved: false,
 };
 
-const contactDetailsSlice = createSlice({
+const contactSlice = createSlice({
 	name: 'contactDetails',
 	initialState,
 	reducers: {
@@ -72,5 +72,5 @@ const contactDetailsSlice = createSlice({
 });
 
 export const { setExpanded, setSaved, updateSelections } =
-	contactDetailsSlice.actions;
-export default contactDetailsSlice.reducer;
+	contactSlice.actions;
+export default contactSlice.reducer;

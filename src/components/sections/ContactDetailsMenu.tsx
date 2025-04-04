@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-	setExpanded,
-	setSaved,
-	updateSelections,
-} from '../../store/slices/contactDetailsSlice';
+	setExpanded, setSaved, updateSelections
+} from '../../store/slices/contactSlice';
+import { Selections } from '../../types';
 import SectionTitle from '../global/SectionTitle';
 import ContactDetailsForm from '../sections/subsections/ContactDetailsForm';
 import ContactDetailsSummary from './subsections/ContactDetailsSummary';
@@ -13,12 +12,13 @@ type Props = {
 	className?: string;
 	onContinue: () => void;
 	onEdit: () => void;
+	selections: Selections
 };
 
 const ContactDetailsMenu = ({ className, onContinue, onEdit }: Props) => {
 	const dispatch = useAppDispatch();
 	const { isExpanded, isSaved, selections } = useAppSelector(
-		(state) => state.contactDetails
+		(state) => state.fulfillment
 	);
 
 	useEffect(() => {
