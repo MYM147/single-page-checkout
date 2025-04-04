@@ -5,7 +5,7 @@ import {
 	setSaved,
 	updateSelections,
 } from '../../store/slices/fulfillmentSlice';
-import { type Selections } from '../../types';
+import { FulfillmentSelections } from '../../types';
 import SectionTitle from '../global/SectionTitle';
 import DeliveryFulfillment from './subsections/DeliveryFulfillment';
 import OrderSummaryDetails from './subsections/OrderSummaryDetails';
@@ -14,21 +14,30 @@ import PickupOrDeliverySelector from './subsections/PickupOrDeliverySelector';
 
 type Props = {
 	className?: string;
-	isExpanded: boolean;
 	onContinue: () => void;
 	onEdit: () => void;
-	onSelectionsChange: (selections: Selections) => void;
-	selections: Selections;
+	onSelectionsChange: (selections: FulfillmentSelections) => void;
+	selections: FulfillmentSelections;
 };
 
-// Container component that manages fulfillment type selection and displays appropriate forms
-const FulfillmentOptions = ({ className, onContinue, onEdit }: Props) => {
+const FulfillmentOptions = ({
+	className,
+	onContinue,
+	onEdit,
+	onSelectionsChange,
+}: Props) => {
 	const dispatch = useAppDispatch();
 	const { fulfillmentType, selections, isSaved, isExpanded } = useAppSelector(
 		(state) => state.fulfillment
 	);
 
-	const handleSelectionsChange = (newSelections: Partial<Selections>) => {
+	const handleSelectionsChange = (
+		newSelections: Partial<FulfillmentSelections>
+	) => {
+		onSelectionsChange({
+			...selections,
+			...newSelections,
+		});
 		dispatch(updateSelections(newSelections));
 	};
 

@@ -10,6 +10,7 @@ import {
 	setSavedAddressSelected,
 	updateDeliveryDetails,
 } from '../../store/slices/fulfillmentSlice';
+import { locationNameRegex } from '../utils/regexUtils';
 import { savedAddresses } from '../utils/savedAddressUtil';
 import DeliveryAddress from './DeliveryAddress';
 
@@ -31,7 +32,6 @@ const SavedDeliveryAddresses = () => {
 	};
 
 	const validateLocationName = (name: string) => {
-		const locationNameRegex = /^[a-zA-Z0-9\s.-]+$/;
 		return name.length > 0 && name.length <= 50 && locationNameRegex.test(name);
 	};
 

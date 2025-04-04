@@ -1,16 +1,20 @@
 import { useState } from 'react';
-import { type Selections } from '../../types';
+import { useAppDispatch } from '../../store/hooks';
+import { setExpanded as setContactExpanded } from '../../store/slices/contactSlice';
+import { setExpanded as setFulfillmentExpanded } from '../../store/slices/fulfillmentSlice';
+import { FulfillmentSelections } from '../../types';
 import AccountDetails from './AccountDetails';
-import ContactDetails from './ContactDetails';
+import ContactDetailsMenu from './ContactDetailsMenu';
 import FulfillmentOptions from './FulfillmentOptions';
 import PaymentMethod from './PaymentMethod';
 
 // Main component that manages the checkout flow and expanded panel state
 const CheckoutProcessList = () => {
 	const [expandedPanel, setExpandedPanel] = useState(0);
+	const dispatch = useAppDispatch();
 
 	// Initial state for all user selections throughout the checkout process
-	const [selections, setSelections] = useState<Selections>({
+	const [selections, setSelections] = useState<FulfillmentSelections>({
 		fulfillmentType: '',
 		deliveryAddress: '',
 		deliveryDate: '',
@@ -49,27 +53,50 @@ const CheckoutProcessList = () => {
 
 	const handleEdit = (panelIndex: number) => {
 		setExpandedPanel(panelIndex);
+
+		// Set the appropriate component as expanded in Redux
+		if (panelIndex === 0) {
+			dispatch(setFulfillmentExpanded(true));
+			dispatch(setContactExpanded(false));
+		} else if (panelIndex === 1) {
+			dispatch(setFulfillmentExpanded(false));
+			dispatch(setContactExpanded(true));
+		} else {
+			dispatch(setFulfillmentExpanded(false));
+			dispatch(setContactExpanded(false));
+		}
+	};
+
+	const handleFulfillmentContinue = () => {
+		setExpandedPanel(1);
+		dispatch(setFulfillmentExpanded(false));
+		dispatch(setContactExpanded(true));
+	};
+
+	const handleContactContinue = () => {
+		setExpandedPanel(2);
+		dispatch(setContactExpanded(false));
 	};
 
 	return (
 		<div className="swdc-flex swdc-w-full swdc-max-w-[752px] swdc-flex-col swdc-gap-4">
 			{/* Controls which panel is currently expanded in the checkout flow */}
 			<FulfillmentOptions
-				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${expandedPanel === 0 ? 'swdc-h-auto swdc-opacity-100' : ''} `}
-				isExpanded={expandedPanel === 0}
-				onContinue={() => setExpandedPanel(1)}
+				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${expandedPanel === 0 ? 'swdc-h-auto swdc-opacity-100' : 'swdc-pb-0 swdc-pt-[32px]'} `}
+				onContinue={handleFulfillmentContinue}
 				onEdit={() => handleEdit(0)}
 				onSelectionsChange={setSelections}
 				selections={selections}
 			/>
-			<ContactDetails
+			<ContactDetailsMenu
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
 					expandedPanel === 1
 						? 'swdc-h-auto swdc-opacity-100'
 						: 'swdc-pb-0 swdc-pt-[32px]'
 				} `}
-				isExpanded={expandedPanel === 1}
-				onContinue={() => setExpandedPanel(2)}
+				onContinue={handleContactContinue}
+				onEdit={() => handleEdit(1)}
+				isActive={expandedPanel === 1}
 			/>
 			<AccountDetails
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${
@@ -92,4 +119,5 @@ const CheckoutProcessList = () => {
 		</div>
 	);
 };
+
 export default CheckoutProcessList;

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Selections } from '../../types';
+import { FulfillmentSelections } from '../../types';
 
 interface FulfillmentState {
-	selections: Selections;
+	selections: FulfillmentSelections;
 	fulfillmentType: 'pickup' | 'delivery';
 	isSaved: boolean;
 	isExpanded: boolean;
@@ -66,12 +66,15 @@ const fulfillmentSlice = createSlice({
 		) => {
 			state.fulfillmentType = action.payload;
 		},
-		updateSelections: (state, action: PayloadAction<Partial<Selections>>) => {
+		updateSelections: (
+			state,
+			action: PayloadAction<Partial<FulfillmentSelections>>
+		) => {
 			state.selections = { ...state.selections, ...action.payload };
 		},
 		updateDeliveryDetails: (
 			state,
-			action: PayloadAction<Partial<Selections['deliveryDetails']>>
+			action: PayloadAction<Partial<FulfillmentSelections['deliveryDetails']>>
 		) => {
 			state.selections.deliveryDetails = {
 				...state.selections.deliveryDetails,

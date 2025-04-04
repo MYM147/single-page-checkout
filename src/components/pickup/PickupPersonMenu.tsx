@@ -1,12 +1,6 @@
 import { Input } from '@prism/dropcloth';
 import { useState } from 'react';
-
-// Text only regex for names
-const nameRegex = /^[a-zA-Z\s]*$/;
-// Email regex
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// Phone regex for format (XXX) XXX-XXXX
-const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
+import { emailRegex, nameRegex, phoneRegex } from '../utils/regexUtils';
 
 type Props = {
 	onPersonDetailsChange: (details: {

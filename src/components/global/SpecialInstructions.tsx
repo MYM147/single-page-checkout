@@ -1,5 +1,6 @@
 import { Input, InputGroup } from '@prism/dropcloth';
 import { useState } from 'react';
+import { instructionsRegex } from '../utils/regexUtils';
 
 interface Props {
 	label?: string;
@@ -20,7 +21,6 @@ const SpecialInstructions = ({
 	const [isValid, setIsValid] = useState(true);
 
 	const validateInstructions = (text: string, maxLength: number) => {
-		const instructionsRegex = /^[a-zA-Z0-9\s.,!?()-]+$/;
 		return !text || (text.length <= maxLength && instructionsRegex.test(text));
 	};
 

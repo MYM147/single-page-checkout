@@ -118,7 +118,7 @@ const PickupFulfillment = ({
 				value2="on-a-specific-day"
 				value="as-soon-as-possible"
 			/>
-			{/* Optional special instructions for pickup */}
+
 			<SpecialInstructions
 				maxLength={100}
 				onChange={(value) => {
@@ -137,7 +137,7 @@ const PickupFulfillment = ({
 				value={selections.specialInstructions}
 			/>
 			<Button
-				className="swdc-mt-6"
+				className="swdc-mt-6 swdc-full md:swdc-w-[250px]"
 				disabled={!isFormValid()}
 				onClick={() => {
 					onContinue();
