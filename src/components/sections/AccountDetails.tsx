@@ -1,6 +1,5 @@
 import { Button, IconRegularCaretRight, Input, InputGroup } from '@prism/dropcloth';
 import { useState } from 'react';
-import { set } from 'react-hook-form';
 import SectionTitle from '../global/SectionTitle';
 import AddNewAccountDetails from './subsections/AddNewAccountDetails';
 
@@ -64,10 +63,7 @@ const AccountDetails = ({ className, isExpanded, onContinue }: Props) => {
 							</Button>
 						</>
 					) : (
-						<AddNewAccountDetails
-							accountNumber="2954512447"
-							jobAccount="01-EXAMPLE JOB ACCOUNT"
-						/>
+						<AddNewAccountDetails />
 					)}
 				</>
 			)}
