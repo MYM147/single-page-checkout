@@ -10,6 +10,7 @@ import {
 	setSavedAddressSelected,
 	updateDeliveryDetails,
 } from '../../store/slices/fulfillmentSlice';
+import SetMapDelivery from '../global/mapLocation/setMapDelivery';
 import { locationNameRegex } from '../utils/regexUtils';
 import { savedAddresses } from '../utils/savedAddressUtil';
 import DeliveryAddress from './DeliveryAddress';
@@ -182,12 +183,7 @@ const SavedDeliveryAddresses = () => {
 					</p>
 				</>
 			)}
-			<p className="swdc-mt-4 swdc-text-center swdc-text-lg md:swdc-text-left md:swdc-text-sm">
-				No address?{' '}
-				<a href="#" className="swdc-ml-1 swdc-font-medium hover:swdc-underline">
-					Set your delivery spot on a map.
-				</a>
-			</p>
+			<SetMapDelivery/>
 		</div>
 	);
 };

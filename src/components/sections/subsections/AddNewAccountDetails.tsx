@@ -6,10 +6,22 @@ import {
 	Input,
 	InputGroup,
 } from '@prism/dropcloth';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { accountNumbers, jobAccounts } from '../../utils/accountUtils';
 
-const AddNewAccountDetails = () => {
+type AddNewAccountDetailsProps = {
+	onSave: (data: {
+		accountNumber: string;
+		jobAccountName: string;
+		projectName: string;
+	}) => void;
+	onCancel: () => void;
+};
+
+const AddNewAccountDetails = ({
+	onSave,
+	onCancel,
+}: AddNewAccountDetailsProps) => {
 	// State for account dropdown
 	const [isAccountOpen, setIsAccountOpen] = useState(false);
 	const [selectedAccount, setSelectedAccount] = useState(accountNumbers[0]);
@@ -17,6 +29,53 @@ const AddNewAccountDetails = () => {
 	// State for job account dropdown
 	const [isJobAccountOpen, setIsJobAccountOpen] = useState(false);
 	const [selectedJobAccount, setSelectedJobAccount] = useState(jobAccounts[0]);
+
+	// State for project name input
+	const [projectName, setProjectName] = useState('');
+	const [isProjectNameValid, setIsProjectNameValid] = useState(true);
+	const [validationError, setValidationError] = useState('');
+
+	// Validate project name for HTML and SQL injection
+	const validateProjectName = (value: string) => {
+		// Check for HTML tags
+		const htmlRegex = /<[^>]*>/;
+		// Check for common SQL injection patterns
+		const sqlRegex =
+			/(\b(SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|EXEC|UNION|CREATE|WHERE)\b)|('--)|(\b(OR|AND)\b\s+\d+\s*=\s*\d+)/i;
+
+		if (htmlRegex.test(value)) {
+			setIsProjectNameValid(false);
+			setValidationError('HTML tags are not allowed');
+			return false;
+		}
+
+		if (sqlRegex.test(value)) {
+			setIsProjectNameValid(false);
+			setValidationError('Invalid characters detected');
+			return false;
+		}
+
+		setIsProjectNameValid(true);
+		setValidationError('');
+		return true;
+	};
+
+	// Handle project name change
+	const handleProjectNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		setProjectName(value);
+		validateProjectName(value);
+	};
+
+	const handleSave = () => {
+		if (isProjectNameValid) {
+			onSave({
+				accountNumber: selectedAccount.accountNumber,
+				jobAccountName: selectedJobAccount.jobAccountName,
+				projectName: projectName,
+			});
+		}
+	};
 
 	return (
 		<>
@@ -103,8 +162,17 @@ const AddNewAccountDetails = () => {
 			</div>
 
 			<div className="swdc-mt-4 swdc-w-full">
-				<InputGroup label="Job or Project Name/PO" maxLength={20}>
-					<Input className="swdc-mt-1 swdc-font-medium"></Input>
+				<InputGroup
+					label="Job or Project Name/PO"
+					maxLength={20}
+					error={!isProjectNameValid}
+				>
+					<Input
+						className="swdc-mt-1 swdc-font-medium"
+						value={projectName}
+						onChange={handleProjectNameChange}
+						error={!isProjectNameValid}
+					/>
 				</InputGroup>
 			</div>
 			<div className="swdc-mt-2 swdc-flex swdc-w-3/4 swdc-items-center swdc-gap-2 swdc-bg-[#EEC46F] swdc-p-2">
@@ -114,8 +182,10 @@ const AddNewAccountDetails = () => {
 				</p>
 			</div>
 			<div className="swdc-mt-4 swdc-flex swdc-justify-start swdc-gap-2">
-				<Button>Save and Continue</Button>
-				<Button polarity="dark" variant="outlined">
+				<Button onClick={handleSave} disabled={!isProjectNameValid}>
+					Save and Continue
+				</Button>
+				<Button polarity="dark" variant="outlined" onClick={onCancel}>
 					Cancel
 				</Button>
 			</div>
