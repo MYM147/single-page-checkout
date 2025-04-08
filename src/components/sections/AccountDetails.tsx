@@ -1,6 +1,5 @@
 import {
 	Button,
-	IconRegularCaretRight,
 	Input,
 	InputGroup,
 } from '@prism/dropcloth';
@@ -14,7 +13,7 @@ type Props = {
 	isExpanded: boolean;
 	onContinue: () => void;
 	onEdit: () => void;
-	isActive?: boolean; // Add this to match ContactDetailsMenu pattern
+	isActive?: boolean;
 };
 
 const AccountDetails = ({
@@ -22,7 +21,7 @@ const AccountDetails = ({
 	isExpanded,
 	onContinue,
 	onEdit,
-	isActive = true, // Default to true if not provided
+	isActive = true,
 }: Props) => {
 	const [usedAccountNumber, setUsedAccountNumber] = useState(true);
 	const [isSaved, setIsSaved] = useState(false);
@@ -112,10 +111,7 @@ const AccountDetails = ({
 										</div>
 									</div>
 									<div className="swdc-mt-4">
-										<InputGroup
-											label="Job or Project Name/PO (optional)"
-											maxLength={20}
-										>
+										<InputGroup label="Job or Project Name/PO (optional)" maxLength={20}>
 											<Input
 												value={accountData.projectName}
 												onChange={handleProjectNameChange}
