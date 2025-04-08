@@ -64,15 +64,9 @@ const AccountDetails = ({
 		});
 	};
 
-	const handleSaveAndContinue = () => {
-		setIsSaved(true);
-		onContinue();
-	};
-
-	// This is the key function that needs to be fixed
 	const handleEdit = () => {
 		setIsSaved(false);
-		onEdit(); // This should trigger the parent to expand this section
+		onEdit();
 	};
 
 	return (
@@ -92,12 +86,12 @@ const AccountDetails = ({
 						<>
 							{usedAccountNumber ? (
 								<>
-									<div className="swdc-mt-4 swdc-flex swdc-items-center swdc-justify-between swdc-bg-[#f6f6f6] swdc-p-3">
-										<div>
+									<div className="swdc-mt-4 swdc-items-center swdc-justify-between swdc-bg-[#f6f6f6] swdc-p-3 swdc-text-center md:swdc-flex md:swdc-text-left">
+										<div className="swdc-items-center">
 											<p className="swdc-text-lg swdc-font-bold">
 												This order belongs to:
 											</p>
-											<p className="swdc-text-[ #2F2F30]">
+											<p className="swdc-text-[ #2F2F30] swdc-pt-2 md:swdc-pt-0">
 												Account: {accountData.accountNumber} -{' '}
 												{accountData.accountName}
 											</p>
@@ -105,17 +99,16 @@ const AccountDetails = ({
 												Job account: {accountData.jobAccountName}
 											</p>
 										</div>
-										<div className="swdc-flex swdc-items-center swdc-font-bold">
+										<div className="swdc-flex swdc-items-center">
 											<Button
 												kind="standard"
 												polarity="dark"
 												variant="text"
-												className="swdc-text-sm swdc-normal-case"
+												className="swdc-text-sm swdc-normal-case hover:swdc-bg-transparent swdc-font-bold"
 												onClick={changeAccountNumber}
 											>
-												Change account
+												Change account <span className='swdc-w-2 swdc-text-lg swdc-font-medium'>&gt;</span>
 											</Button>
-											<IconRegularCaretRight className="swdc-w-2 swdc-font-bold" />
 										</div>
 									</div>
 									<div className="swdc-mt-4">
@@ -129,7 +122,13 @@ const AccountDetails = ({
 											/>
 										</InputGroup>
 									</div>
-									<Button className="swdc-mt-6" onClick={handleSaveAndContinue}>
+									<Button
+										className="swdc-mt-6 swdc-w-full md:swdc-w-[250px]"
+										onClick={() => {
+											setIsSaved(true);
+											onContinue();
+										}}
+									>
 										Save and Continue
 									</Button>
 								</>
