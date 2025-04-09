@@ -3,7 +3,7 @@ import {
 	Input,
 	InputGroup,
 } from '@prism/dropcloth';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SectionTitle from '../global/SectionTitle';
 import AccountDetailsSummary from './subsections/AccountDetailsSummary';
 import AddNewAccountDetails from './subsections/AddNewAccountDetails';
@@ -23,6 +23,7 @@ const AccountDetails = ({
 	onEdit,
 	isActive = true,
 }: Props) => {
+	const [screenSize, setScreenSize] = useState('');
 	const [usedAccountNumber, setUsedAccountNumber] = useState(true);
 	const [isSaved, setIsSaved] = useState(false);
 	const [accountData, setAccountData] = useState({
@@ -68,6 +69,25 @@ const AccountDetails = ({
 		onEdit();
 	};
 
+	useEffect(() => {
+		const handleResize = () => {
+			const width = window.innerWidth;
+			if (width >= 1024) {
+				setScreenSize('lg');
+			} else if (width >= 768) {
+				setScreenSize('md');
+			} else if (width >= 640) {
+				setScreenSize('sm');
+			} else {
+				setScreenSize('xs');
+			}
+		};
+
+		handleResize();
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
 	return (
 		<div
 			className={`swdc-bg-[#fff] swdc-py-4 swdc-pl-6 swdc-pr-6 swdc-drop-shadow-md ${className}`}
@@ -99,19 +119,37 @@ const AccountDetails = ({
 											</p>
 										</div>
 										<div className="swdc-flex swdc-items-center">
-											<Button
-												kind="standard"
-												polarity="dark"
-												variant="text"
-												className="swdc-text-sm swdc-normal-case hover:swdc-bg-transparent swdc-font-bold"
-												onClick={changeAccountNumber}
-											>
-												Change account <span className='swdc-w-2 swdc-text-lg swdc-font-medium'>&gt;</span>
-											</Button>
+											{screenSize === 'md' || screenSize === 'lg' ? (
+												<Button
+													kind="standard"
+													polarity="dark"
+													variant="text"
+													className="swdc-text-sm swdc-font-bold swdc-normal-case hover:swdc-bg-transparent"
+													onClick={changeAccountNumber}
+												>
+													Change account{' '}
+													<span className="swdc-w-2 swdc-text-lg swdc-font-medium">
+														&gt;
+													</span>
+												</Button>
+											) : (
+												<Button
+													kind="standard"
+													polarity="dark"
+													variant="outlined"
+													className="swdc-text-sm swdc-font-bold hover:swdc-bg-transparent swdc-mt-2 swdc-w-full swdc-uppercase"
+													onClick={changeAccountNumber}
+												>
+													Change account
+												</Button>
+											)}
 										</div>
 									</div>
 									<div className="swdc-mt-4">
-										<InputGroup label="Job or Project Name/PO (optional)" maxLength={20}>
+										<InputGroup
+											label="Job or Project Name/PO (optional)"
+											maxLength={20}
+										>
 											<Input
 												value={accountData.projectName}
 												onChange={handleProjectNameChange}

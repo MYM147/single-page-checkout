@@ -6,7 +6,7 @@ import {
 	Input,
 	InputGroup,
 } from '@prism/dropcloth';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { accountNumbers, jobAccounts } from '../../utils/accountUtils';
 
 type AddNewAccountDetailsProps = {
@@ -37,9 +37,7 @@ const AddNewAccountDetails = ({
 
 	// Validate project name for HTML and SQL injection
 	const validateProjectName = (value: string) => {
-		// Check for HTML tags
 		const htmlRegex = /<[^>]*>/;
-		// Check for common SQL injection patterns
 		const sqlRegex =
 			/(\b(SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|EXEC|UNION|CREATE|WHERE)\b)|('--)|(\b(OR|AND)\b\s+\d+\s*=\s*\d+)/i;
 
