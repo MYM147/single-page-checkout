@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import FreeDeliveryBanner from './components/global/FreeDeliveryBanner';
 import CheckoutProcessList from './components/sections/CheckoutProcessList';
-import { Sidebar } from './components/sidebar/Sidebar';
+// import { Sidebar } from './components/sidebar/Sidebar';
 import { UserType } from './types';
 
 export const UserContext = createContext<UserType | null>(null);
@@ -16,7 +16,7 @@ function App() {
 				</h1>
 				<div className="lg:swdc-px-16 swdc-items-start swdc-gap-8 lg:swdc-flex">
 					<CheckoutProcessList />
-					<Sidebar />
+					{/* <Sidebar /> */}
 				</div>
 			</div>
 		</>

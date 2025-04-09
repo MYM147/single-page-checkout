@@ -117,7 +117,6 @@ const DeliveryFulfillment = ({ onContinue, selections, setIsSaved }: Props) => {
 					membershipType={membershipType}
 					onDateSelect={handleDateSelect}
 					onSelectionsChange={(updatedSelections) => {
-						// Directly dispatch to Redux
 						dispatch(updateSelections(updatedSelections));
 					}}
 					rush={true}
