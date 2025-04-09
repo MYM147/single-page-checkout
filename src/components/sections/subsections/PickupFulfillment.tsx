@@ -9,21 +9,11 @@ import RadioBtnChoice from '../../global/RadioBtnChoice';
 import SpecialInstructions from '../../global/SpecialInstructions';
 import PickupStore from '../../pickup/PickupStore';
 
-type PickupPersonDetails = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-};
-
-type PickupDateDetails = string | Date | null;
-
 type Props = {
 	onContinue: () => void;
 	onSelectionsChange: (selections: Partial<FulfillmentSelections>) => void;
 	selections: FulfillmentSelections;
 	setIsSaved: (value: boolean) => void;
-	onSelectionChange: (selection: string, details?: PickupPersonDetails | PickupDateDetails) => void;
 };
 
 //Form component for store pickup options
@@ -77,40 +67,43 @@ const PickupFulfillment = ({
 				name2='pickup-person'
 				name='pickup-person'
 				onSelectionChange={(selection, details) => {
-					if (selection === 'someone-else' && details) {	
-					const personDetails = details as {
-						firstName: string;
-						lastName: string;
-						email: string;
-						phone: string;
-					};
-					
-					dispatch(
-						updateSelections({
+					// Convert the details to the format expected by Redux
+					if (selection === 'someone-else' && details) {
+						// If details is PickupPersonDetails, use it directly
+						const personDetails = details as {
+							firstName: string;
+							lastName: string;
+							email: string;
+							phone: string;
+						};
+						
+						dispatch(
+							updateSelections({
+								pickupPerson: selection,
+								pickupPersonDetails: personDetails,
+							})
+						);
+						onSelectionsChange({
+							...selections,
 							pickupPerson: selection,
 							pickupPersonDetails: personDetails,
-						})
-					);
-					onSelectionsChange({
-						...selections,
-						pickupPerson: selection,
-						pickupPersonDetails: personDetails,
-					});
-				} else {
-					// If no details or self-pickup, just update the selection
-					dispatch(
-						updateSelections({
+						});
+					} else {
+						// If no details or self-pickup, just update the selection
+						dispatch(
+							updateSelections({
+								pickupPerson: selection,
+								// Clear pickup person details if selecting self
+								pickupPersonDetails: selection === 'self-pickup' ? undefined : selections.pickupPersonDetails,
+							})
+						);
+						onSelectionsChange({
+							...selections,
 							pickupPerson: selection,
-							// Clear pickup person details if selecting self
 							pickupPersonDetails: selection === 'self-pickup' ? undefined : selections.pickupPersonDetails,
-						})
-					);
-					onSelectionsChange({
-						...selections,
-						pickupPerson: selection,
-						pickupPersonDetails: details,
-					});
-				}}}
+						});
+					}
+				}}
 				onSelectionsChange={onSelectionsChange}
 				option2='Someone else'
 				option='Me'
@@ -128,16 +121,27 @@ const PickupFulfillment = ({
 				name2='pickup-date'
 				name='pickup-date'
 				onSelectionChange={(selection, details) => {
+					// Convert the details to the format expected by Redux
+					let dateSelection: string | null = null;
+					
+					if (details) {
+						if (typeof details === 'string') {
+							dateSelection = details;
+						} else if (details instanceof Date) {
+							dateSelection = details.toLocaleDateString('en-US');
+						}
+					}
+					
 					dispatch(
 						updateSelections({
 							pickupDate: selection,
-							pickupDateSelection: details,
+							pickupDateSelection: dateSelection,
 						})
 					);
 					onSelectionsChange({
 						...selections,
 						pickupDate: selection,
-						pickupDateSelection: details,
+						pickupDateSelection: dateSelection,
 					});
 				}}
 				onSelectionsChange={onSelectionsChange}
