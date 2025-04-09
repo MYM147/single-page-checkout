@@ -9,6 +9,6 @@ const SetMapDelivery = () => {
 			</p>
 		</>
 	);
-}
+};
 
 export default SetMapDelivery;

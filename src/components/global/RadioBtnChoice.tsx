@@ -1,31 +1,40 @@
 import { Radio } from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
-import { type Selections } from '../../types';
+import { type FulfillmentSelections } from '../../types';
 import PickupPersonMenu from '../pickup/PickupPersonMenu';
 import { weekDates } from '../utils/dateUtils';
 import PickupDateMenu from './DateSelectMenu';
 
+type PickupPersonDetails = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+};
+
+type PickupDateDetails = string | Date | null;
+
 type Props = {
-	name2: string;
-	name: string;
-	onSelectionChange: (selection: string, details?: any) => void;
-	onSelectionsChange: (selections: Selections) => void;
-	option2: string;
-	option: string;
-	pickupDate?: string;
-	pickupDateSelection: string | null;
-	pickupPerson?: string;
-	pickupPersonDetails?: {
-		firstName: string;
-		lastName: string;
-		email: string;
-		phone: string;
-	};
-	selections: Selections;
-	text?: string;
-	title: string;
-	value2: string;
-	value: string;
+  name2: string;
+  name: string;
+  onSelectionChange: (selection: string, details?: PickupPersonDetails | PickupDateDetails) => void;
+  onSelectionsChange: (selections: FulfillmentSelections) => void;
+  option2: string;
+  option: string;
+  pickupDate?: string;
+  pickupDateSelection: string | null;
+  pickupPerson?: string;
+  pickupPersonDetails?: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+  };
+  selections: FulfillmentSelections;
+  text?: string;
+  title: string;
+  value2: string;
+  value: string;
 };
 
 const RadioBtnChoice = ({
@@ -104,13 +113,13 @@ const RadioBtnChoice = ({
 						onDateSelect={(date) => {
 							onSelectionChange('on-a-specific-day', date);
 						}}
-						selectedDate={pickupDateSelection}
+						selectedDate={pickupDateSelection ?? null}
 						selectedTimeSlot={selections.deliveryTimeSlot}
 						selections={selections}
 						onSelectionsChange={(newSelections) => {
 							onSelectionChange(
 								'on-a-specific-day',
-								newSelections.pickupDateSelection
+								newSelections.pickupDateSelection || undefined
 							);
 						}}
 					/>
@@ -119,5 +128,4 @@ const RadioBtnChoice = ({
 		</div>
 	);
 };
-
 export default RadioBtnChoice;

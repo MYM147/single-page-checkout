@@ -1,23 +1,18 @@
-import { Button } from '@prism/dropcloth';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import {
-	setLoading,
-	setSaved,
-	updateDeliveryDetails,
-	updateSelections,
-} from '../../../store/slices/fulfillmentSlice';
-import { Selections } from '../../../types';
+import DateSelectMenu from '../../global/DateSelectMenu';
 import DeliveryAddress from '../../delivery/DeliveryAddress';
 import DeliveryNotificationNumber from '../../delivery/DeliveryNotificationNumber';
 import SavedDeliveryAddresses from '../../delivery/SavedDeliveryAddresses';
-import DateSelectMenu from '../../global/DateSelectMenu';
 import SpecialInstructions from '../../global/SpecialInstructions';
+import { Button } from '@prism/dropcloth';
+import { FulfillmentSelections } from '../../../types';
 import { getDates } from '../../utils/dateUtils';
 import { phoneRegex } from '../../utils/regexUtils';
+import { setLoading, setSaved,	updateDeliveryDetails, updateSelections,} from '../../../store/slices/fulfillmentSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 type Props = {
 	onContinue: () => void;
-	selections: Selections;
+	selections: FulfillmentSelections;
 	setIsSaved: (value: boolean) => void;
 };
 

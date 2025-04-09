@@ -2,7 +2,7 @@ import { IconFillAlarm } from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
 import { FulfillmentSelections } from '../../types';
 import { getDates } from '../utils/dateUtils';
-import { proTimeSlots, TimeSlot } from '../utils/timeSlotUtil';
+import { TimeSlot, proTimeSlots } from '../utils/timeSlotUtil';
 import BasicTimeSelector from './timeselector/BasicTimeSelector';
 import BasicTimeSlot from './timeselector/BasicTimeSlot';
 import ProTimeSelector from './timeselector/ProTimeSelector';
@@ -48,7 +48,6 @@ export const DateSelectMenu = ({
 		setSelectedDateState(
 			selectedDate || selections.pickupDateSelection || selections.deliveryDate
 		);
-		// Keep local state in sync with Redux
 		setSelectedTimeSlot(selections.deliveryTimeSlot);
 	}, [
 		selectedDate,
@@ -60,9 +59,7 @@ export const DateSelectMenu = ({
 	useEffect(() => {
 		if (selectedDateState) {
 			const today = weekDates[0].toLocaleDateString('en-US', {
-				weekday: 'long',
-				month: 'short',
-				day: 'numeric',
+				weekday: 'long', month: 'short', day: 'numeric',
 			});
 
 			setIsRushSelected(Boolean(selectedDateState === today && rush));
@@ -78,19 +75,13 @@ export const DateSelectMenu = ({
 		return () => clearTimeout(timer);
 	}, []);
 
-	// Handle time slot selection with local state update first
 	const handleTimeSlotSelect = (uniqueId: string) => {
 		const value = uniqueId.split('-').slice(0, -1).join('-');
-
-		// Find the corresponding time slot in the proTimeSlots array to get its title
 		const selectedSlot = proTimeSlots.find((slot: TimeSlot) =>
 			uniqueId.startsWith(`${slot.value}-`)
 		);
-
-		// Use the title from the selected slot as the display time
 		const timeDisplay = selectedSlot?.title || value;
 
-		// Update Redux with both the time slot value and display time
 		onSelectionsChange({
 			...selections,
 			deliveryTimeSlot: uniqueId, // Store the uniqueId to maintain selection
@@ -116,13 +107,10 @@ export const DateSelectMenu = ({
 			)}
 
 			<div
-				className={`date-scroll swdc-mt-2 swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-[25px] swdc-overflow-x-auto lg:swdc-gap-[15px] ${loading ? 'swdc-opacity-[.15]' : ''}`}
-			>
+				className={`date-scroll swdc-mt-2 swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-[25px] swdc-overflow-x-auto lg:swdc-gap-[15px] ${loading ? 'swdc-opacity-[.15]' : ''}`}>
 				{weekDates.map((date, index) => (
 					<div
-						className="swdc-flex swdc-flex-shrink-0 swdc-snap-center swdc-flex-col swdc-items-center"
-						key={index}
-					>
+						className="swdc-flex swdc-flex-shrink-0 swdc-snap-center swdc-flex-col swdc-items-center" key={index}>
 						<span className="swdc-mb-1 swdc-text-sm">
 							{index === 0
 								? 'Today'
@@ -175,13 +163,10 @@ export const DateSelectMenu = ({
 												});
 											}
 										}
-									: undefined
-							}
-						>
+									: undefined }>
 							<span className="swdc-text-sm swdc-font-medium">
 								{date.toLocaleDateString('en-US', {
-									month: 'short',
-									day: 'numeric',
+									month: 'short', day: 'numeric',
 								})}
 							</span>
 							{index === 0 && rush && (
@@ -197,11 +182,7 @@ export const DateSelectMenu = ({
 
 			{loading && (
 				<div className="swdc-absolute swdc-bottom-[20%] swdc-left-[45%] swdc-items-center swdc-justify-center">
-					<img
-						alt="Loading..."
-						height="48px"
-						src="/assets/color-wheel.svg"
-						width="48px"
+					<img alt="Loading..." height="48px" src="/assets/color-wheel.svg" width="48px"
 					/>
 				</div>
 			)}
