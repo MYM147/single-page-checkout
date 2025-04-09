@@ -10,7 +10,7 @@ import {
 	setSavedAddressSelected,
 	updateDeliveryDetails,
 } from '../../store/slices/fulfillmentSlice';
-import SetMapDelivery from '../global/mapLocation/setMapDelivery';
+import DropAPin from '../global/mapLocation/DropAPin';
 import { locationNameRegex } from '../utils/regexUtils';
 import { savedAddresses } from '../utils/savedAddressUtil';
 import DeliveryAddress from './DeliveryAddress';
@@ -90,31 +90,31 @@ const SavedDeliveryAddresses = () => {
 	};
 
 	return (
-		<div className="swdc-mt-6 swdc-flex swdc-flex-shrink-0 swdc-flex-col swdc-gap-2 lg:swdc-mr-[20px]">
-			<h3 className="swdc-font-bold swdc-uppercase">Delivery Address</h3>
-			<div className="swdc-relative">
+		<div className='swdc-mt-6 swdc-flex swdc-flex-shrink-0 swdc-flex-col swdc-gap-2 lg:swdc-mr-[20px]'>
+			<h3 className='swdc-font-bold swdc-uppercase'>Delivery Address</h3>
+			<div className='swdc-relative'>
 				<div
 					onClick={() => setIsOpen(!isOpen)}
-					className="swdc-cursor-pointer swdc-border swdc-p-2"
+					className='swdc-cursor-pointer swdc-border swdc-p-2'
 				>
-					<div className="swdc-flex swdc-items-center swdc-justify-between">
-						<div className="swdc-truncate swdc-font-medium">
+					<div className='swdc-flex swdc-items-center swdc-justify-between'>
+						<div className='swdc-truncate swdc-font-medium'>
 							{selectedAddress.locationName}
 						</div>
 						{isOpen ? (
-							<IconRegularCaretUp className="swdc-relative swdc-top-2" />
+							<IconRegularCaretUp className='swdc-relative swdc-top-2' />
 						) : (
-							<IconRegularCaretDown className="swdc-relative swdc-top-2" />
+							<IconRegularCaretDown className='swdc-relative swdc-top-2' />
 						)}
 					</div>
-					<div className="swdc-truncate swdc-pr-4 swdc-text-[#6d6d6e]">
+					<div className='swdc-truncate swdc-pr-4 swdc-text-[#6d6d6e]'>
 						{selectedAddress.streetAddress} {selectedAddress.city},{' '}
 						{selectedAddress.state} {selectedAddress.zip}
 					</div>
 				</div>
 
 				{isOpen && (
-					<div className="swdc-border-top-[0px] swdc-absolute swdc-z-50 swdc-w-full swdc-border-x swdc-border-b swdc-bg-white">
+					<div className='swdc-border-top-[0px] swdc-absolute swdc-z-50 swdc-w-full swdc-border-x swdc-border-b swdc-bg-white'>
 						{addresses.map((address) => (
 							<div
 								key={address.locationName}
@@ -131,12 +131,12 @@ const SavedDeliveryAddresses = () => {
 										})
 									);
 								}}
-								className="hover:swdc-bg-gray-100 swdc-cursor-pointer swdc-p-2 hover:swdc-bg-[#f6f6f6]"
+								className='hover:swdc-bg-gray-100 swdc-cursor-pointer swdc-p-2 hover:swdc-bg-[#f6f6f6]'
 							>
-								<div className="swdc-truncate swdc-font-bold">
+								<div className='swdc-truncate swdc-font-bold'>
 									{address.locationName}
 								</div>
-								<div className="swdc-truncate">
+								<div className='swdc-truncate'>
 									{address.streetAddress} {address.city}, {address.state}{' '}
 									{address.zip}
 								</div>
@@ -153,20 +153,20 @@ const SavedDeliveryAddresses = () => {
 						selections={selections}
 						hideForSavedAddresses={true}
 					/>
-					<div className="swdc-mt-4 swdc-flex swdc-justify-end swdc-gap-4">
+					<div className='swdc-mt-4 swdc-flex swdc-justify-end swdc-gap-4'>
 						<Button
 							onClick={handleCancelNewAddress}
-							polarity="dark"
-							type="button"
-							variant="outlined"
+							polarity='dark'
+							type='button'
+							variant='outlined'
 						>
 							Cancel
 						</Button>
 						<Button
 							onClick={() => handleSaveNewAddress(formData)}
-							polarity="dark"
-							type="button"
-							variant="filled"
+							polarity='dark'
+							type='button'
+							variant='filled'
 						>
 							Save
 						</Button>
@@ -175,15 +175,15 @@ const SavedDeliveryAddresses = () => {
 			) : (
 				<>
 					<p
-						className="md:swdc-text-md swdc-ml-2 swdc-mt-2 swdc-flex swdc-cursor-pointer swdc-justify-center swdc-text-xl swdc-font-bold swdc-uppercase swdc-tracking-[1.5px] md:swdc-justify-start"
+						className='md:swdc-text-md swdc-ml-2 swdc-mt-2 swdc-flex swdc-cursor-pointer swdc-justify-center swdc-text-xl swdc-font-bold swdc-uppercase swdc-tracking-[1.5px] md:swdc-justify-start'
 						onClick={handleAddNewAddress}
 					>
-						<IconRegularClose className="swdc-mr-1 swdc-rotate-45" />
+						<IconRegularClose className='swdc-mr-1 swdc-rotate-45' />
 						ADD A NEW ADDRESS
 					</p>
 				</>
 			)}
-			<SetMapDelivery/>
+			<DropAPin/>
 		</div>
 	);
 };

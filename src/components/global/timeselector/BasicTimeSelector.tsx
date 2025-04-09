@@ -1,10 +1,10 @@
-import { type Selections } from '../../../types';
+import { type FulfillmentSelections } from '../../../types';
 import TimeSlot from './BasicTimeSlot';
 
 type Props = {
 	defaultValue?: string;
 	onSelect: (value: string) => void;
-	selections: Selections;
+	selections: FulfillmentSelections;
 	timeSlots: Array<{
 		deliveryIsFree?: boolean;
 		price?: number;
@@ -16,14 +16,14 @@ type Props = {
 // Container for multiple time slot options
 const TimeSelector = ({ defaultValue, onSelect, timeSlots }: Props) => {
 	return (
-		<div className="swdc-flex swdc-flex-col swdc-gap-4 md:swdc-flex-row">
+		<div className='swdc-flex swdc-flex-col swdc-gap-4 md:swdc-flex-row'>
 			{/* Maps through available time slots and renders each option */}
 			{timeSlots.map((slot, index) => (
 				<TimeSlot
 					defaultValue={defaultValue}
 					deliveryIsFree={slot.deliveryIsFree}
 					key={index}
-					name="delivery-time-slot"
+					name='delivery-time-slot'
 					onSelect={onSelect}
 					price={timeSlots[index].price}
 					rushDelivery={false}

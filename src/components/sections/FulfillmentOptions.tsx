@@ -71,22 +71,22 @@ const FulfillmentOptions = ({
 					toggleExpanded(true);
 					onEdit();
 				}}
-				title="Fulfillment Options"
+				title='Fulfillment Options'
 				showEdit={isSaved}
 			/>
 			{isExpanded && (
 				<>
 					<PickupOrDeliverySelector
 						defaultValue={fulfillmentType}
-						name2="pickup"
-						name="pickup"
+						name2='pickup'
+						name='pickup'
 						onSelect={handleFulfillmentTypeChange}
-						text2="Standard or rush delivery available"
-						text="Ready in as little as 2 hours"
-						title2="Delivery"
-						title="Pickup"
-						value2="delivery"
-						value="pickup"
+						text2='Standard or rush delivery available'
+						text='Ready in as little as 2 hours'
+						title2='Delivery'
+						title='Pickup'
+						value2='delivery'
+						value='pickup'
 					/>
 					{fulfillmentType === 'pickup' ? (
 						<PickupFulfillment

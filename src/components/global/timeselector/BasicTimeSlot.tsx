@@ -42,9 +42,9 @@ const TimeSlot = ({
 						onChange={(e) => onSelect(e.target.value)}
 						value={value}
 					>
-						<div className="swdc-flex swdc-w-full swdc-items-center swdc-justify-between md:swdc-p-0">
-							<div className="swdc-flex swdc-flex-col">
-								<p className="swdc-text-lg swdc-font-medium md:swdc-text-base">
+						<div className='swdc-flex swdc-w-full swdc-items-center swdc-justify-between md:swdc-p-0'>
+							<div className='swdc-flex swdc-flex-col'>
+								<p className='swdc-text-lg swdc-font-medium md:swdc-text-base'>
 									{title}
 								</p>
 								<p
@@ -54,15 +54,15 @@ const TimeSlot = ({
 								</p>
 							</div>
 							{!freeDelivery ? (
-								<div className="swdc-h-full swdc-rounded-[2px] swdc-bg-[#edece6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold">
+								<div className='swdc-h-full swdc-rounded-[2px] swdc-bg-[#edece6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold'>
 									${price}
 								</div>
 							) : (
-								<div className="swdc-flex">
-									<div className="swdc-rounded-[2px] swdc-bg-[#f8f8f6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold swdc-text-[#b0b0b0] swdc-line-through">
+								<div className='swdc-flex'>
+									<div className='swdc-rounded-[2px] swdc-bg-[#f8f8f6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold swdc-text-[#b0b0b0] swdc-line-through'>
 										${price}
 									</div>
-									<div className="swdc-ml-1 swdc-rounded-[2px] swdc-bg-[#dae4df] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold swdc-text-[#466c5b]">
+									<div className='swdc-ml-1 swdc-rounded-[2px] swdc-bg-[#dae4df] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold swdc-text-[#466c5b]'>
 										FREE
 									</div>
 								</div>
@@ -81,17 +81,17 @@ const TimeSlot = ({
 						onChange={(e) => onSelect(e.target.value)}
 						value={value}
 					>
-						<div className="swdc-flex swdc-w-full swdc-items-center swdc-justify-between md:swdc-p-0">
-							<div className="swdc-flex swdc-flex-col">
-								<p className="swdc-flex swdc-items-center swdc-text-lg swdc-font-medium md:swdc-text-base">
-									<IconFillAlarm className="swdc-mr-[5px] swdc-h-2 swdc-w-2 swdc-fill-[#eec46f]" />{' '}
+						<div className='swdc-flex swdc-w-full swdc-items-center swdc-justify-between md:swdc-p-0'>
+							<div className='swdc-flex swdc-flex-col'>
+								<p className='swdc-flex swdc-items-center swdc-text-lg swdc-font-medium md:swdc-text-base'>
+									<IconFillAlarm className='swdc-mr-[5px] swdc-h-2 swdc-w-2 swdc-fill-[#eec46f]' />{' '}
 									{title}
 								</p>
-								<p className="swdc-text-xs swdc-font-medium swdc-uppercase swdc-leading-tight swdc-text-[#6d6d6e] md:swdc-text-[12px] md:swdc-font-normal">
+								<p className='swdc-text-xs swdc-font-medium swdc-uppercase swdc-leading-tight swdc-text-[#6d6d6e] md:swdc-text-[12px] md:swdc-font-normal'>
 									Get it by noon
 								</p>
 							</div>
-							<div className="swdc-flex swdc-h-full swdc-rounded-[2px] swdc-bg-[#edece6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold">
+							<div className='swdc-flex swdc-h-full swdc-rounded-[2px] swdc-bg-[#edece6] swdc-px-[6px] swdc-py-[4px] swdc-text-xs swdc-font-bold'>
 								$25
 							</div>
 						</div>

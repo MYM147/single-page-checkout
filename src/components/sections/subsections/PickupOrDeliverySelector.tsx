@@ -41,7 +41,7 @@ const PickupOrDeliverySelector = ({
 						className={`swdc-w-full swdc-justify-between md:swdc-p-0 ${name === 'pickup' ? 'swdc-w-full swdc-flex-col swdc-pt-1' : 'swdc-flex swdc-items-center'}`}
 					>
 						<div>
-							<p className="swdc-text-lg swdc-font-medium md:swdc-text-base">
+							<p className='swdc-text-lg swdc-font-medium md:swdc-text-base'>
 								{title}
 							</p>
 							<p
@@ -64,7 +64,7 @@ const PickupOrDeliverySelector = ({
 						className={`swdc-flex swdc-w-full swdc-justify-between md:swdc-p-0 ${name === 'pickup' ? 'swdc swdc-w-full swdc-flex-col swdc-pt-1' : 'swdc-items-center'}`}
 					>
 						<div>
-							<p className="swdc-text-lg swdc-font-medium md:swdc-text-base">
+							<p className='swdc-text-lg swdc-font-medium md:swdc-text-base'>
 								{title2}
 							</p>
 							<p

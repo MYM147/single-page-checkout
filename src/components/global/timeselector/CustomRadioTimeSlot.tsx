@@ -35,7 +35,7 @@ const CustomRadioTimeSlot = ({
 	};
 
 	return (
-		<div className="swdc-mt-0 swdc-flex swdc-flex-shrink-0 swdc-gap-4">
+		<div className='swdc-mt-0 swdc-flex swdc-flex-shrink-0 swdc-gap-4'>
 			<div
 				className={`swdc-relative swdc-w-full swdc-cursor-pointer swdc-rounded-[2px] swdc-border-2 swdc-p-3 swdc-transition-all swdc-duration-200 ${
 					isSelected
@@ -43,7 +43,7 @@ const CustomRadioTimeSlot = ({
 						: 'swdc-border swdc-border-[#2F2F30]/[0.45]'
 				}`}
 				onClick={handleClick}
-				role="radio"
+				role='radio'
 				aria-checked={isSelected}
 				tabIndex={0}
 				onKeyDown={(e) => {
@@ -55,8 +55,8 @@ const CustomRadioTimeSlot = ({
 			>
 				{/* Hidden actual radio input for accessibility */}
 				<input
-					type="radio"
-					className="swdc-sr-only"
+					type='radio'
+					className='swdc-sr-only'
 					name={name}
 					value={uniqueId} // Use uniqueId for the radio value
 					checked={isSelected}
@@ -64,34 +64,34 @@ const CustomRadioTimeSlot = ({
 				/>
 
 				{/* Content container */}
-				<div className="swdc-flex swdc-w-full swdc-flex-col swdc-justify-between">
+				<div className='swdc-flex swdc-w-full swdc-flex-col swdc-justify-between'>
 					{/* Icon area - show check icon when selected, courier icon when not selected */}
-					<div className="swdc-absolute swdc-left-3 swdc-top-3">
+					<div className='swdc-absolute swdc-left-3 swdc-top-3'>
 						{isSelected ? (
-							<div className="swdc-flex swdc-h-4 swdc-w-4 swdc-items-center swdc-justify-center swdc-rounded-full swdc-bg-[#2F2F30]">
-								<IconRegularDone className="swdc-icon-1 swdc-fill-white" />
+							<div className='swdc-flex swdc-h-4 swdc-w-4 swdc-items-center swdc-justify-center swdc-rounded-full swdc-bg-[#2F2F30]'>
+								<IconRegularDone className='swdc-icon-1 swdc-fill-white' />
 							</div>
 						) : (
 							<>
 								{courierType === 'Sherwin-Williams Delivery' ? (
 									<img
 										src={logo}
-										className="swdc-relative swdc-bottom-[10px] swdc-left-[5px] swdc-w-[25px]"
-										alt="Sherwin Williams"
+										className='swdc-relative swdc-bottom-[10px] swdc-left-[5px] swdc-w-[25px]'
+										alt='Sherwin Williams'
 									/>
 								) : (
-									<IconRegularTruck className="swdc-icon-2 swdc-relative swdc-top-[2px] swdc-text-[#6d6d6e]" />
+									<IconRegularTruck className='swdc-icon-2 swdc-relative swdc-top-[2px] swdc-text-[#6d6d6e]' />
 								)}
 							</>
 						)}
 					</div>
 
 					{/* Text content - shifted right to make room for icon */}
-					<div className="swdc-ml-7 swdc-flex swdc-flex-col">
-						<p className="swdc-text-[13px] swdc-font-bold swdc-uppercase swdc-text-[#6d6d6e] md:swdc-text-[10px]">
+					<div className='swdc-ml-7 swdc-flex swdc-flex-col'>
+						<p className='swdc-text-[13px] swdc-font-bold swdc-uppercase swdc-text-[#6d6d6e] md:swdc-text-[10px]'>
 							{courierType}
 						</p>
-						<p className="swdc-text-lg swdc-font-medium md:swdc-text-base">
+						<p className='swdc-text-lg swdc-font-medium md:swdc-text-base'>
 							{title}
 						</p>
 					</div>

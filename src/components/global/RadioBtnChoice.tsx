@@ -67,12 +67,12 @@ const RadioBtnChoice = ({
 	}, [selectedOption, name2]);
 
 	return (
-		<div className="swdc-mt-6">
-			<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">{title}</h3>
-			{text && <p className="swdc-mt-2">{text}</p>}
-			<div className="swdc-pt-2">
+		<div className='swdc-mt-6'>
+			<h3 className='swdc-text-base swdc-font-bold swdc-uppercase'>{title}</h3>
+			{text && <p className='swdc-mt-2'>{text}</p>}
+			<div className='swdc-pt-2'>
 				<Radio
-					className="hover:swdc-bg-[#fff]"
+					className='hover:swdc-bg-[#fff]'
 					checked={selectedOption === value}
 					name={`${name}`}
 					onChange={(e) => {
@@ -85,7 +85,7 @@ const RadioBtnChoice = ({
 				</Radio>
 				<br />
 				<Radio
-					className="hover:swdc-bg-[#fff]"
+					className='hover:swdc-bg-[#fff]'
 					checked={selectedOption === value2}
 					name={`${name2}`}
 					onChange={(e) => {

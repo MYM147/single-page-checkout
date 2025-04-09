@@ -4,13 +4,13 @@ import { Button } from '@prism/dropcloth';
 const SetMapDelivery = () => {
   return (
 		<>
-			<p className="swdc-text-sm">
+			<p className='swdc-text-sm'>
 				No address?{' '}
 				<Button
-					className="swdc-ml-1 swdc-font-medium hover:swdc-underline"
+					className='swdc-ml-1 swdc-font-medium hover:swdc-underline'
 					onClick={function noRefCheck(){}}
-					polarity="dark"
-					variant="text">
+					polarity='dark'
+					variant='text'>
 					<span className='swdc-text-xs'>Set your delivery spot on a map.</span>
 				</Button>
 				<DropAPin />

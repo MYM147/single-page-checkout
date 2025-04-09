@@ -44,35 +44,35 @@ const OrderSummaryDetails = ({
 		<>
 			{fulfillmentType === 'pickup' ? (
 				<>
-					<div className="swdc-flex">
+					<div className='swdc-flex'>
 						<IconRegularStore />
 						<PickupStore
 							isHeading={false}
-							storeCity="Cleveland"
+							storeCity='Cleveland'
 							storeIsOpen={false}
 							storeNumber={721107}
-							storePhone="(216) 7412-6800"
-							storeState="OH"
-							storeStreet="4329 Lorain Ave."
-							storeZip="44113-3716"
+							storePhone='(216) 7412-6800'
+							storeState='OH'
+							storeStreet='4329 Lorain Ave.'
+							storeZip='44113-3716'
 						/>
 					</div>
-					<div className="swdc-mt-3 swdc-flex">
+					<div className='swdc-mt-3 swdc-flex'>
 						<IconRegularCalendar />
-						<div className="swdc-ml-1">
-							<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
+						<div className='swdc-ml-1'>
+							<h3 className='swdc-text-base swdc-font-bold swdc-uppercase'>
 								Pickup Date & Time
 							</h3>
-							<p className="swdc-mt-1">
+							<p className='swdc-mt-1'>
 								{pickupDate === 'as-soon-as-possible'
 									? 'As soon as possible'
 									: typeof pickupDateTime === 'string'
 										? pickupDateTime
 										: pickupDateTime?.toLocaleDateString('en-US')}
 								{pickupDate === 'as-soon-as-possible' && (
-									<div className="swdc-mt-1 swdc-flex swdc-items-center swdc-bg-[#d8e8d8] swdc-p-[6px] swdc-text-xs">
-										<IconRegularInformation className="swdc-w-2" />
-										<p className="swdc-ml-1">
+									<div className='swdc-mt-1 swdc-flex swdc-items-center swdc-bg-[#d8e8d8] swdc-p-[6px] swdc-text-xs'>
+										<IconRegularInformation className='swdc-w-2' />
+										<p className='swdc-ml-1'>
 											We&apos;ll let you know when your order is ready
 										</p>
 									</div>
@@ -80,13 +80,13 @@ const OrderSummaryDetails = ({
 							</p>
 						</div>
 					</div>
-					<div className="swdc-mt-3 swdc-flex">
+					<div className='swdc-mt-3 swdc-flex'>
 						<IconRegularPerson />
-						<div className="swdc-ml-1">
-							<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
+						<div className='swdc-ml-1'>
+							<h3 className='swdc-text-base swdc-font-bold swdc-uppercase'>
 								Pickup Person
 							</h3>
-							<p className="swdc-mt-1">
+							<p className='swdc-mt-1'>
 								{pickupPerson === 'self-pickup'
 									? 'Me'
 									: `${pickupPersonDetails?.firstName} ${pickupPersonDetails?.lastName} - ${pickupPersonDetails?.phone}`}
@@ -96,19 +96,19 @@ const OrderSummaryDetails = ({
 				</>
 			) : (
 				<>
-					<div className="swdc-flex">
+					<div className='swdc-flex'>
 						<IconRegularMapPin />
-						<div className="swdc-ml-1">
-							<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
+						<div className='swdc-ml-1'>
+							<h3 className='swdc-text-base swdc-font-bold swdc-uppercase'>
 								Delivery Address
 							</h3>
 							<p>{deliveryAddress}</p>
 						</div>
 					</div>
-					<div className="swdc-mt-3 swdc-flex">
+					<div className='swdc-mt-3 swdc-flex'>
 						<IconRegularTruck />
-						<div className="swdc-ml-1">
-							<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
+						<div className='swdc-ml-1'>
+							<h3 className='swdc-text-base swdc-font-bold swdc-uppercase'>
 								Delivery Date & Time
 							</h3>
 							<p>
@@ -118,10 +118,10 @@ const OrderSummaryDetails = ({
 							</p>
 						</div>
 					</div>
-					<div className="swdc-mt-3 swdc-flex">
+					<div className='swdc-mt-3 swdc-flex'>
 						<IconRegularSmartphone />
-						<div className="swdc-ml-1">
-							<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
+						<div className='swdc-ml-1'>
+							<h3 className='swdc-text-base swdc-font-bold swdc-uppercase'>
 								Delivery Phone
 							</h3>
 							<p>{deliveryPhone}</p>
@@ -129,13 +129,13 @@ const OrderSummaryDetails = ({
 					</div>
 				</>
 			)}
-			<div className="swdc-mt-3 swdc-flex swdc-pb-4">
+			<div className='swdc-mt-3 swdc-flex swdc-pb-4'>
 				<IconRegularNotepad />
-				<div className="swdc-ml-1">
-					<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
+				<div className='swdc-ml-1'>
+					<h3 className='swdc-text-base swdc-font-bold swdc-uppercase'>
 						Special Instructions
 					</h3>
-					<p className="swdc-mt-1">{specialInstructions || 'N/A'}</p>
+					<p className='swdc-mt-1'>{specialInstructions || 'N/A'}</p>
 				</div>
 			</div>
 		</>

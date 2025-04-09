@@ -47,7 +47,7 @@ const ContactDetailsMenu = ({
 					dispatch(setExpanded(true));
 					onEdit();
 				}}
-				title="Contact Details"
+				title='Contact Details'
 				showEdit={!isExpanded && isSaved}
 			/>
 			{isExpanded && isActive && (

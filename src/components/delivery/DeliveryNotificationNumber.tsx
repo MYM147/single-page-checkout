@@ -32,35 +32,35 @@ const DeliveryNotificationNumber = ({ onChange, selections, title }: Props) => {
 
 	return (
 		<>
-			<div className="swdc-mt-6 swdc-items-center md:swdc-flex">
-				<h3 className="swdc-text-base swdc-font-bold swdc-uppercase">
+			<div className='swdc-mt-6 swdc-items-center md:swdc-flex'>
+				<h3 className='swdc-text-base swdc-font-bold swdc-uppercase'>
 					{title}
 				</h3>
-				<DetailTooltip text="This is required in case we need to contact you with questions about your delivery." />
+				<DetailTooltip text='This is required in case we need to contact you with questions about your delivery.' />
 			</div>
-			<p className="swdc-my-1">Phone number*</p>
+			<p className='swdc-my-1'>Phone number*</p>
 			<Input
 				value={phone}
 				onChange={handlePhoneChange}
 				error={error}
-				className="swdc-w-full md:swdc-w-[300px]"
+				className='swdc-w-full md:swdc-w-[300px]'
 			/>
 			{error && (
-				<div className="swdc-mt-1 swdc-text-sm swdc-text-[#93324C]">
+				<div className='swdc-mt-1 swdc-text-sm swdc-text-[#93324C]'>
 					Please enter a valid phone number
 				</div>
 			)}
-			<div className="swdc-mt-2 swdc-flex">
-				<Checkbox name="sms-alerts" value="enabled">
+			<div className='swdc-mt-2 swdc-flex'>
+				<Checkbox name='sms-alerts' value='enabled'>
 					Please send me text alerts for this order
 				</Checkbox>
 			</div>
-			<p className="swdc-mt-1 swdc-text-sm">
+			<p className='swdc-mt-1 swdc-text-sm'>
 				We&apos;ll only text you updates for this order. Standard text messaging
 				rates apply.
 				<br />
 				See our{' '}
-				<a href="#" className="swdc-text-[#2F2F30] swdc-underline">
+				<a href='#' className='swdc-text-[#2F2F30] swdc-underline'>
 					Privacy Policy
 				</a>{' '}
 				for details

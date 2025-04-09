@@ -106,77 +106,77 @@ const ContactDetailsForm = ({
 
 	return (
 		<>
-			<div className="swdc-mb-4">
-				<p className="swdc-text-sm"> * Required</p>
+			<div className='swdc-mb-4'>
+				<p className='swdc-text-sm'> * Required</p>
 			</div>
-			<div className="swdc-mt swdc-grid swdc-gap-2 md:swdc-grid-cols-2">
+			<div className='swdc-mt swdc-grid swdc-gap-2 md:swdc-grid-cols-2'>
 				<div>
 					First Name *
 					<br />
 					<Input
-						as="input"
-						className="swdc-w-full"
+						as='input'
+						className='swdc-w-full'
 						error={errors.firstName}
-						name="firstName"
+						name='firstName'
 						onChange={handleInputChange}
 						value={formData.firstName}
 					/>
 					{errors.firstName && (
-						<span className="swdc-text-sm">Please enter letters only</span>
+						<span className='swdc-text-sm'>Please enter letters only</span>
 					)}
 				</div>
-				<div className="swdc-mt-2 md:swdc-mt-0">
+				<div className='swdc-mt-2 md:swdc-mt-0'>
 					Last Name *
 					<br />
 					<Input
-						as="input"
-						className="swdc-w-full"
+						as='input'
+						className='swdc-w-full'
 						error={errors.lastName}
-						name="lastName"
+						name='lastName'
 						onChange={handleInputChange}
 						value={formData.lastName}
 					/>
 					{errors.lastName && (
-						<span className="swdc-text-sm">Please enter letters only</span>
+						<span className='swdc-text-sm'>Please enter letters only</span>
 					)}
 				</div>
-				<div className="swdc-mt-2 md:swdc-mt-0">
+				<div className='swdc-mt-2 md:swdc-mt-0'>
 					Email Address *
 					<br />
 					<Input
-						as="input"
-						className="swdc-w-full"
+						as='input'
+						className='swdc-w-full'
 						error={errors.email}
-						name="email"
+						name='email'
 						onChange={handleInputChange}
-						type="email"
+						type='email'
 						value={formData.email}
 					/>
 					{errors.email && (
-						<span className="swdc-text-sm">
+						<span className='swdc-text-sm'>
 							Please enter a valid email address
 						</span>
 					)}
 				</div>
-				<div className="swdc-mt-2 md:swdc-mt-0">
+				<div className='swdc-mt-2 md:swdc-mt-0'>
 					Phone Number *
 					<br />
 					<Input
-						as="input"
-						className="swdc-w-full"
+						as='input'
+						className='swdc-w-full'
 						error={errors.phone}
-						name="phone"
+						name='phone'
 						onChange={handleInputChange}
 						value={formData.phone}
 					/>
 					{errors.phone && (
-						<span className="swdc-text-sm">
+						<span className='swdc-text-sm'>
 							Please enter a valid phone number
 						</span>
 					)}
 				</div>
 				<Button
-					className="swdc-mt-4 swdc-w-full md:swdc-w-[250px]"
+					className='swdc-mt-4 swdc-w-full md:swdc-w-[250px]'
 					disabled={!isFormValid()}
 					onClick={() => {
 						setIsSaved(true);

@@ -93,7 +93,7 @@ const AccountDetails = ({
 			className={`swdc-bg-[#fff] swdc-py-4 swdc-pl-6 swdc-pr-6 swdc-drop-shadow-md ${className}`}
 		>
 			<SectionTitle
-				title="Account Details"
+				title='Account Details'
 				showEdit={!isExpanded && isSaved}
 				onEdit={handleEdit}
 			/>
@@ -105,39 +105,39 @@ const AccountDetails = ({
 						<>
 							{usedAccountNumber ? (
 								<>
-									<div className="swdc-mt-4 swdc-items-center swdc-justify-between swdc-bg-[#f6f6f6] swdc-p-3 swdc-text-center md:swdc-flex md:swdc-text-left">
-										<div className="swdc-items-center">
-											<p className="swdc-text-lg swdc-font-bold">
+									<div className='swdc-mt-4 swdc-items-center swdc-justify-between swdc-bg-[#f6f6f6] swdc-p-3 swdc-text-center md:swdc-flex md:swdc-text-left'>
+										<div className='swdc-items-center'>
+											<p className='swdc-text-lg swdc-font-bold'>
 												This order belongs to:
 											</p>
-											<p className="swdc-text-[ #2F2F30] swdc-pt-2 md:swdc-pt-0">
+											<p className='swdc-text-[ #2F2F30] swdc-pt-2 md:swdc-pt-0'>
 												Account: {accountData.accountNumber} -{' '}
 												{accountData.accountName}
 											</p>
-											<p className="swdc-text-[ #2F2F30]">
+											<p className='swdc-text-[ #2F2F30]'>
 												Job account: {accountData.jobAccountName}
 											</p>
 										</div>
-										<div className="swdc-flex swdc-items-center">
+										<div className='swdc-flex swdc-items-center'>
 											{screenSize === 'md' || screenSize === 'lg' ? (
 												<Button
-													kind="standard"
-													polarity="dark"
-													variant="text"
-													className="swdc-text-sm swdc-font-bold swdc-normal-case hover:swdc-bg-transparent"
+													kind='standard'
+													polarity='dark'
+													variant='text'
+													className='swdc-text-sm swdc-font-bold swdc-normal-case hover:swdc-bg-transparent'
 													onClick={changeAccountNumber}
 												>
 													Change account{' '}
-													<span className="swdc-w-2 swdc-text-lg swdc-font-medium">
+													<span className='swdc-w-2 swdc-text-lg swdc-font-medium'>
 														&gt;
 													</span>
 												</Button>
 											) : (
 												<Button
-													kind="standard"
-													polarity="dark"
-													variant="outlined"
-													className="swdc-text-sm swdc-font-bold hover:swdc-bg-transparent swdc-mt-2 swdc-w-full swdc-uppercase"
+													kind='standard'
+													polarity='dark'
+													variant='outlined'
+													className='swdc-text-sm swdc-font-bold hover:swdc-bg-transparent swdc-mt-2 swdc-w-full swdc-uppercase'
 													onClick={changeAccountNumber}
 												>
 													Change account
@@ -145,9 +145,9 @@ const AccountDetails = ({
 											)}
 										</div>
 									</div>
-									<div className="swdc-mt-4">
+									<div className='swdc-mt-4'>
 										<InputGroup
-											label="Job or Project Name/PO (optional)"
+											label='Job or Project Name/PO (optional)'
 											maxLength={20}
 										>
 											<Input
@@ -157,7 +157,7 @@ const AccountDetails = ({
 										</InputGroup>
 									</div>
 									<Button
-										className="swdc-mt-6 swdc-w-full md:swdc-w-[250px]"
+										className='swdc-mt-6 swdc-w-full md:swdc-w-[250px]'
 										onClick={() => {
 											setIsSaved(true);
 											onContinue();

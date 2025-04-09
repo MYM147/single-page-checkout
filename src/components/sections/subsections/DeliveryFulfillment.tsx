@@ -95,8 +95,8 @@ const DeliveryFulfillment = ({ onContinue, selections, setIsSaved }: Props) => {
 
 	return (
 		<>
-			<div className="swdc-mt-6">
-				<p className="md:swdc-text-sm"> *Required</p>
+			<div className='swdc-mt-6'>
+				<p className='md:swdc-text-sm'> *Required</p>
 			</div>
 			{membershipType === 'PRO' ? (
 				<SavedDeliveryAddresses />
@@ -107,7 +107,7 @@ const DeliveryFulfillment = ({ onContinue, selections, setIsSaved }: Props) => {
 					selections={selections}
 				/>
 			)}
-			<div className="swdc-relative">
+			<div className='swdc-relative'>
 				<DateSelectMenu
 					disabled={
 						membershipType === 'PRO'
@@ -123,26 +123,26 @@ const DeliveryFulfillment = ({ onContinue, selections, setIsSaved }: Props) => {
 					selectedDate={selections.deliveryDate}
 					selectedTimeSlot={selections.deliveryTimeSlot}
 					selections={selections}
-					title="Delivery Date"
+					title='Delivery Date'
 				/>
 			</div>
 			<DeliveryNotificationNumber
 				defaultValue={selections.deliveryDetails?.phone}
 				onChange={handlePhoneChange}
 				selections={selections}
-				title="Delivery Notification Number"
+				title='Delivery Notification Number'
 			/>
 			<SpecialInstructions
 				maxLength={100}
 				onChange={(value) => {
 					dispatch(updateSelections({ specialInstructions: value }));
 				}}
-				text="If you have any special instructions for the store or delivery driver, add them here."
-				title="Special Instructions (Optional)"
+				text='If you have any special instructions for the store or delivery driver, add them here.'
+				title='Special Instructions (Optional)'
 				value={selections.specialInstructions}
 			/>
 			<Button
-				className="swdc-mt-10 swdc-w-full md:swdc-w-1/2"
+				className='swdc-mt-10 swdc-w-full md:swdc-w-1/2'
 				disabled={!isFormValid()}
 				onClick={() => {
 					onContinue();

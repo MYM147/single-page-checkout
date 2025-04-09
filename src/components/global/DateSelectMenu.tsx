@@ -93,10 +93,10 @@ export const DateSelectMenu = ({
 		<>
 			{title && (
 				<>
-					<h3 className="swdc-mt-6 swdc-text-base swdc-font-bold swdc-uppercase swdc-tracking-[1.5px]">
+					<h3 className='swdc-mt-6 swdc-text-base swdc-font-bold swdc-uppercase swdc-tracking-[1.5px]'>
 						{title}
 					</h3>
-					<p className="swdc-mt-2 swdc-pr-[100px] md:swdc-mt-1 md:swdc-pr-0">
+					<p className='swdc-mt-2 swdc-pr-[100px] md:swdc-mt-1 md:swdc-pr-0'>
 						Choose a convenient time within the next 7 days to receive your
 						order.
 					</p>
@@ -110,8 +110,8 @@ export const DateSelectMenu = ({
 				className={`date-scroll swdc-mt-2 swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-flex-row swdc-gap-[25px] swdc-overflow-x-auto lg:swdc-gap-[15px] ${loading ? 'swdc-opacity-[.15]' : ''}`}>
 				{weekDates.map((date, index) => (
 					<div
-						className="swdc-flex swdc-flex-shrink-0 swdc-snap-center swdc-flex-col swdc-items-center" key={index}>
-						<span className="swdc-mb-1 swdc-text-sm">
+						className='swdc-flex swdc-flex-shrink-0 swdc-snap-center swdc-flex-col swdc-items-center' key={index}>
+						<span className='swdc-mb-1 swdc-text-sm'>
 							{index === 0
 								? 'Today'
 								: index === 1
@@ -164,15 +164,15 @@ export const DateSelectMenu = ({
 											}
 										}
 									: undefined }>
-							<span className="swdc-text-sm swdc-font-medium">
+							<span className='swdc-text-sm swdc-font-medium'>
 								{date.toLocaleDateString('en-US', {
 									month: 'short', day: 'numeric',
 								})}
 							</span>
 							{index === 0 && rush && (
-								<div className="swdc-flex swdc-items-center swdc-text-center">
-									<IconFillAlarm className="swdc-mr-[2px] swdc-h-2 swdc-w-2 swdc-fill-[#eec46f]" />
-									<span className="swdc-text-xs swdc-uppercase">RUSH</span>
+								<div className='swdc-flex swdc-items-center swdc-text-center'>
+									<IconFillAlarm className='swdc-mr-[2px] swdc-h-2 swdc-w-2 swdc-fill-[#eec46f]' />
+									<span className='swdc-text-xs swdc-uppercase'>RUSH</span>
 								</div>
 							)}
 						</div>
@@ -181,25 +181,25 @@ export const DateSelectMenu = ({
 			</div>
 
 			{loading && (
-				<div className="swdc-absolute swdc-bottom-[20%] swdc-left-[45%] swdc-items-center swdc-justify-center">
-					<img alt="Loading..." height="48px" src="/assets/color-wheel.svg" width="48px"
+				<div className='swdc-absolute swdc-bottom-[20%] swdc-left-[45%] swdc-items-center swdc-justify-center'>
+					<img alt='Loading...' height='48px' src='/assets/color-wheel.svg' width='48px'
 					/>
 				</div>
 			)}
 
 			{title ? (
 				<div className={`${loading ? 'swdc-opacity-[.15]' : ''}`}>
-					{membershipType === 'DIY' && <h3 className="swdc-mt-2">Time*</h3>}
+					{membershipType === 'DIY' && <h3 className='swdc-mt-2'>Time*</h3>}
 					{disabled ? (
-						<div className="opacity-50 swdc-mt-2 swdc-flex swdc-h-[68px] swdc-w-full swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-opacity-50">
+						<div className='opacity-50 swdc-mt-2 swdc-flex swdc-h-[68px] swdc-w-full swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-opacity-50'>
 							<p>Please fill out delivery address to continue</p>
 						</div>
 					) : isRushSelected ? (
 						<>
-							<h3 className="swdc-mt-5">Time*</h3>
+							<h3 className='swdc-mt-5'>Time*</h3>
 							<BasicTimeSlot
 								defaultValue={selectedTimeSlot}
-								name="rush-delivery"
+								name='rush-delivery'
 								onSelect={(timeSlot) => {
 									const timeDisplay = '8AM - 11AM';
 									setSelectedTimeSlot(timeSlot);
@@ -210,9 +210,9 @@ export const DateSelectMenu = ({
 									});
 								}}
 								rushDelivery={true}
-								text="Get it by noon"
-								title="RUSH Delivery"
-								value="rush"
+								text='Get it by noon'
+								title='RUSH Delivery'
+								value='rush'
 							/>
 						</>
 					) : selectedDateState && !isRushSelected ? (
@@ -248,14 +248,14 @@ export const DateSelectMenu = ({
 							/>
 						)
 					) : (
-						<div className="swdc-mt-2 swdc-flex swdc-h-[68px] swdc-w-full swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-opacity-50">
+						<div className='swdc-mt-2 swdc-flex swdc-h-[68px] swdc-w-full swdc-items-center swdc-justify-center swdc-rounded-[2px] swdc-border swdc-border-[#2F2F30]/[0.45] swdc-opacity-50'>
 							<p>Please select a date to find available timeslots</p>
 						</div>
 					)}
 				</div>
 			) : (
 				<div className={`${loading ? 'swdc-opacity-[.15]' : ''}`}>
-					<p className="swdc-mt-2">Two hours after store opens.</p>
+					<p className='swdc-mt-2'>Two hours after store opens.</p>
 					<StoreHoursTooltip />
 				</div>
 			)}

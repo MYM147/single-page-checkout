@@ -136,13 +136,13 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 	}, [currentPage]);
 
 	return (
-		<div className="swdc-mt-4 swdc-flex swdc-flex-col swdc-gap-3">
-			<div className="swdc-flex swdc-flex-col swdc-items-start swdc-gap-2 md:swdc-flex-row md:swdc-items-center md:swdc-justify-between">
-				<h3 className="swdc-text-base swdc-font-medium">Time*</h3>
+		<div className='swdc-mt-4 swdc-flex swdc-flex-col swdc-gap-3'>
+			<div className='swdc-flex swdc-flex-col swdc-items-start swdc-gap-2 md:swdc-flex-row md:swdc-items-center md:swdc-justify-between'>
+				<h3 className='swdc-text-base swdc-font-medium'>Time*</h3>
 
 				{/* Scrollable filter buttons container */}
-				<div className="swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-overflow-x-auto swdc-pb-2 md:swdc-w-auto md:swdc-justify-end">
-					<div className="swdc-flex swdc-min-w-max swdc-gap-2">
+				<div className='swdc-flex swdc-w-full swdc-touch-pan-x swdc-snap-x swdc-overflow-x-auto swdc-pb-2 md:swdc-w-auto md:swdc-justify-end'>
+					<div className='swdc-flex swdc-min-w-max swdc-gap-2'>
 						{(
 							['All Couriers', 'S-W Delivery', 'Local Courier'] as FilterType[]
 						).map((filter) => (
@@ -156,7 +156,7 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 								}`}
 							>
 								{filter === 'S-W Delivery' && (
-									<img src={logo} className="swdc-h-3" alt="Sherwin Williams" />
+									<img src={logo} className='swdc-h-3' alt='Sherwin Williams' />
 								)}
 								{filter === 'Local Courier' && (
 									<IconRegularTruck
@@ -167,20 +167,20 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 										}`}
 									/>
 								)}
-								<span className="swdc-uppercase">{filter}</span>
+								<span className='swdc-uppercase'>{filter}</span>
 							</button>
 						))}
 					</div>
 				</div>
 			</div>
 
-			<div className="swdc-grid swdc-grid-cols-1 swdc-gap-4 md:swdc-grid-cols-2">
+			<div className='swdc-grid swdc-grid-cols-1 swdc-gap-4 md:swdc-grid-cols-2'>
 				{currentSlots.map((slot) => (
 					<CustomRadioTimeSlot
 						key={slot.uniqueId}
 						courierType={slot.courierType}
 						selectedValue={localSelectedValue}
-						name="delivery-time-slot"
+						name='delivery-time-slot'
 						onSelect={handleSelect}
 						text={slot.text}
 						title={slot.title || ''}
@@ -192,9 +192,9 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 
 			{/* Pagination controls - only show if we have more than one page */}
 			{totalPages > 1 && (
-				<div className="swdc-flex swdc-w-full swdc-items-center swdc-justify-center swdc-gap-4 sm:swdc-items-end sm:swdc-justify-end">
+				<div className='swdc-flex swdc-w-full swdc-items-center swdc-justify-center swdc-gap-4 sm:swdc-items-end sm:swdc-justify-end'>
 					<button
-						type="button"
+						type='button'
 						onClick={goToPreviousPage}
 						disabled={currentPage === 0 || isChangingPage.current}
 						className={`swdc-flex swdc-h-8 swdc-w-8 swdc-items-center swdc-justify-center swdc-rounded-full swdc-transition-colors ${
@@ -202,13 +202,13 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 								? 'swdc-cursor-not-allowed swdc-opacity-50'
 								: 'swdc-bg-[#f6f6f6] hover:swdc-bg-[#e0e0e0]'
 						}`}
-						aria-label="Previous page"
+						aria-label='Previous page'
 					>
-						<IconRegularArrowLongLeft className="swdc-icon-3" />
+						<IconRegularArrowLongLeft className='swdc-icon-3' />
 					</button>
 
 					<button
-						type="button"
+						type='button'
 						onClick={goToNextPage}
 						disabled={currentPage === totalPages - 1 || isChangingPage.current}
 						className={`swdc-flex swdc-h-8 swdc-w-8 swdc-items-center swdc-justify-center swdc-rounded-full swdc-transition-colors ${
@@ -216,9 +216,9 @@ const ProTimeSelector = ({ selectedValue, onSelect, timeSlots }: Props) => {
 								? 'swdc-cursor-not-allowed swdc-opacity-50'
 								: 'swdc-bg-[#f6f6f6] hover:swdc-bg-[#e0e0e0]'
 						}`}
-						aria-label="Next page"
+						aria-label='Next page'
 					>
-						<IconRegularArrowLongRight className="swdc-icon-3" />
+						<IconRegularArrowLongRight className='swdc-icon-3' />
 					</button>
 				</div>
 			)}

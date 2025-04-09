@@ -25,21 +25,21 @@ const ContactDetailsSummary = ({ contactDetails }: Props) => {
 
 	return (
 		<div className=' swdc-pb-5'>
-			<div className="swdc-flex">
+			<div className='swdc-flex'>
 				<IconRegularPerson />
-				<div className="swdc-ml-1">
+				<div className='swdc-ml-1'>
 					<p>{`${details.firstName} ${details.lastName}`}</p>
 				</div>
 			</div>
-			<div className="swdc-mt-3 swdc-flex">
+			<div className='swdc-mt-3 swdc-flex'>
 				<IconRegularEnvelope />
-				<div className="swdc-ml-1">
+				<div className='swdc-ml-1'>
 					<p>{details.email}</p>
 				</div>
 			</div>
-			<div className="swdc-mt-3 swdc-flex">
+			<div className='swdc-mt-3 swdc-flex'>
 				<IconRegularSmartphone />
-				<div className="swdc-ml-1">
+				<div className='swdc-ml-1'>
 					<p>{details.phone}</p>
 				</div>
 			</div>
