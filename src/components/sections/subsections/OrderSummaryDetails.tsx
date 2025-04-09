@@ -73,7 +73,7 @@ const OrderSummaryDetails = ({
 									<div className="swdc-mt-1 swdc-flex swdc-items-center swdc-bg-[#d8e8d8] swdc-p-[6px] swdc-text-xs">
 										<IconRegularInformation className="swdc-w-2" />
 										<p className="swdc-ml-1">
-											We'll let you know when your order is ready
+											We&apos;ll let you know when your order is ready
 										</p>
 									</div>
 								)}

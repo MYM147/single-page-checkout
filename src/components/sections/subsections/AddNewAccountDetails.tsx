@@ -172,10 +172,13 @@ const AddNewAccountDetails = ({
 						error={!isProjectNameValid}
 					/>
 				</InputGroup>
+				{!isProjectNameValid && (
+					<p className="swdc-mt-1 swdc-text-sm swdc-text-red-500">{validationError}</p>
+				)}
 			</div>
-			<div className="swdc-mt-2 swdc-flex swdc-w-3/4 swdc-items-center swdc-gap-2 swdc-bg-[#EEC46F] swdc-p-2">
-				<IconRegularInformation />
-				<p className="swdc-text-sm">
+			<div className="swdc-mt-2 swdc-flex md:swdc-w-3/4 swdc-items-center swdc-gap-2 swdc-bg-[#EEC46F] swdc-p-2">
+				<IconRegularInformation className="swdc-icon-3" />
+				<p>
 					Changing accounts may affect pricing and product availability.
 				</p>
 			</div>

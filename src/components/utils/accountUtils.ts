@@ -32,4 +32,4 @@ export const jobAccounts = [
   {
     jobAccountName: '05-EXAMPLE JOB ACCOUNT',
 	}
-]
+];

@@ -1,6 +1,6 @@
 import { IconFillAlarm } from '@prism/dropcloth';
 import { useEffect, useState } from 'react';
-import { Selections } from '../../types';
+import { FulfillmentSelections } from '../../types';
 import { getDates } from '../utils/dateUtils';
 import { proTimeSlots, TimeSlot } from '../utils/timeSlotUtil';
 import BasicTimeSelector from './timeselector/BasicTimeSelector';
@@ -12,11 +12,11 @@ type Props = {
 	disabled?: boolean;
 	membershipType?: 'PRO' | 'DIY';
 	onDateSelect: (date: string) => void;
-	onSelectionsChange: (selections: Selections) => void;
+	onSelectionsChange: (selections: FulfillmentSelections) => void;
 	rush?: boolean;
 	selectedDate: string | null;
 	selectedTimeSlot: string;
-	selections: Selections;
+	selections: FulfillmentSelections;
 	title?: string;
 };
 

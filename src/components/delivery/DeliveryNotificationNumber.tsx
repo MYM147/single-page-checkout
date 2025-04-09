@@ -1,13 +1,13 @@
 import { Checkbox, Input } from '@prism/dropcloth';
 import { useState } from 'react';
-import { type Selections } from '../../types';
+import { type FulfillmentSelections } from '../../types';
 import DetailTooltip from '../global/tooltips/DetailTooltip';
 import { phoneRegex } from '../utils/regexUtils';
 
 type Props = {
 	defaultValue: string;
 	onChange: (phone: string) => void;
-	selections: Selections;
+	selections: FulfillmentSelections;
 	title?: string;
 };
 
@@ -56,7 +56,7 @@ const DeliveryNotificationNumber = ({ onChange, selections, title }: Props) => {
 				</Checkbox>
 			</div>
 			<p className="swdc-mt-1 swdc-text-sm">
-				We'll only text you updates for this order. Standard text messaging
+				We&apos;ll only text you updates for this order. Standard text messaging
 				rates apply.
 				<br />
 				See our{' '}

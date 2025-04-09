@@ -5,18 +5,27 @@ import SetMapDelivery from '../global/mapLocation/setMapDelivery';
 import { addressRegex, cityRegex, zipRegex } from '../utils/regexUtils';
 import { states } from '../utils/statesUtils';
 
+type DeliveryFormData = {
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  zip: string;
+  locationName: string;
+};
+
 type Props = {
-	defaultValues: {
-		address1: string;
-		address2: string;
-		city: string;
-		state: string;
-		zip: string;
-	};
-	hideForSavedAddresses?: boolean;
-	membershipType?: string;
-	onChange: (value: any) => void;
-	selections: FulfillmentSelections;
+  defaultValues: {
+    address1: string;
+    address2: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+  hideForSavedAddresses?: boolean;
+  membershipType?: string;
+  onChange: (value: DeliveryFormData) => void;
+  selections: FulfillmentSelections;
 };
 
 const DeliveryAddress = ({
