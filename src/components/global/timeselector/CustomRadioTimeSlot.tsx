@@ -1,5 +1,5 @@
 import { IconRegularDone, IconRegularTruck } from '@prism/dropcloth';
-import logo from '/public/assets/logo-sm.png';
+import logo from '../../../assets/logo-sm.png';
 
 type Props = {
 	courierType: 'Sherwin-Williams Delivery' | 'Local Courier';

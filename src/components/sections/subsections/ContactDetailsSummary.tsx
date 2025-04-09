@@ -24,7 +24,7 @@ const ContactDetailsSummary = ({ contactDetails }: Props) => {
 	const details = contactDetails || defaultContactDetails;
 
 	return (
-		<div className='swdc-pt-4 swdc-pb-5'>
+		<div className=' swdc-pb-5'>
 			<div className="swdc-flex">
 				<IconRegularPerson />
 				<div className="swdc-ml-1">

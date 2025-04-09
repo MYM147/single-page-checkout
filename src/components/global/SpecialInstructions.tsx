@@ -20,17 +20,17 @@ const SpecialInstructions = ({
 }: Props) => {
 	const [isValid, setIsValid] = useState(true);
 
-	const validateInstructions = (text: string, maxLength: number) => {
-		return !text || (text.length <= maxLength && instructionsRegex.test(text));
+	const validateInstructions = (inputText: string, maxLen: number) => {
+		return !inputText || (inputText.length <= maxLen && instructionsRegex.test(inputText));
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
-		const valid = validateInstructions(value, maxLength || 100);
+		const inputValue = e.target.value;
+		const valid = validateInstructions(inputValue, maxLength || 100);
 		setIsValid(valid);
 
 		if (valid) {
-			onChange(value);
+			onChange(inputValue);
 		}
 	};
 

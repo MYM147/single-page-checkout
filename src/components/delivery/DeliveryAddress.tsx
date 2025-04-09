@@ -1,21 +1,31 @@
 import { Checkbox, Input, Select } from '@prism/dropcloth';
 import { useState } from 'react';
-import { type Selections } from '../../types';
-import { states } from '../utils/statesUtils';
+import { type FulfillmentSelections } from '../../types';
+import SetMapDelivery from '../global/mapLocation/setMapDelivery';
 import { addressRegex, cityRegex, zipRegex } from '../utils/regexUtils';
+import { states } from '../utils/statesUtils';
+
+type DeliveryFormData = {
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  zip: string;
+  locationName: string;
+};
 
 type Props = {
-	defaultValues: {
-		address1: string;
-		address2: string;
-		city: string;
-		state: string;
-		zip: string;
-	};
-	hideForSavedAddresses?: boolean;
-	membershipType?: string;
-	onChange: (value: any) => void;
-	selections: Selections;
+  defaultValues: {
+    address1: string;
+    address2: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+  hideForSavedAddresses?: boolean;
+  membershipType?: string;
+  onChange: (value: DeliveryFormData) => void;
+  selections: FulfillmentSelections;
 };
 
 const DeliveryAddress = ({
@@ -196,15 +206,7 @@ const DeliveryAddress = ({
 
 			</div>
 			{!hideForSavedAddresses && (
-				<p className="swdc-text-sm">
-					No address?{' '}
-					<a
-						href="#"
-						className="swdc-ml-1 swdc-font-medium hover:swdc-underline"
-					>
-						Set your delivery spot on a map.
-					</a>
-				</p>
+				<SetMapDelivery/>
 			)}
 		</div>
 	);

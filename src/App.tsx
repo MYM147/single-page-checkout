@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext } from 'react';
 import FreeDeliveryBanner from './components/global/FreeDeliveryBanner';
 import CheckoutProcessList from './components/sections/CheckoutProcessList';
 import { Sidebar } from './components/sidebar/Sidebar';

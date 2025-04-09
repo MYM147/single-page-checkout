@@ -1,18 +1,20 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FulfillmentSelections } from '../../types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface FulfillmentState {
-	selections: FulfillmentSelections;
 	fulfillmentType: 'pickup' | 'delivery';
-	isSaved: boolean;
 	isExpanded: boolean;
 	isLoading: boolean;
+	isSaved: boolean;
 	membershipType: 'PRO' | 'DIY';
 	savedAddressSelected: boolean;
+	selections: FulfillmentSelections;
 }
 
 const initialState: FulfillmentState = {
 	selections: {
+		deliveryAddress: '',
+		deliveryDate: '',
 		deliveryDetails: {
 			address1: '',
 			address2: '',
@@ -24,9 +26,10 @@ const initialState: FulfillmentState = {
 			state: '',
 			zip: '',
 		},
-		deliveryDate: '',
+		deliveryPhone: '',
 		deliveryTime: '',
 		deliveryTimeSlot: '',
+		fulfillmentType: '',
 		pickupDate: '',
 		pickupDateSelection: '',
 		pickupPerson: '',
@@ -36,7 +39,6 @@ const initialState: FulfillmentState = {
 			lastName: '',
 			phone: '',
 		},
-		fulfillmentType: '',
 		specialInstructions: '',
 		storeDetails: {
 			storeCity: '',
@@ -45,8 +47,6 @@ const initialState: FulfillmentState = {
 			storeStreet: '',
 			storeZip: '',
 		},
-		deliveryAddress: '',
-		deliveryPhone: '',
 	},
 	fulfillmentType: 'pickup',
 	isExpanded: true,

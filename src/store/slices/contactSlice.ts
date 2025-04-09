@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ContactDetails } from '../../types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface ContactState {
 	contactDetails: ContactDetails;
@@ -19,8 +19,8 @@ const initialState: ContactState = {
 };
 
 const contactSlice = createSlice({
-	name: 'contactDetails',
 	initialState,
+	name: 'contactDetails',
 	reducers: {
 		setExpanded: (state, action: PayloadAction<boolean>) => {
 			state.isExpanded = action.payload;

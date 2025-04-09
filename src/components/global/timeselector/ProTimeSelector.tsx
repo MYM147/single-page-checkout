@@ -4,9 +4,9 @@ import {
 	IconRegularTruck,
 } from '@prism/dropcloth';
 import { useEffect, useRef, useState } from 'react';
-import { type Selections } from '../../../types';
+import logo from '../../../assets/logo-sm.png';
+import { type FulfillmentSelections } from '../../../types';
 import CustomRadioTimeSlot from './CustomRadioTimeSlot';
-import logo from '/public/assets/logo-sm.png';
 
 type CourierType = 'Sherwin-Williams Delivery' | 'Local Courier';
 type FilterType = 'All Couriers' | 'S-W Delivery' | 'Local Courier';
@@ -28,7 +28,7 @@ type TimeSlotData = {
 type Props = {
 	selectedValue: string;
 	onSelect: (value: string) => void;
-	selections: Selections;
+	selections: FulfillmentSelections;
 	timeSlots: TimeSlotData[];
 };
 

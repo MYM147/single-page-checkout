@@ -106,6 +106,7 @@ const CheckoutProcessList = () => {
 				} `}
 				isExpanded={expandedPanel === 2}
 				onContinue={() => setExpandedPanel(3)}
+				onEdit={() => setExpandedPanel(2)}
 			/>
 			<PaymentMethod
 				className={`swdc-overflow-hidden swdc-transition-all swdc-duration-300 ${

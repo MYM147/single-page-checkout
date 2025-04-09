@@ -11,7 +11,7 @@ const FreeDeliveryBanner = () => {
 					<IconRegularTruck className="swdc-icon-3 swdc-mr-4 swdc-fill-[#466C5B]" />
 					<div className="swdc-text-[#466C5B]">
 						<p className="swdc-font-medium">Good News!</p>
-						<p className="swdc-text-sm">You've unlocked free delivery.</p>
+						<p className="swdc-text-sm">You&apos;ve unlocked free delivery.</p>
 					</div>
 				</div>
 			) : (

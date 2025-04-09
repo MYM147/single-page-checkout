@@ -10,6 +10,7 @@ import {
 	setSavedAddressSelected,
 	updateDeliveryDetails,
 } from '../../store/slices/fulfillmentSlice';
+import SetMapDelivery from '../global/mapLocation/setMapDelivery';
 import { locationNameRegex } from '../utils/regexUtils';
 import { savedAddresses } from '../utils/savedAddressUtil';
 import DeliveryAddress from './DeliveryAddress';
@@ -58,7 +59,7 @@ const SavedDeliveryAddresses = () => {
 		});
 	};
 
-	const handleSaveNewAddress = (formData: {
+	const handleSaveNewAddress = (newAddressData: {
 		address1: string;
 		address2: string;
 		city: string;
@@ -69,7 +70,7 @@ const SavedDeliveryAddresses = () => {
 	}) => {
 		// Validate location name if provided
 		const locationName =
-			formData.locationName || `New Address ${addresses.length + 1}`;
+    newAddressData.locationName || `New Address ${addresses.length + 1}`;
 		if (!validateLocationName(locationName)) {
 			// Show error or use default name
 			return;
@@ -77,10 +78,10 @@ const SavedDeliveryAddresses = () => {
 
 		const newAddress = {
 			locationName: locationName,
-			streetAddress: formData.address1,
-			city: formData.city,
-			state: formData.state,
-			zip: formData.zip,
+			streetAddress: newAddressData.address1,
+			city: newAddressData.city,
+			state: newAddressData.state,
+			zip: newAddressData.zip,
 		};
 
 		setAddresses([...addresses, newAddress]);
@@ -182,12 +183,7 @@ const SavedDeliveryAddresses = () => {
 					</p>
 				</>
 			)}
-			<p className="swdc-mt-4 swdc-text-center swdc-text-lg md:swdc-text-left md:swdc-text-sm">
-				No address?{' '}
-				<a href="#" className="swdc-ml-1 swdc-font-medium hover:swdc-underline">
-					Set your delivery spot on a map.
-				</a>
-			</p>
+			<SetMapDelivery/>
 		</div>
 	);
 };
