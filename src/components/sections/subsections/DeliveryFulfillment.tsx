@@ -1,4 +1,4 @@
-import DateSelectMenu from '../../global/DateSelectMenu';
+import DateSelectMenu from '../../global/dateSelectMenu/DateSelectMenu';
 import DeliveryAddress from '../../delivery/DeliveryAddress';
 import DeliveryNotificationNumber from '../../delivery/DeliveryNotificationNumber';
 import SavedDeliveryAddresses from '../../delivery/SavedDeliveryAddresses';

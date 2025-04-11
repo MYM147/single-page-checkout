@@ -175,10 +175,10 @@ const SavedDeliveryAddresses = () => {
 			) : (
 				<>
 					<p
-						className='md:swdc-text-md swdc-ml-2 swdc-mt-2 swdc-flex swdc-cursor-pointer swdc-justify-center swdc-text-xl swdc-font-bold swdc-uppercase swdc-tracking-[1.5px] md:swdc-justify-start'
+						className='md:swdc-text-md swdc-ml-2 swdc-mt-2 swdc-flex swdc-cursor-pointer swdc-justify-center swdc-text-lg swdc-font-bold swdc-uppercase swdc-tracking-[1.5px] md:swdc-justify-start'
 						onClick={handleAddNewAddress}
 					>
-						<IconRegularClose className='swdc-mr-1 swdc-rotate-45' />
+						<IconRegularClose className='swdc-mr-1 swdc-rotate-45 swdc-w-[20px]' />
 						ADD A NEW ADDRESS
 					</p>
 				</>

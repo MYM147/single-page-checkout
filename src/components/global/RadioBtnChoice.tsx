@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { type FulfillmentSelections } from '../../types';
 import PickupPersonMenu from '../pickup/PickupPersonMenu';
 import { weekDates } from '../utils/dateUtils';
-import PickupDateMenu from './DateSelectMenu';
+import PickupDateMenu from './dateSelectMenu/DateSelectMenu';
 
 type PickupPersonDetails = {
   firstName: string;

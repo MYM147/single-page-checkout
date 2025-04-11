@@ -76,7 +76,7 @@ const TimeSlot = ({
 				>
 					<Radio
 						checked={defaultValue === value}
-						className={`swdc-has-[input:checked]:swdc-rounded-[2px] swdc-mt-2 swdc-w-full swdc-items-center swdc-rounded-[1px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1 ${name === 'pickup' ? 'swdc-block swdc-w-1/2 md:swdc-flex' : 'swdc-flex swdc-w-full'}`}
+						className={`!swdc-has-[input:checked]:swdc-rounded-[0px] swdc-mt-2 swdc-w-full swdc-items-center !swdc-rounded-[0px] swdc-border-2 swdc-p-3 swdc-pb-2 swdc-transition-all swdc-duration-200 has-[input:checked]:swdc-border-[3px] has-[input:checked]:swdc-border-[#2F2F30] md:swdc-flex md:swdc-w-[300px] md:swdc-border-[#2F2F30]/[0.45] md:swdc-p-1 ${name === 'pickup' ? 'swdc-block swdc-w-1/2 md:swdc-flex' : 'swdc-flex swdc-w-full'}`}
 						name={`${name}`}
 						onChange={(e) => onSelect(e.target.value)}
 						value={value}
